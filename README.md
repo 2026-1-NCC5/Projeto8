@@ -1,118 +1,83 @@
-```sh
-Utilize o site <https://www.toptal.com/developers/gitignore> para gerar seu arquivo gitignore e apague este campo.
-
-Vide tutoriais do PI.
-```
-
-# FECAP - Fundação de Comércio Álvares Penteado
+# 🏫 FECAP - Fundação de Comércio Álvares Penteado
 
 <p align="center">
 <a href= "https://www.fecap.br/"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhZPrRa89Kma0ZZogxm0pi-tCn_TLKeHGVxywp-LXAFGR3B1DPouAJYHgKZGV0XTEf4AE&usqp=CAU" alt="FECAP - Fundação de Comércio Álvares Penteado" border="0"></a>
 </p>
 
-# Nome do Projeto
+# Projeto 8: ContaCerto ✅🌱
 
-## Nome do Grupo
+## Nome do Grupo: Radonix
 
-## Integrantes: <a href="https://www.linkedin.com/in/victorbarq/">Goku Sayajin</a>, <a href="https://www.linkedin.com/in/victorbarq/">Saitama One</a>, <a href="https://www.linkedin.com/in/victorbarq/">Ikki de Fenix</a>, <a href="https://www.linkedin.com/in/victorbarq/">Yusuke Urameshi</a>, <a href="https://www.linkedin.com/in/victorbarq/">Roronoa Zoro</a>
+## Integrantes: <a href="https://www.linkedin.com/in/gabrielcarvalhomota/">Gabriel Carvalho</a>, <a href="https://www.linkedin.com/in/sik4s/">Guilherme Siqueira</a>, <a href="https://www.linkedin.com/in/rluizreis/">Rodrigo Reis</a>, <a href="https://www.linkedin.com/in/vitória-maciel-8308a42a6/">Vitória Leticia Maciel</a>.
 
-## Professores Orientadores: <a href="https://www.linkedin.com/in/victorbarq/">Dr. Victor Von Doom</a>, <a href="https://www.linkedin.com/in/victorbarq/">Me. Saitama</a>, <a href="https://www.linkedin.com/in/victorbarq/">Dr. Strange</a>, <a href="https://www.linkedin.com/in/victorbarq/">Me. Yoda</a>, <a href="https://www.linkedin.com/in/victorbarq/">Dr. Gero</a>
+## Professores Orientadores: <a href="https://www.linkedin.com/in/marcosminorunakatsugawa/">Marcos Minoru</a>, <a href="https://www.linkedin.com/in/rafael-diogo-rossetti/">Rafael Rossetti</a>, <a href="https://www.linkedin.com/in/professorrodnil/">Rodnil Lisbôa</a>, <a href="https://www.linkedin.com/in/rodrigo-da-rosa-phd/">Rodrigo da Rosa</a>, <a href="https://www.linkedin.com/in/victorbarq/">Victor Rosetti</a>.
 
-## Descrição
+## 💰 Descrição - ContaCerto
 
 <p align="center">
-<img src="https://pix4free.org/assets/library/2021-01-20/originals/game.jpg" alt="NOME DO JOGO" border="0">
-  Game by <a href="http://www.nyphotographic.com/">Nick Youngson</a> <a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a> <a href="http://pix4free.org/">Pix4free</a>
+  <img src="img/gif_picmoney.gif" alt="Demonstração do Dashboard" width="100%">
+</p>
+<p align="center">
+  Project by <a>Gabriel Carvalho, Guilherme Siqueira, Rodrigo Reis, Vitória Maciel</a>
 </p>
 
+O **ContaCerto** (apelidado carinhosamente de CC) nasceu para transformar o trabalho manual e cansativo de conferir doações em um processo leve, inteligente e transparente. Através de um site simples e intuitivo, usamos a Visão Computacional para "dar olhos" à solidariedade: uma câmera identifica automaticamente se o pacote é arroz, feijão ou outro alimento, garantindo que cada item seja registrado com precisão absoluta. É a tecnologia saindo das linhas de código para resolver um problema real do projeto **Lideranças Empáticas**, permitindo que os voluntários foquem menos em planilhas e mais em quem realmente precisa de ajuda.
 
-De um a dois parágrafos sobre o que é seu projeto e o que ele faz.
+Nossa plataforma não apenas conta pacotes, ela valoriza o esforço de cada equipe, organizando as arrecadações por grupo e categoria de forma automática e segura. Com o **ContaCerto**, cada doação gera um registro confiável e auditável, trazendo clareza para todo o processo de impacto social dentro da FECAP. É ciência da computação aplicada com um único propósito: usar a inteligência artificial para somar forças e multiplicar o bem.
 <br><br>
-Meu projeto ajuda estudantes FECAP a configurarem seus githubs.
-<br><br>
-May the force be with you!
+
+## 🚀 Ferramentas e Funcionalidades
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
+![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+![Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=microsoftazure&logoColor=white)
+![YOLO](https://img.shields.io/badge/YOLO-00FFFF?style=for-the-badge&logo=yolo&logoColor=black)
+![IA](https://img.shields.io/badge/AI-FF6F00?style=for-the-badge&logo=google-cloud&logoColor=white)
+
+✨ <b>Principais Funcionalidades</b>  
+- **Identificação Inteligente (IA):** Sistema que reconhece e classifica automaticamente pacotes de arroz, feijão e outros tipos de alimentos via câmera.
+- **Contagem de Precisão:** Tecnologia de rastreio que garante que cada doação seja contada apenas uma única vez ao passar pela rampa.
+- **Site de Operação:** Interface web para os administradores da Lideranças Empáticas selecionarem os nomes das equipes, iniciarem sessões e acompanharem a contagem em tempo real.
+- **Registro de Evidências:** Captura e armazenamento automático de fotos de cada item processado para auditoria e segurança dos dados.
+- **Relatórios em Nuvem:** Painel que organiza os resultados por equipe, categoria e data, facilitando a gestão para a coordenação do projeto. 
+
+## 🎨 Figma
+https://www.figma.com/design/XwCW0RoK16cSd28sLVHa7K/Figma-PI5-?node-id=0-1&p=f&t=zjPLYhTzqw6b2N22-0
 <br><br>
 
 ## 🛠 Estrutura de pastas
 
--Raiz<br>
-|<br>
-|-->documentos<br>
-  &emsp;|-->antigos<br>
-  &emsp;|Documentação.docx<br>
-|-->executáveis<br>
-  &emsp;|-->windows<br>
-  &emsp;|-->android<br>
-  &emsp;|-->HTML<br>
-|-->imagens<br>
-|-->src<br>
-  &emsp;|-->Backend<br>
-  &emsp;|-->Frontend<br>
-|readme.md<br>
+```
+├── documentos/
+│   ├── Entrega1/
+│   │   ├── Álgebra Linear, Vetores e Geometria Analítica/
+│   │   ├── Sistemas Operacionais e Computação em Nuvem/
+│   │   ├── Projeto_Interdisciplinar: Inteligência Artificial/
+│   │   ├── Psicologia, Liderança e Soft Skills/
+│   │   └── Inteligência Artifical e Aprendizado de Máquina/
+│   ├── Entrega2/
+│   │   ├── Álgebra Linear, Vetores e Geometria Analítica/
+│   │   ├── Sistemas Operacionais e Computação em Nuvem/
+│   │   ├── Projeto_Interdisciplinar: Inteligência Artificial/
+│   │   ├── Psicologia, Liderança e Soft Skills/
+│   │   └── Inteligência Artifical e Aprendizado de Máquina/
+│   ├── Documentação.docx
+├── imagens/
+├── src/
+│   ├── Entrega1/
+│   ├── Entrega2/
+└── readme.md<br>
+```
 
-A pasta raiz contem dois arquivos que devem ser alterados:
-
-<b>README.MD</b>: Arquivo que serve como guia e explicação geral sobre seu projeto. O mesmo que você está lendo agora.
+<b>📄 README.MD</b>: Arquivo que serve como guia e explicação geral sobre o projeto.
 
 Há também 4 pastas que seguem da seguinte forma:
 
-<b>documentos</b>: Toda a documentação estará nesta pasta.
+<b>🗂️ Documentos</b>: Toda a documentação geral do projeto. Além das entregas das disciplinas do semestre.
 
-<b>executáveis</b>: Binários e executáveis do projeto devem estar nesta pasta.
+<b>📷 imagens</b>: Imagens utilizadas para documentação e explicação do projeto.
 
-<b>imagens</b>: Imagens do sistema
-
-<b>src</b>: Pasta que contém o código fonte.
-
-## 🛠 Instalação
-
-<b>Android:</b>
-
-Faça o Download do JOGO.apk no seu celular.
-Execute o APK e siga as instruções de seu telefone.
-
-```sh
-Coloque código do prompt de comnando se for necessário
-```
-
-<b>Windows:</b>
-
-Não há instalação! Apenas executável!
-Encontre o JOGO.exe na pasta executáveis e execute-o como qualquer outro programa.
-
-```sh
-Coloque código do prompt de comnando se for necessário
-```
-
-<b>HTML:</b>
-
-Não há instalação!
-Encontre o index.html na pasta executáveis e execute-o como uma página WEB (através de algum browser).
-
-## 💻 Configuração para Desenvolvimento
-
-Descreva como instalar todas as dependências para desenvolvimento e como rodar um test-suite automatizado de algum tipo. Se necessário, faça isso para múltiplas plataformas.
-
-Para abrir este projeto você necessita das seguintes ferramentas:
-
--<a href="https://godotengine.org/download">GODOT</a>
-
-```sh
-make install
-npm test
-Coloque código do prompt de comnando se for necessário
-```
+<b>🧑‍💻 src</b>: Pasta que contém o código fonte (frontend e backend).
 
 ## 📋 Licença/License
-Utilize o link <https://chooser-beta.creativecommons.org/> para fazer uma licença CC BY 4.0.
-
-## 🎓 Referências
-
-Aqui estão as referências usadas no projeto.
-
-1. <https://github.com/iuricode/readme-template>
-2. <https://github.com/gabrieldejesus/readme-model>
-3. <https://chooser-beta.creativecommons.org/>
-4. <https://freesound.org/>
-5. <https://www.toptal.com/developers/gitignore>
-6. Músicas por: <a href="https://freesound.org/people/DaveJf/sounds/616544/"> DaveJf </a> e <a href="https://freesound.org/people/DRFX/sounds/338986/"> DRFX </a> ambas com Licença CC 0.
+PicMoney © 2025 by Gabriel Carvalho, Guilherme Siqueira, Rodrigo Luiz, Vitória Maciel is licensed under CC BY 4.0
