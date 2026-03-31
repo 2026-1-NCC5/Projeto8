@@ -14,9 +14,7 @@
 
 ## 💰 Descrição - ContaCerto
 
-<p align="center">
-  <img src="img/gif_picmoney.gif" alt="Demonstração do Dashboard" width="100%">
-</p>
+![Logo CC: ContaCerto](imagens/ContaCerto_Logo.png)
 <p align="center">
   Project by <a>Gabriel Carvalho, Guilherme Siqueira, Rodrigo Reis, Vitória Maciel</a>
 </p>
