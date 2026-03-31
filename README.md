@@ -78,4 +78,4 @@ Há também 4 pastas que seguem da seguinte forma:
 <b>🧑‍💻 src</b>: Pasta que contém o código fonte (frontend e backend).
 
 ## 📋 Licença/License
-PicMoney © 2025 by Gabriel Carvalho, Guilherme Siqueira, Rodrigo Luiz, Vitória Maciel is licensed under CC BY 4.0
+<a href="https://github.com/2026-1-NCC5/Projeto8">ContaCerto</a> © 2026 por <a href="https://github.com/2026-1-NCC5/Projeto8">Guilherme Siqueira, Gabriel Mota, Rodrigo Luiz, Vitória Maciel</a> está licenciado sob <a href="https://creativecommons.org/licenses/by/4.0/">CC EM 4,0</a>
