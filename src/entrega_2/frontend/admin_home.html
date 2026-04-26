@@ -162,16 +162,16 @@
                         ATIVO
                     </span>
                     <span
-                        class="btn-editar-semestre material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors"
+                        id="btn-opcoes-semestre-2024-1" class="btn-editar-semestre material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors" aria-label="Opções do semestre 2024.1"
                         data-icon="more_vert">more_vert</span>
                 </div>
                 <div class="mb-8">
-                    <h2 class="font-headline text-5xl font-extrabold text-primary tracking-tighter">2024.1</h2>
+                    <h2 id="titulo-semestre-ativo" class="font-headline text-5xl font-extrabold text-primary tracking-tighter">2024.1</h2>
                     <p class="text-xs font-medium text-on-surface-variant mt-2 uppercase tracking-widest">Semestre em
                         Curso</p>
                 </div>
                 <button
-                    class="w-full bg-primary-container text-on-primary-container font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all">
+                    id="btn-acessar-equipes" class="w-full bg-primary-container text-on-primary-container font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all" aria-label="Acessar equipes do semestre 2024.1">
                     Acessar Equipes
                     <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
                 </button>
@@ -185,11 +185,11 @@
                         OFFLINE
                     </span>
                     <span
-                        class="btn-editar-semestre material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors"
+                        id="btn-opcoes-semestre-2023-2" class="btn-editar-semestre material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors" aria-label="Opções do semestre 2023.2"
                         data-icon="more_vert">more_vert</span>
                 </div>
                 <div class="mb-8">
-                    <h2
+                    <h2 id="titulo-semestre-inativo"
                         class="font-headline text-5xl font-extrabold text-on-surface-variant opacity-60 tracking-tighter">
                         2023.2</h2>
                     <p class="text-xs font-medium text-on-surface-variant mt-2 uppercase tracking-widest">Período
@@ -255,14 +255,14 @@
                                 do Semestre</label>
                             <input
                                 class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
-                                placeholder="Ex: 2024.2 - Primavera" type="text">
+                                id="input-nome-semestre" placeholder="Ex: 2024.2 - Primavera" type="text" pattern="[A-Za-zÀ-ÿ0-9 .\-]+" title="Nome do semestre (letras, números, ponto e hífen)" autocomplete="off">
                         </div>
                         <div>
                             <label
                                 class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Ano</label>
                             <input
                                 class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
-                                placeholder="2024" type="number">
+                                id="input-ano-semestre" placeholder="2024" type="number" min="2000" max="2100" step="1" inputmode="numeric" title="Digite apenas o ano (ex: 2024)">
                         </div>
                         <div>
                             <label
@@ -278,7 +278,7 @@
                                 class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Data
                                 Início</label>
                             <input
-                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
+                                id="input-data-inicio" class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
                                 type="date">
                         </div>
                         <div>
@@ -286,7 +286,7 @@
                                 class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Data
                                 Término</label>
                             <input
-                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
+                                id="input-data-termino" class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
                                 type="date">
                         </div>
 
@@ -385,6 +385,28 @@
                     modalNovoSemestre.classList.add('hidden');
                 }
             });
+        
+            // ── Validação de campos do modal ──────────────────────
+            const inputNomeSemestre = document.getElementById('input-nome-semestre');
+            const inputAnoSemestre  = document.getElementById('input-ano-semestre');
+
+            // "Ano": bloqueia teclas não-numéricas (permite: 0-9, Backspace, Tab, Delete, setas)
+            if (inputAnoSemestre) {
+                inputAnoSemestre.addEventListener('keydown', function(e) {
+                    const permitidos = ['Backspace','Tab','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'];
+                    if (permitidos.includes(e.key) || (e.key >= '0' && e.key <= '9')) return;
+                    e.preventDefault();
+                });
+                inputAnoSemestre.addEventListener('paste', function(e) {
+                    var texto = (e.clipboardData || window.clipboardData).getData('text');
+                    if (!/^\d+$/.test(texto)) e.preventDefault();
+                });
+            }
+
+            // "Nome do Semestre": bloqueia dígitos isolados (evita que seja só número)
+            // Regra: aceita letras, espaços, ponto, hífen e dígitos dentro de texto
+            // Para simplificar: o campo text já tem o atributo pattern para validação no submit
+
         });
     </script>
 </body>

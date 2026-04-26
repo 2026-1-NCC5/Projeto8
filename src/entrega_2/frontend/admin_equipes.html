@@ -102,7 +102,7 @@
 <div class="flex items-center gap-8">
 <span class="text-xl font-bold tracking-tight text-green-800">Lideranças Empáticas</span>
 <div class="hidden md:flex gap-6 items-center">
-<a class="font-manrope text-sm font-medium text-slate-600 hover:text-green-600 transition-colors" href="admin-home.html">Home</a>
+<a class="btn-home font-manrope text-sm font-medium text-slate-600 hover:text-green-600 transition-colors cursor-pointer">Home</a>
 <a class="font-manrope text-sm font-medium text-green-700 border-b-2 border-green-600 pb-1" href="admin-equipes.html">Equipes</a>
 </div>
 </div>
@@ -126,7 +126,7 @@
 <p class="text-xs text-slate-500">Empathetic Authority</p>
 </div>
 <nav class="flex-1 space-y-2">
-<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all rounded-lg" href="#">
+<a class="btn-home flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all rounded-lg cursor-pointer">
 <span class="material-symbols-outlined">dashboard</span>
 <span class="font-manrope text-sm">Home</span>
 </a>
@@ -166,7 +166,7 @@
 </div>
 <!-- Search Component -->
 <div class="relative w-full md:w-80 group">
-<input class="w-full h-12 pl-4 pr-12 bg-surface-container-lowest border border-outline/15 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none text-on-surface-variant" placeholder="Buscar equipes..." type="text"/>
+<input class="w-full h-12 pl-4 pr-12 bg-surface-container-lowest border border-outline/15 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none text-on-surface-variant" id="input-buscar-equipes" placeholder="Buscar equipes..." type="text" aria-label="Buscar equipes"/>
 <div class="absolute right-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">
 <span class="material-symbols-outlined">search</span>
 </div>
@@ -183,13 +183,13 @@
 <span class="px-3 py-1 bg-primary-container/20 text-primary text-xs font-bold rounded-full uppercase tracking-wider">Ativa</span>
 <span class="material-symbols-outlined text-outline">more_vert</span>
 </div>
-<h3 class="text-2xl font-bold text-on-surface mb-1">Alpha</h3>
+<h3 id="titulo-card-equipe-alpha" class="text-2xl font-bold text-on-surface mb-1">Alpha</h3>
 <div class="flex items-center gap-2 text-on-surface-variant">
 <span class="material-symbols-outlined text-sm">groups</span>
 <span class="text-sm font-medium">6 membros registrados</span>
 </div>
 </div>
-<a class="w-full py-3 bg-primary-container text-on-primary-container font-bold rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all" href="admin-equipe-detalhe.html">
+<a id="btn-iniciar-contagem-alpha" class="btn-iniciar-contagem w-full py-3 bg-primary-container text-on-primary-container font-bold rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all" href="admin-equipe-detalhe.html">
                     Iniciar Contagem <span class="material-symbols-outlined">arrow_forward</span>
 </a>
 </div>
@@ -200,13 +200,13 @@
 <span class="px-3 py-1 bg-surface-container text-on-surface-variant text-xs font-bold rounded-full uppercase tracking-wider">Pendente</span>
 <span class="material-symbols-outlined text-outline">more_vert</span>
 </div>
-<h3 class="text-2xl font-bold text-on-surface mb-1">Beta</h3>
+<h3 id="titulo-card-equipe-beta" class="text-2xl font-bold text-on-surface mb-1">Beta</h3>
 <div class="flex items-center gap-2 text-on-surface-variant">
 <span class="material-symbols-outlined text-sm">groups</span>
 <span class="text-sm font-medium">5 membros registrados</span>
 </div>
 </div>
-<a class="w-full py-3 bg-surface-container text-on-surface-variant font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all" href="admin-equipe-detalhe.html">
+<a id="btn-iniciar-contagem-beta" class="btn-iniciar-contagem w-full py-3 bg-surface-container text-on-surface-variant font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all" href="admin-equipe-detalhe.html">
                     Iniciar Contagem <span class="material-symbols-outlined">arrow_forward</span>
 </a>
 </div>
@@ -217,13 +217,13 @@
 <span class="px-3 py-1 bg-surface-container text-on-surface-variant text-xs font-bold rounded-full uppercase tracking-wider">Pendente</span>
 <span class="material-symbols-outlined text-outline">more_vert</span>
 </div>
-<h3 class="text-2xl font-bold text-on-surface mb-1">Gamma</h3>
+<h3 id="titulo-card-equipe-gamma" class="text-2xl font-bold text-on-surface mb-1">Gamma</h3>
 <div class="flex items-center gap-2 text-on-surface-variant">
 <span class="material-symbols-outlined text-sm">groups</span>
 <span class="text-sm font-medium">4 membros registrados</span>
 </div>
 </div>
-<a class="w-full py-3 bg-surface-container text-on-surface-variant font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all" href="admin-equipe-detalhe.html">
+<a id="btn-iniciar-contagem-gamma" class="btn-iniciar-contagem w-full py-3 bg-surface-container text-on-surface-variant font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all" href="admin-equipe-detalhe.html">
                     Iniciar Contagem <span class="material-symbols-outlined">arrow_forward</span>
 </a>
 </div>
@@ -234,18 +234,18 @@
 <span class="px-3 py-1 bg-surface-container text-on-surface-variant text-xs font-bold rounded-full uppercase tracking-wider">Pendente</span>
 <span class="material-symbols-outlined text-outline">more_vert</span>
 </div>
-<h3 class="text-2xl font-bold text-on-surface mb-1">Helios</h3>
+<h3 id="titulo-card-equipe-helios" class="text-2xl font-bold text-on-surface mb-1">Helios</h3>
 <div class="flex items-center gap-2 text-on-surface-variant">
 <span class="material-symbols-outlined text-sm">groups</span>
 <span class="text-sm font-medium">5 membros registrados</span>
 </div>
 </div>
-<a class="w-full py-3 bg-surface-container text-on-surface-variant font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all" href="admin-equipe-detalhe.html">
+<a id="btn-iniciar-contagem-helios" class="btn-iniciar-contagem w-full py-3 bg-surface-container text-on-surface-variant font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all" href="admin-equipe-detalhe.html">
                     Iniciar Contagem <span class="material-symbols-outlined">arrow_forward</span>
 </a>
 </div>
 <!-- New Team Special Card -->
-<button class="group border-2 border-dashed border-outline/20 rounded-xl p-6 flex flex-col items-center justify-center h-64 hover:border-primary/40 hover:bg-green-50/20 transition-all">
+<button id="btn-nova-equipe" aria-label="Adicionar nova equipe" class="group border-2 border-dashed border-outline/20 rounded-xl p-6 flex flex-col items-center justify-center h-64 hover:border-primary/40 hover:bg-green-50/20 transition-all">
 <div class="w-16 h-16 bg-surface-container rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
 <span class="material-symbols-outlined text-primary text-3xl">add</span>
 </div>
@@ -262,7 +262,7 @@
 </main>
 <!-- Bottom Navigation Bar (Mobile Only) -->
 <nav class="lg:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around items-center px-4 py-3 pb-safe z-50 border-t border-slate-100">
-<a class="flex flex-col items-center justify-center text-slate-400" href="#">
+<a class="btn-home flex flex-col items-center justify-center text-slate-400 cursor-pointer">
 <span class="material-symbols-outlined">home</span>
 <span class="text-[10px] font-manrope font-semibold">Home</span>
 </a>

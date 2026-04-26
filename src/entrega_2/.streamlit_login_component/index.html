@@ -204,45 +204,34 @@
 
     <script>
         function sendMessageToStreamlitClient(type, data) {
-            var outData = Object.assign({
-                isStreamlitMessage: true,
-                type: type,
-            }, data);
+            var outData = Object.assign({ isStreamlitMessage: true, type: type }, data);
             window.parent.postMessage(outData, "*");
         }
-
-        // Informar ao Streamlit que o componente está pronto
         function init() {
             sendMessageToStreamlitClient("streamlit:componentReady", {apiVersion: 1});
         }
-
-        // Função para enviar o papel (admin ou aluno) para o Python
         function setComponentValue(value) {
             sendMessageToStreamlitClient("streamlit:setComponentValue", {value: value});
         }
-
         window.addEventListener("message", function(event) {
             if (event.data.type === "streamlit:render") {
-                // Ajustar altura automaticamente
                 sendMessageToStreamlitClient("streamlit:setFrameHeight", {height: 800});
             }
         });
-
         init();
-
         document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            const email = document.getElementById('email').value;
-            
+            var email = document.getElementById('email').value;
             if (email === 'admin@le.com') {
-                setComponentValue('admin');
+                setComponentValue('admin_home');
             } else if (email === 'aluno@le.com') {
-                setComponentValue('aluno');
+                setComponentValue('aluno_home');
             } else {
                 alert('Credenciais inválidas. Tente:\nAdmin: admin@le.com\nAluno: aluno@le.com');
             }
         });
     </script>
-    \n</body>
+    
+</body>
 
 </html>
