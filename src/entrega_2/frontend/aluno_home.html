@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#f7f9fc",
+                    "on-primary": "#ffffff",
+                    "surface-container-low": "#f2f4f7",
+                    "error-container": "#ffdad6",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#004b1e",
+                    "on-error-container": "#93000a",
+                    "surface-container": "#eceef1",
+                    "on-tertiary-fixed": "#410001",
+                    "surface-variant": "#e0e3e6",
+                    "on-secondary-container": "#24703e",
+                    "on-surface": "#191c1e",
+                    "surface-container-highest": "#e0e3e6",
+                    "surface": "#f7f9fc",
+                    "surface-tint": "#006e2f",
+                    "surface-container-high": "#e6e8eb",
+                    "secondary": "#1f6c3a",
+                    "secondary-container": "#a4f1b2",
+                    "on-secondary-fixed": "#00210b",
+                    "inverse-primary": "#4ae176",
+                    "tertiary-container": "#ff8b7c",
+                    "inverse-surface": "#2d3133",
+                    "secondary-fixed-dim": "#8bd79b",
+                    "on-surface-variant": "#3d4a3d",
+                    "on-tertiary-container": "#76231b",
+                    "surface-dim": "#d8dadd",
+                    "tertiary": "#9e4036",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#ffb4a9",
+                    "on-background": "#191c1e",
+                    "primary-container": "#22c55e",
+                    "on-tertiary-fixed-variant": "#7f2a21",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#4ae176",
+                    "secondary-fixed": "#a6f4b5",
+                    "on-secondary-fixed-variant": "#005226",
+                    "primary-fixed": "#6bff8f",
+                    "primary": "#006e2f",
+                    "outline-variant": "#bccbb9",
+                    "inverse-on-surface": "#eff1f4",
+                    "on-primary-fixed-variant": "#005321",
+                    "outline": "#6d7b6c",
+                    "tertiary-fixed": "#ffdad5",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#002109",
+                    "background": "#f7f9fc"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-headline { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md shadow-sm">
+<div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tight text-green-800">Lideranças Empáticas</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-green-700 border-b-2 border-green-600 pb-1 font-manrope text-sm font-medium transition-colors" href="#">Home</a>
+<a class="text-slate-600 hover:text-green-600 transition-colors font-manrope text-sm font-medium" href="aluno-equipe.html">Equipes</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-600 hover:text-green-600 transition-all active:opacity-80">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-600 hover:text-green-600 transition-all active:opacity-80">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden bg-surface-container-high ring-2 ring-primary-container/20">
+<img alt="User avatar" class="w-full h-full object-cover" data-alt="Close up portrait of a young professional woman smiling warmly with soft office lighting background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6f_WigLQvZiDvHFmGPcubJXsWfVl9RNXIFl8CU1Hd7MHTJ6XUABQG_KlqlPVgN6xkFqzBW20Lw4pZUJxFDuCsXfE9qSltys8s0FOwE2qZmioHC7CNIlEBpH71AuVBO0wNxNVkDJH2vOAr8ftVWj4ahm2fsVYH6wAYLaWMY_czZO9eQMtn0Se2oSsy8-GpRHcgKX_CxajYYZHf48gDe3714_wJglnVHpB-8oGR95NyYCkxVYdGgfO_iCBMmbjy998EwllUVn5_oKWX"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-24 pb-20 px-6 max-w-screen-2xl mx-auto">
+<!-- Welcome Hero Section -->
+<header class="mb-16">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="text-primary font-semibold tracking-wider text-xs uppercase mb-2 block">Portal do Aluno</span>
+<h1 class="text-5xl font-extrabold text-on-surface tracking-tight mb-4">Bem-vinda, Maria.</h1>
+<p class="text-on-surface-variant max-w-xl text-lg leading-relaxed">
+                        Sua jornada de liderança empática continua aqui. Gerencie seus semestres e colabore com sua equipe para desenvolver autoridade com humanidade.
+                    </p>
+</div>
+<div class="bg-surface-container-low px-6 py-4 rounded-xl flex items-center gap-4">
+<div class="w-12 h-12 bg-primary-container/20 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="verified_user" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-widest">Status da Conta</p>
+<p class="font-semibold text-primary">Estudante Verificado</p>
+</div>
+</div>
+</div>
+</header>
+<!-- Leadership Insight Block (Asymmetric Signature Component) -->
+<section class="mb-20 grid grid-cols-1 lg:grid-cols-12 gap-8">
+<div class="lg:col-span-8 bg-tertiary-container/10 p-12 rounded-[2rem] relative overflow-hidden">
+<div class="absolute -top-12 -left-12 w-48 h-48 bg-tertiary-container/20 rounded-full blur-3xl"></div>
+<div class="relative z-10 pl-12 border-l-4 border-tertiary">
+<p class="font-headline text-3xl text-on-tertiary-container italic leading-tight">
+                        "Liderança não é sobre estar no comando. É sobre cuidar daqueles que estão sob o seu comando."
+                    </p>
+<p class="mt-6 text-tertiary font-bold">— Simon Sinek</p>
+</div>
+</div>
+<div class="lg:col-span-4 rounded-[2rem] overflow-hidden shadow-sm">
+<img alt="Leadership Workshop" class="w-full h-full object-cover" data-alt="Modern bright meeting room where diverse group of professionals are engaged in a collaborative discussion with warm natural sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBu8kP0ZBg_qkBYK9-Ix1ytzKiKjbjXr8V_IW8EJJ7ZdaE_4W-30THfLSZ--XeoXRJiZJBYc8x-DRT-Usl6ZbmZMrbajN9tnZEfJDbN1hwBOk0AN2vmA3feW-eHIvvLKQJ15eT2MUWgZtmixGxgFNRSR8qLPM1TkXbakV_FaOTDBlBjI7ob35yaMEEi6ztqG8ZXbvR0f7oRCklY3PMuF3x3BbKJW30JmuuZ-7z01Qg9-KT6gxsHbZe82ZZS_lRwRuu5Q2zYziEC60zE"/>
+</div>
+</section>
+<!-- Semesters Grid -->
+<section>
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-2xl font-bold tracking-tight text-on-surface">Seus Semestres</h2>
+<div class="h-px bg-surface-container-high flex-grow mx-8 hidden md:block"></div>
+<span class="text-sm font-medium text-on-surface-variant">Exibindo 2 períodos acadêmicos</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Active Semester Card -->
+<div class="bg-surface-container-lowest p-8 rounded-[1.5rem] shadow-[0_20px_40px_rgba(25,28,30,0.04)] relative ring-2 ring-primary">
+<div class="absolute top-6 right-8 px-3 py-1 bg-primary-container text-on-primary-container text-[10px] font-bold rounded-full uppercase tracking-tighter">
+                        Ativo
+                    </div>
+<div class="mb-6">
+<p class="text-primary font-bold text-lg mb-1">2024.1</p>
+<h3 class="text-2xl font-extrabold text-on-surface">Liderança em Crise</h3>
+</div>
+<div class="space-y-4 mb-8">
+<div class="flex items-center gap-3 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-sm" data-icon="groups">groups</span>
+<span>Equipe: Alpha Guardian</span>
+</div>
+<div class="flex items-center gap-3 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-sm" data-icon="calendar_month">calendar_month</span>
+<span>Término: Junho 2024</span>
+</div>
+</div>
+<a class="flex items-center justify-center w-full bg-gradient-to-br from-primary to-secondary text-white py-4 px-6 rounded-xl font-bold tracking-tight hover:opacity-90 transition-all group" href="aluno-equipe.html">
+                        Launch Session
+                        <span class="material-symbols-outlined ml-2 transition-transform group-hover:translate-x-1" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Past Semester Card -->
+<div class="bg-surface-container-low p-8 rounded-[1.5rem] grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all">
+<div class="mb-6">
+<p class="text-on-surface-variant font-bold text-lg mb-1">2023.2</p>
+<h3 class="text-2xl font-extrabold text-on-surface">Fundamentos da Empatia</h3>
+</div>
+<div class="space-y-4 mb-8 text-on-surface-variant">
+<div class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-sm" data-icon="groups">groups</span>
+<span>Equipe: Delta Pioneers</span>
+</div>
+<div class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+<span>Concluído</span>
+</div>
+</div>
+<button class="flex items-center justify-center w-full border border-outline/15 text-primary py-4 px-6 rounded-xl font-bold tracking-tight hover:bg-surface-container-high transition-all">
+                        Ver Relatórios
+                    </button>
+</div>
+<!-- Empty State / Upcoming Concept -->
+<div class="bg-surface-container-low/40 border-2 border-dashed border-outline/10 p-8 rounded-[1.5rem] flex flex-col items-center justify-center text-center">
+<div class="w-16 h-16 bg-surface-container-high rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-outline" data-icon="school">school</span>
+</div>
+<p class="font-bold text-on-surface-variant">Próximo Semestre</p>
+<p class="text-xs text-on-surface-variant/60 mt-1">Aguardando período de inscrição</p>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around items-center px-4 py-3 pb-safe z-50 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] rounded-t-2xl">
+<a class="flex flex-col items-center justify-center bg-green-100 text-green-800 rounded-xl px-4 py-1 transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-[10px] font-manrope font-semibold">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 active:bg-slate-50 transition-transform active:scale-90" href="aluno-equipe.html">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="text-[10px] font-manrope font-semibold">Equipes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 active:bg-slate-50 transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-[10px] font-manrope font-semibold">Perfil</span>
+</a>
+</nav>
+</body></html>

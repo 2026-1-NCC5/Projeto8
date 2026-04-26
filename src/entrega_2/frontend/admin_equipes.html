@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lideranças Empáticas - Diretório de Equipes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f7f9fc",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f2f4f7",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#004b1e",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#eceef1",
+                        "on-tertiary-fixed": "#410001",
+                        "surface-variant": "#e0e3e6",
+                        "on-secondary-container": "#24703e",
+                        "on-surface": "#191c1e",
+                        "surface-container-highest": "#e0e3e6",
+                        "surface": "#f7f9fc",
+                        "surface-tint": "#006e2f",
+                        "surface-container-high": "#e6e8eb",
+                        "secondary": "#1f6c3a",
+                        "secondary-container": "#a4f1b2",
+                        "on-secondary-fixed": "#00210b",
+                        "inverse-primary": "#4ae176",
+                        "tertiary-container": "#ff8b7c",
+                        "inverse-surface": "#2d3133",
+                        "secondary-fixed-dim": "#8bd79b",
+                        "on-surface-variant": "#3d4a3d",
+                        "on-tertiary-container": "#76231b",
+                        "surface-dim": "#d8dadd",
+                        "tertiary": "#9e4036",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ffb4a9",
+                        "on-background": "#191c1e",
+                        "primary-container": "#22c55e",
+                        "on-tertiary-fixed-variant": "#7f2a21",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#4ae176",
+                        "secondary-fixed": "#a6f4b5",
+                        "on-secondary-fixed-variant": "#005226",
+                        "primary-fixed": "#6bff8f",
+                        "primary": "#006e2f",
+                        "outline-variant": "#bccbb9",
+                        "inverse-on-surface": "#eff1f4",
+                        "on-primary-fixed-variant": "#005321",
+                        "outline": "#6d7b6c",
+                        "tertiary-fixed": "#ffdad5",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#002109",
+                        "background": "#f7f9fc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc;
+            color: #191c1e;
+        }
+        h1, h2, h3, .font-headline {
+            font-family: 'Manrope', sans-serif;
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-surface">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 glass-nav shadow-sm">
+<div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tight text-green-800">Lideranças Empáticas</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="font-manrope text-sm font-medium text-slate-600 hover:text-green-600 transition-colors" href="admin-home.html">Home</a>
+<a class="font-manrope text-sm font-medium text-green-700 border-b-2 border-green-600 pb-1" href="admin-equipes.html">Equipes</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-slate-600">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-slate-600">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="User avatar with dropdown" data-alt="Close up professional portrait of a smiling leader in a bright office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN3KibVXF1PPG_a9mhFcYTIllz5ZwuEryTetAEw5P1PQ1kkfdw4PLsYXasDHmV0qwZWgvtP6GnplgRqgXi0BRpFIa_-JYXH9VuP299URVlHOVxZv9RrXQjQRGS9i_a_8O23ITiTSDYxkKNk-ClO6GrwUhZI7xBrjPlb9BasKnzeBS73-EU8S1G4SPJiUo5HR2ef_G6-YoJ192kF7ujG5tJfwAFHIh7yQUVWXO-Uhu2wp9u6oVhKdeC1m_RawSBkasf-MKGpSjY0ruX"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Side Navigation Bar (Desktop) -->
+<aside class="hidden lg:flex flex-col fixed left-0 top-0 h-full w-64 bg-slate-50 p-4 pt-20 z-40">
+<div class="mb-8 px-2">
+<h2 class="text-lg font-extrabold text-green-900 font-headline">Portal Lideranças</h2>
+<p class="text-xs text-slate-500">Empathetic Authority</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-manrope text-sm">Home</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-green-700 font-bold bg-green-50/50 rounded-lg" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-manrope text-sm">Equipes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-manrope text-sm">Semestres</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-manrope text-sm">Relatórios</span>
+</a>
+</nav>
+<button class="mt-4 mb-8 w-full py-2.5 bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-sm hover:opacity-90 transition-all text-sm">
+            Novo Semestre
+        </button>
+<div class="pt-4 border-t border-slate-200/50 space-y-2">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-100 rounded-lg text-sm" href="#">
+<span class="material-symbols-outlined">help</span> Ajuda
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-100 rounded-lg text-sm" href="#">
+<span class="material-symbols-outlined">logout</span> Sair
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="lg:ml-64 pt-24 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
+<!-- Header Section -->
+<header class="mb-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="max-w-2xl">
+<h1 class="text-4xl md:text-5xl font-extrabold text-on-surface tracking-tight mb-3">Diretório de Equipes</h1>
+<p class="text-on-surface-variant text-lg leading-relaxed">Gerencie o engajamento e a dinâmica das suas frentes de trabalho. Acompanhe o progresso e estimule a cultura de empatia.</p>
+</div>
+<!-- Search Component -->
+<div class="relative w-full md:w-80 group">
+<input class="w-full h-12 pl-4 pr-12 bg-surface-container-lowest border border-outline/15 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none text-on-surface-variant" placeholder="Buscar equipes..." type="text"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Alpha Team Card (Primary Action) -->
+<div class="group bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(25,28,30,0.06)] transition-all flex flex-col justify-between h-64 border border-outline/5 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/10 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform"></div>
+<div>
+<div class="flex justify-between items-start mb-4">
+<span class="px-3 py-1 bg-primary-container/20 text-primary text-xs font-bold rounded-full uppercase tracking-wider">Ativa</span>
+<span class="material-symbols-outlined text-outline">more_vert</span>
+</div>
+<h3 class="text-2xl font-bold text-on-surface mb-1">Alpha</h3>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">groups</span>
+<span class="text-sm font-medium">6 membros registrados</span>
+</div>
+</div>
+<a class="w-full py-3 bg-primary-container text-on-primary-container font-bold rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all" href="admin-equipe-detalhe.html">
+                    Iniciar Contagem <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+<!-- Beta Team Card -->
+<div class="group bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(25,28,30,0.06)] transition-all flex flex-col justify-between h-64 border border-outline/5">
+<div>
+<div class="flex justify-between items-start mb-4">
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant text-xs font-bold rounded-full uppercase tracking-wider">Pendente</span>
+<span class="material-symbols-outlined text-outline">more_vert</span>
+</div>
+<h3 class="text-2xl font-bold text-on-surface mb-1">Beta</h3>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">groups</span>
+<span class="text-sm font-medium">5 membros registrados</span>
+</div>
+</div>
+<a class="w-full py-3 bg-surface-container text-on-surface-variant font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all" href="admin-equipe-detalhe.html">
+                    Iniciar Contagem <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+<!-- Gamma Team Card -->
+<div class="group bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(25,28,30,0.06)] transition-all flex flex-col justify-between h-64 border border-outline/5">
+<div>
+<div class="flex justify-between items-start mb-4">
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant text-xs font-bold rounded-full uppercase tracking-wider">Pendente</span>
+<span class="material-symbols-outlined text-outline">more_vert</span>
+</div>
+<h3 class="text-2xl font-bold text-on-surface mb-1">Gamma</h3>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">groups</span>
+<span class="text-sm font-medium">4 membros registrados</span>
+</div>
+</div>
+<a class="w-full py-3 bg-surface-container text-on-surface-variant font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all" href="admin-equipe-detalhe.html">
+                    Iniciar Contagem <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+<!-- Helios Team Card -->
+<div class="group bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(25,28,30,0.06)] transition-all flex flex-col justify-between h-64 border border-outline/5">
+<div>
+<div class="flex justify-between items-start mb-4">
+<span class="px-3 py-1 bg-surface-container text-on-surface-variant text-xs font-bold rounded-full uppercase tracking-wider">Pendente</span>
+<span class="material-symbols-outlined text-outline">more_vert</span>
+</div>
+<h3 class="text-2xl font-bold text-on-surface mb-1">Helios</h3>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">groups</span>
+<span class="text-sm font-medium">5 membros registrados</span>
+</div>
+</div>
+<a class="w-full py-3 bg-surface-container text-on-surface-variant font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all" href="admin-equipe-detalhe.html">
+                    Iniciar Contagem <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+<!-- New Team Special Card -->
+<button class="group border-2 border-dashed border-outline/20 rounded-xl p-6 flex flex-col items-center justify-center h-64 hover:border-primary/40 hover:bg-green-50/20 transition-all">
+<div class="w-16 h-16 bg-surface-container rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl">add</span>
+</div>
+<span class="text-lg font-bold text-on-surface-variant">+ Nova Equipe</span>
+<p class="text-sm text-outline mt-2 text-center">Adicione um novo grupo para acompanhamento estratégico</p>
+</button>
+<!-- Human-Centric Insight (Asymmetric Element) -->
+<div class="xl:col-span-1 bg-tertiary-fixed/10 rounded-xl p-6 flex flex-col justify-center border-l-4 border-tertiary">
+<span class="material-symbols-outlined text-tertiary mb-3" style="font-variation-settings: 'FILL' 1;">format_quote</span>
+<p class="font-headline text-lg italic text-on-tertiary-container leading-snug">"A verdadeira autoridade nasce do espaço que você cria para que outros possam crescer."</p>
+<p class="mt-4 text-xs font-bold uppercase tracking-widest text-tertiary">Leadership Insights</p>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around items-center px-4 py-3 pb-safe z-50 border-t border-slate-100">
+<a class="flex flex-col items-center justify-center text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-manrope font-semibold">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-green-100 text-green-800 rounded-xl px-4 py-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="text-[10px] font-manrope font-semibold">Equipes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-manrope font-semibold">Perfil</span>
+</a>
+</nav>
+</body></html>

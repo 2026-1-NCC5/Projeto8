@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Portal Lideranças - Admin Home</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f7f9fc",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f2f4f7",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#004b1e",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#eceef1",
+                        "on-tertiary-fixed": "#410001",
+                        "surface-variant": "#e0e3e6",
+                        "on-secondary-container": "#24703e",
+                        "on-surface": "#191c1e",
+                        "surface-container-highest": "#e0e3e6",
+                        "surface": "#f7f9fc",
+                        "surface-tint": "#006e2f",
+                        "surface-container-high": "#e6e8eb",
+                        "secondary": "#1f6c3a",
+                        "secondary-container": "#a4f1b2",
+                        "on-secondary-fixed": "#00210b",
+                        "inverse-primary": "#4ae176",
+                        "tertiary-container": "#ff8b7c",
+                        "inverse-surface": "#2d3133",
+                        "secondary-fixed-dim": "#8bd79b",
+                        "on-surface-variant": "#3d4a3d",
+                        "on-tertiary-container": "#76231b",
+                        "surface-dim": "#d8dadd",
+                        "tertiary": "#9e4036",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ffb4a9",
+                        "on-background": "#191c1e",
+                        "primary-container": "#22c55e",
+                        "on-tertiary-fixed-variant": "#7f2a21",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#4ae176",
+                        "secondary-fixed": "#a6f4b5",
+                        "on-secondary-fixed-variant": "#005226",
+                        "primary-fixed": "#6bff8f",
+                        "primary": "#006e2f",
+                        "outline-variant": "#bccbb9",
+                        "inverse-on-surface": "#eff1f4",
+                        "on-primary-fixed-variant": "#005321",
+                        "outline": "#6d7b6c",
+                        "tertiary-fixed": "#ffdad5",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#002109",
+                        "background": "#f7f9fc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+        }
+
+        .cloud-shadow {
+            box-shadow: 0 20px 40px rgba(25, 28, 30, 0.06);
+        }
+
+        .ghost-border {
+            border: 1px solid rgba(109, 123, 108, 0.15);
+        }
+
+        /* Prevenir rolagem dupla (body fixo, apenas <main> rola) e garantir fundo cobrindo toda a tela */
+        html,
+        body {
+            overflow: hidden !important;
+            height: 100vh;
+            min-height: 100vh;
+            background-color: #f7f9fc;
+            /* Fundo "surface" */
+        }
+
+        main {
+            overflow-y: auto !important;
+            height: 100vh;
+        }
+    </style>
+
+</head>
+
+<body class="bg-surface font-body text-on-surface min-h-[1024px]" data-stitch-vh="min-h-[1024px]===min-h-screen"
+    data-mode="connect">
+    <!-- Top Navigation Bar -->
+    <nav class="fixed top-0 w-full z-50 glass-nav shadow-sm">
+        <div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
+            <div class="flex items-center gap-8">
+                <span class="text-xl font-bold tracking-tight text-green-800 font-headline">Lideranças Empáticas</span>
+                <div class="hidden md:flex gap-6 items-center">
+                    <a class="text-green-700 border-b-2 border-green-600 pb-1 font-medium text-sm transition-colors"
+                        href="#">Home</a>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 ml-2 pl-4 border-l border-slate-200/50">
+                    <div
+                        class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs">
+                        AR
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Content Canvas -->
+    <main class="pt-32 pb-24 px-6 max-w-screen-xl mx-auto">
+        <!-- Header Section -->
+        <header class="text-center mb-20">
+            <h1 class="font-headline text-[28px] font-semibold text-on-surface mb-2">Seja bem vindo, Admin</h1>
+            <p class="text-sm text-on-surface-variant max-w-md mx-auto">Gerencie o progresso das turmas, visualize
+                métricas de empatia e configure os novos ciclos de liderança da organização.</p>
+        </header>
+        <!-- Semester Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Active Semester Card -->
+            <div
+                class="bg-surface-container-lowest rounded-xl p-8 cloud-shadow relative flex flex-col items-start transition-transform hover:-translate-y-1">
+                <div class="flex justify-between w-full items-start mb-6">
+                    <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-container text-on-primary-container">
+                        <span class="mr-1.5 h-1.5 w-1.5 rounded-full bg-on-primary-container"></span>
+                        ATIVO
+                    </span>
+                    <span
+                        class="btn-editar-semestre material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors"
+                        data-icon="more_vert">more_vert</span>
+                </div>
+                <div class="mb-8">
+                    <h2 class="font-headline text-5xl font-extrabold text-primary tracking-tighter">2024.1</h2>
+                    <p class="text-xs font-medium text-on-surface-variant mt-2 uppercase tracking-widest">Semestre em
+                        Curso</p>
+                </div>
+                <button
+                    class="w-full bg-primary-container text-on-primary-container font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all">
+                    Acessar Equipes
+                    <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+                </button>
+            </div>
+            <!-- Offline Semester Card -->
+            <div
+                class="bg-surface-container-low rounded-xl p-8 flex flex-col items-start transition-transform hover:-translate-y-1">
+                <div class="flex justify-between w-full items-start mb-6">
+                    <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-variant text-on-surface-variant">
+                        OFFLINE
+                    </span>
+                    <span
+                        class="btn-editar-semestre material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors"
+                        data-icon="more_vert">more_vert</span>
+                </div>
+                <div class="mb-8">
+                    <h2
+                        class="font-headline text-5xl font-extrabold text-on-surface-variant opacity-60 tracking-tighter">
+                        2023.2</h2>
+                    <p class="text-xs font-medium text-on-surface-variant mt-2 uppercase tracking-widest">Período
+                        Encerrado</p>
+                </div>
+                <button
+                    class="w-full ghost-border text-on-surface font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all">
+                    Verificar Edição
+                    <span class="material-symbols-outlined text-sm" data-icon="refresh">refresh</span>
+                </button>
+            </div>
+            <!-- Add New Semester Trigger -->
+            <div id="btn-novo-semestre"
+                class="bg-transparent rounded-xl p-8 border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary/40 hover:bg-primary-fixed-dim/5 transition-all group">
+                <div
+                    class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-primary text-3xl" data-icon="add">add</span>
+                </div>
+                <h3 class="font-headline font-bold text-on-surface tracking-tight">+ Novo Semestre</h3>
+                <p class="text-[10px] font-bold text-on-surface-variant mt-1 tracking-widest uppercase">ADICIONAR
+                    PERÍODO</p>
+            </div>
+        </div>
+        <!-- Signature Leadership Quote -->
+
+    </main>
+    <!-- Bottom Nav (Mobile) -->
+    <div
+        class="lg:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around items-center px-4 py-3 pb-safe z-50 rounded-t-2xl shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+        <div class="flex flex-col items-center justify-center bg-green-100 text-green-800 rounded-xl px-4 py-1">
+            <span class="material-symbols-outlined" data-icon="home">home</span>
+            <span class="text-[10px] font-semibold">Home</span>
+        </div>
+        <div class="flex flex-col items-center justify-center text-slate-400">
+            <span class="material-symbols-outlined" data-icon="group">group</span>
+            <span class="text-[10px] font-semibold">Equipes</span>
+        </div>
+        <div class="flex flex-col items-center justify-center text-slate-400">
+            <span class="material-symbols-outlined" data-icon="person">person</span>
+            <span class="text-[10px] font-semibold">Perfil</span>
+        </div>
+    </div>
+    <!-- Modal: Novo Semestre (Simplified Overlay) -->
+    <!-- Note: Modal is hidden by default using 'hidden' class. Remove for visualization. -->
+    <div id="modal-novo-semestre" class="fixed inset-0 z-[100] bg-on-surface/20 backdrop-blur-sm hidden">
+        <div
+            class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[110] bg-surface-bright w-[calc(100%-2rem)] max-w-lg rounded-xl shadow-2xl overflow-hidden">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <div>
+                        <h2 class="font-headline text-2xl font-bold text-on-surface">Configurar Novo Semestre</h2>
+                        <p class="text-sm text-on-surface-variant">Defina os parâmetros do próximo ciclo.</p>
+                    </div>
+                    <button id="btn-close-modal" type="button" class="text-on-surface-variant hover:text-on-surface">
+                        <span class="material-symbols-outlined" data-icon="close">close</span>
+                    </button>
+                </div>
+                <form class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="col-span-2">
+                            <label
+                                class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Nome
+                                do Semestre</label>
+                            <input
+                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
+                                placeholder="Ex: 2024.2 - Primavera" type="text">
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Ano</label>
+                            <input
+                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
+                                placeholder="2024" type="number">
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Período</label>
+                            <select
+                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all">
+                                <option>1º Semestre</option>
+                                <option>2º Semestre</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Data
+                                Início</label>
+                            <input
+                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
+                                type="date">
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Data
+                                Término</label>
+                            <input
+                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
+                                type="date">
+                        </div>
+
+                        <!-- Status Selection -->
+                        <div class="col-span-2 pt-2">
+                            <label
+                                class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Status
+                                do Semestre</label>
+                            <div class="grid grid-cols-2 gap-4">
+                                <!-- Opção Ativo -->
+                                <div>
+                                    <input type="radio" name="status_semestre" id="status-ativo" value="ativo"
+                                        class="peer hidden" checked>
+                                    <label for="status-ativo"
+                                        class="flex flex-col items-start gap-2 p-4 border-2 border-outline-variant rounded-xl cursor-pointer transition-all peer-checked:border-primary peer-checked:bg-primary-fixed-dim/10 hover:bg-surface-container-highest">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-container text-on-primary-container">
+                                            <span
+                                                class="mr-1.5 h-1.5 w-1.5 rounded-full bg-on-primary-container"></span>
+                                            ATIVO
+                                        </span>
+                                        <span class="text-xs font-medium text-on-surface-variant">Semestre atual e
+                                            visível</span>
+                                    </label>
+                                </div>
+                                <!-- Opção Inativo -->
+                                <div>
+                                    <input type="radio" name="status_semestre" id="status-inativo" value="inativo"
+                                        class="peer hidden">
+                                    <label for="status-inativo"
+                                        class="flex flex-col items-start gap-2 p-4 border-2 border-outline-variant rounded-xl cursor-pointer transition-all peer-checked:border-slate-400 peer-checked:bg-surface-variant/30 hover:bg-surface-container-highest">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-variant text-on-surface-variant">
+                                            OFFLINE
+                                        </span>
+                                        <span class="text-xs font-medium text-on-surface-variant">Semestre
+                                            encerrado/inativo</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-4 flex gap-3">
+                        <button id="btn-cancel-modal"
+                            class="flex-1 ghost-border text-on-surface font-semibold py-3 rounded-lg hover:bg-surface-container transition-all"
+                            type="button">Cancelar</button>
+                        <button
+                            class="flex-1 bg-primary text-on-primary font-bold py-3 rounded-lg hover:opacity-90 transition-all shadow-lg shadow-primary/20"
+                            type="submit">Salvar Período</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const btnNovoSemestre = document.getElementById('btn-novo-semestre');
+            const modalNovoSemestre = document.getElementById('modal-novo-semestre');
+            const btnCloseModal = document.getElementById('btn-close-modal');
+            const btnCancelModal = document.getElementById('btn-cancel-modal');
+
+            const btnsEditarSemestre = document.querySelectorAll('.btn-editar-semestre');
+            const modalTitle = document.querySelector('#modal-novo-semestre h2');
+
+            // Abrir Modal (Cadastro)
+            if (btnNovoSemestre) {
+                btnNovoSemestre.addEventListener('click', () => {
+                    if (modalTitle) modalTitle.innerText = "Configurar Novo Semestre";
+                    modalNovoSemestre.classList.remove('hidden');
+                });
+            }
+
+            // Abrir Modal (Edição)
+            btnsEditarSemestre.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (modalTitle) modalTitle.innerText = "Editar Semestre";
+                    modalNovoSemestre.classList.remove('hidden');
+                });
+            });
+
+            // Fechar Modal (Botão X)
+            btnCloseModal.addEventListener('click', () => {
+                modalNovoSemestre.classList.add('hidden');
+            });
+
+            // Fechar Modal (Botão Cancelar)
+            btnCancelModal.addEventListener('click', () => {
+                modalNovoSemestre.classList.add('hidden');
+            });
+
+            // Fechar ao clicar fora do Modal
+            modalNovoSemestre.addEventListener('click', (e) => {
+                if (e.target === modalNovoSemestre) {
+                    modalNovoSemestre.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
