@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@500;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f7f9fc",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f2f4f7",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#004b1e",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#eceef1",
+                        "on-tertiary-fixed": "#410001",
+                        "surface-variant": "#e0e3e6",
+                        "on-secondary-container": "#24703e",
+                        "on-surface": "#191c1e",
+                        "surface-container-highest": "#e0e3e6",
+                        "surface": "#f7f9fc",
+                        "surface-tint": "#006e2f",
+                        "surface-container-high": "#e6e8eb",
+                        "secondary": "#1f6c3a",
+                        "secondary-container": "#a4f1b2",
+                        "on-secondary-fixed": "#00210b",
+                        "inverse-primary": "#4ae176",
+                        "tertiary-container": "#ff8b7c",
+                        "inverse-surface": "#2d3133",
+                        "secondary-fixed-dim": "#8bd79b",
+                        "on-surface-variant": "#3d4a3d",
+                        "on-tertiary-container": "#76231b",
+                        "surface-dim": "#d8dadd",
+                        "tertiary": "#9e4036",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ffb4a9",
+                        "on-background": "#191c1e",
+                        "primary-container": "#22c55e",
+                        "on-tertiary-fixed-variant": "#7f2a21",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#4ae176",
+                        "secondary-fixed": "#a6f4b5",
+                        "on-secondary-fixed-variant": "#005226",
+                        "primary-fixed": "#6bff8f",
+                        "primary": "#006e2f",
+                        "outline-variant": "#bccbb9",
+                        "inverse-on-surface": "#eff1f4",
+                        "on-primary-fixed-variant": "#005321",
+                        "outline": "#6d7b6c",
+                        "tertiary-fixed": "#ffdad5",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#002109",
+                        "background": "#f7f9fc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .ghost-chart-bar {
+            background: linear-gradient(180deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0) 100%);
+        }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+    <main class="flex-grow flex">
+        <!-- Main Panel: Authentication -->
+        <section class="w-full flex flex-col items-center justify-center p-6 sm:p-12 bg-surface">
+            <div class="w-full max-w-md space-y-8">
+                <!-- Branding -->
+                <div class="flex items-center gap-3 mb-12">
+                    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white">
+                        <span class="material-symbols-outlined" style='font-variation-settings: "FILL" 1;'>groups</span>
+                    </div>
+                    <span class="text-xl font-extrabold tracking-tight text-primary font-headline" style="">Conta Certo
+                        Portal</span>
+                </div>
+                <!-- Login Card -->
+                <div
+                    class="bg-surface-container-lowest p-8 rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] space-y-6">
+                    <header class="space-y-1">
+                        <h1 class="text-[24px] font-medium font-headline text-on-surface" style="">Bem-vindo</h1>
+                        <p class="text-[14px] text-on-surface-variant" style="">Insira suas credenciais para acessar.
+                        </p>
+                    </header>
+                    <form class="space-y-5" id="login-form">
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant px-1"
+                                for="email" style="">E-mail</label>
+                            <div class="relative group">
+                                <span
+                                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors"
+                                    style="">mail</span>
+                                <input
+                                    class="w-full pl-11 pr-4 py-3 bg-surface-container-lowest border border-outline/15 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm"
+                                    id="email" placeholder="nome@dominio.com" type="email" />
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between items-center px-1">
+                                <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant"
+                                    for="password" style="">Senha</label>
+                                <a class="text-xs font-medium text-primary hover:underline" href="#" style="">Esqueceu a
+                                    senha?</a>
+                            </div>
+                            <div class="relative group">
+                                <span
+                                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors"
+                                    style="">lock</span>
+                                <input
+                                    class="w-full pl-11 pr-11 py-3 bg-surface-container-lowest border border-outline/15 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm"
+                                    id="password" placeholder="••••••••" type="password" />
+                                <button type="button" id="toggle-password" tabindex="-1" class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors focus:outline-none flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-xl" id="toggle-icon">visibility</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button
+                            class="w-full bg-primary-container hover:bg-primary transition-colors text-on-primary-container font-bold py-3.5 rounded-lg flex items-center justify-center gap-2 group"
+                            style="" type="submit">
+                            Entrar
+                            <span
+                                class="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform"
+                                style="">arrow_forward</span>
+                        </button>
+                    </form>
+                </div>
+                <!-- Info Banner -->
+                <div class="flex items-start gap-4 p-4 bg-surface-container-low rounded-lg border border-outline/5">
+                    <span class="material-symbols-outlined text-secondary"
+                        style='font-variation-settings: "FILL" 1;'>shield</span>
+                    <p class="text-xs text-on-surface-variant leading-relaxed" style="">
+                        Sua segurança é nossa prioridade. Utilizamos criptografia de ponta a ponta e autenticação
+                        multifatorial para proteger seus dados de liderança.
+                    </p>
+                </div>
+                <!-- Footer Text -->
+                <p class="text-center text-sm text-on-surface-variant" style="">
+                    Novo na Plataforma? <a class="text-primary font-semibold hover:underline" href="#" style="">Entre em
+                        contato com seu administrador</a>
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const togglePassword = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('toggle-icon');
+
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            toggleIcon.textContent = type === 'password' ? 'visibility' : 'visibility_off';
+        });
+    </script>
+
+    
+
+    <script>
+        function sendMessageToStreamlitClient(type, data) {
+            var outData = Object.assign({
+                isStreamlitMessage: true,
+                type: type,
+            }, data);
+            window.parent.postMessage(outData, "*");
+        }
+
+        // Informar ao Streamlit que o componente está pronto
+        function init() {
+            sendMessageToStreamlitClient("streamlit:componentReady", {apiVersion: 1});
+        }
+
+        // Função para enviar o papel (admin ou aluno) para o Python
+        function setComponentValue(value) {
+            sendMessageToStreamlitClient("streamlit:setComponentValue", {value: value});
+        }
+
+        window.addEventListener("message", function(event) {
+            if (event.data.type === "streamlit:render") {
+                // Ajustar altura automaticamente
+                sendMessageToStreamlitClient("streamlit:setFrameHeight", {height: 800});
+            }
+        });
+
+        init();
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            
+            if (email === 'admin@le.com') {
+                setComponentValue('admin');
+            } else if (email === 'aluno@le.com') {
+                setComponentValue('aluno');
+            } else {
+                alert('Credenciais inválidas. Tente:\nAdmin: admin@le.com\nAluno: aluno@le.com');
+            }
+        });
+    </script>
+    \n</body>
+
+</html>
