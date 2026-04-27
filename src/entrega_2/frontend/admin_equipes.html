@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 
-<html lang="pt-BR"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Lideranças Empáticas - Diretório de Equipes</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Lideranças Empáticas - Diretório de Equipes</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -77,202 +85,514 @@
             },
         }
     </script>
-<style>
+    <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+
+        html, body {
+            min-height: 100vh;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f7f9fc;
             color: #191c1e;
         }
-        h1, h2, h3, .font-headline {
+
+        h1,
+        h2,
+        h3,
+        .font-headline {
             font-family: 'Manrope', sans-serif;
         }
+
         .glass-nav {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(12px);
         }
+
+        .ghost-border {
+            border: 1px solid rgba(109, 123, 108, 0.15);
+        }
+
+        .search-results {
+            max-height: 160px;
+            overflow-y: auto;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #a4f1b2;
+            color: #004b1e;
+            transition: all 0.15s;
+        }
+
+        .chip button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #004b1e;
+            font-size: 14px;
+            line-height: 1;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .chip button:hover {
+            color: #ba1a1a;
+        }
     </style>
 </head>
+
 <body class="bg-surface">
-<!-- Top Navigation Bar -->
-<nav class="fixed top-0 w-full z-50 glass-nav shadow-sm">
-<div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
-<div class="flex items-center gap-8">
-<span class="text-xl font-bold tracking-tight text-green-800">Lideranças Empáticas</span>
-<div class="hidden md:flex gap-6 items-center">
-<a class="btn-home font-manrope text-sm font-medium text-slate-600 hover:text-green-600 transition-colors cursor-pointer">Home</a>
-<a class="font-manrope text-sm font-medium text-green-700 border-b-2 border-green-600 pb-1" href="admin-equipes.html">Equipes</a>
-</div>
-</div>
-<div class="flex items-center gap-4">
-<button class="p-2 rounded-full hover:bg-surface-container transition-colors">
-<span class="material-symbols-outlined text-slate-600">notifications</span>
-</button>
-<button class="p-2 rounded-full hover:bg-surface-container transition-colors">
-<span class="material-symbols-outlined text-slate-600">settings</span>
-</button>
-<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden">
-<img alt="User avatar with dropdown" data-alt="Close up professional portrait of a smiling leader in a bright office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN3KibVXF1PPG_a9mhFcYTIllz5ZwuEryTetAEw5P1PQ1kkfdw4PLsYXasDHmV0qwZWgvtP6GnplgRqgXi0BRpFIa_-JYXH9VuP299URVlHOVxZv9RrXQjQRGS9i_a_8O23ITiTSDYxkKNk-ClO6GrwUhZI7xBrjPlb9BasKnzeBS73-EU8S1G4SPJiUo5HR2ef_G6-YoJ192kF7ujG5tJfwAFHIh7yQUVWXO-Uhu2wp9u6oVhKdeC1m_RawSBkasf-MKGpSjY0ruX"/>
-</div>
-</div>
-</div>
-</nav>
-<!-- Side Navigation Bar (Desktop) -->
-<aside class="hidden lg:flex flex-col fixed left-0 top-0 h-full w-64 bg-slate-50 p-4 pt-20 z-40">
-<div class="mb-8 px-2">
-<h2 class="text-lg font-extrabold text-green-900 font-headline">Portal Lideranças</h2>
-<p class="text-xs text-slate-500">Empathetic Authority</p>
-</div>
-<nav class="flex-1 space-y-2">
-<a class="btn-home flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all rounded-lg cursor-pointer">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="font-manrope text-sm">Home</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 text-green-700 font-bold bg-green-50/50 rounded-lg" href="#">
-<span class="material-symbols-outlined">groups</span>
-<span class="font-manrope text-sm">Equipes</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all rounded-lg" href="#">
-<span class="material-symbols-outlined">calendar_month</span>
-<span class="font-manrope text-sm">Semestres</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-100 hover:translate-x-1 transition-all rounded-lg" href="#">
-<span class="material-symbols-outlined">analytics</span>
-<span class="font-manrope text-sm">Relatórios</span>
-</a>
-</nav>
-<button class="mt-4 mb-8 w-full py-2.5 bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-sm hover:opacity-90 transition-all text-sm">
-            Novo Semestre
+    <!-- Top Navigation Bar -->
+    <nav class="fixed top-0 w-full z-50 glass-nav shadow-sm">
+        <div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
+            <div class="flex items-center gap-8">
+                <span class="text-xl font-bold tracking-tight text-green-800">Lideranças Empáticas</span>
+                <div class="hidden md:flex gap-6 items-center">
+                    <a
+                        class="btn-home font-manrope text-sm font-medium text-slate-600 hover:text-green-600 transition-colors cursor-pointer">Home</a>
+                    <a class="font-manrope text-sm font-medium text-green-700 border-b-2 border-green-600 pb-1"
+                        href="admin-equipes.html">Equipes</a>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="relative">
+                    <button id="btn-avatar-menu" class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden cursor-pointer hover:ring-2 hover:ring-primary/40 transition-all">
+                        <img alt="User avatar" class="w-full h-full object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN3KibVXF1PPG_a9mhFcYTIllz5ZwuEryTetAEw5P1PQ1kkfdw4PLsYXasDHmV0qwZWgvtP6GnplgRqgXi0BRpFIa_-JYXH9VuP299URVlHOVxZv9RrXQjQRGS9i_a_8O23ITiTSDYxkKNk-ClO6GrwUhZI7xBrjPlb9BasKnzeBS73-EU8S1G4SPJiUo5HR2ef_G6-YoJ192kF7ujG5tJfwAFHIh7yQUVWXO-Uhu2wp9u6oVhKdeC1m_RawSBkasf-MKGpSjY0ruX" />
+                    </button>
+                    <div id="avatar-dropdown" class="hidden absolute right-0 top-12 w-48 bg-white rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.12)] border border-slate-100 py-2 z-[200]">
+                        <a class="btn-perfil flex items-center gap-3 px-4 py-3 text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-lg text-on-surface-variant">person</span> Perfil
+                        </a>
+                        <hr class="my-1 border-slate-100" />
+                        <a class="btn-sair flex items-center gap-3 px-4 py-3 text-sm font-medium text-error hover:bg-error-container/20 transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-lg">logout</span> Sair
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Content Area -->
+    <main class="pt-24 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
+        <!-- Header Section -->
+        <header class="mb-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div class="max-w-2xl">
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-on-surface tracking-tight mb-3">Diretório de
+                        Equipes</h1>
+                    <p class="text-on-surface-variant text-lg leading-relaxed">Gerencie o engajamento e a dinâmica das
+                        suas frentes de trabalho. Acompanhe o progresso e estimule a cultura de empatia.</p>
+                </div>
+                <!-- Search Component -->
+                <div class="relative w-full md:w-80 group">
+                    <input
+                        class="w-full h-12 pl-4 pr-12 bg-surface-container-lowest border border-outline/15 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none text-on-surface-variant"
+                        id="input-buscar-equipes" placeholder="Buscar equipes..." type="text"
+                        aria-label="Buscar equipes" />
+                    <div
+                        class="absolute right-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">
+                        <span class="material-symbols-outlined">search</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Bento Grid Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <!-- Alpha Team Card -->
+            <div
+                class="group bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(25,28,30,0.06)] transition-all flex flex-col justify-between h-64 border border-outline/5 relative overflow-hidden">
+                <div
+                    class="absolute top-0 right-0 w-32 h-32 bg-primary-container/10 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform pointer-events-none">
+                </div>
+                <div>
+                    <div class="flex justify-end items-start mb-4">
+                        <span class="btn-editar-equipe material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors" data-equipe="alpha">more_vert</span>
+                    </div>
+                    <h3 id="titulo-card-equipe-alpha" class="text-2xl font-bold text-on-surface mb-1">Alpha</h3>
+                    <div class="flex items-center gap-2 text-on-surface-variant">
+                        <span class="material-symbols-outlined text-sm">groups</span>
+                        <span class="text-sm font-medium">6 membros registrados</span>
+                    </div>
+                </div>
+                <a id="btn-iniciar-contagem-alpha"
+                    class="btn-iniciar-contagem w-full py-3 bg-primary-container text-on-primary-container font-bold rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all"
+                    href="admin-equipe-detalhe.html">
+                    Acessar <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
+            </div>
+            <!-- Beta Team Card -->
+            <div
+                class="group bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(25,28,30,0.06)] transition-all flex flex-col justify-between h-64 border border-outline/5 relative overflow-hidden">
+                <div
+                    class="absolute top-0 right-0 w-32 h-32 bg-primary-container/10 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform pointer-events-none">
+                </div>
+                <div>
+                    <div class="flex justify-end items-start mb-4">
+                        <span class="btn-editar-equipe material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors" data-equipe="beta">more_vert</span>
+                    </div>
+                    <h3 id="titulo-card-equipe-beta" class="text-2xl font-bold text-on-surface mb-1">Beta</h3>
+                    <div class="flex items-center gap-2 text-on-surface-variant">
+                        <span class="material-symbols-outlined text-sm">groups</span>
+                        <span class="text-sm font-medium">5 membros registrados</span>
+                    </div>
+                </div>
+                <a id="btn-iniciar-contagem-beta"
+                    class="btn-iniciar-contagem w-full py-3 bg-primary-container text-on-primary-container font-bold rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all"
+                    href="admin-equipe-detalhe.html">
+                    Acessar <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
+            </div>
+            <!-- Gamma Team Card -->
+            <div
+                class="group bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(25,28,30,0.06)] transition-all flex flex-col justify-between h-64 border border-outline/5 relative overflow-hidden">
+                <div
+                    class="absolute top-0 right-0 w-32 h-32 bg-primary-container/10 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform pointer-events-none">
+                </div>
+                <div>
+                    <div class="flex justify-end items-start mb-4">
+                        <span class="btn-editar-equipe material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors" data-equipe="gamma">more_vert</span>
+                    </div>
+                    <h3 id="titulo-card-equipe-gamma" class="text-2xl font-bold text-on-surface mb-1">Gamma</h3>
+                    <div class="flex items-center gap-2 text-on-surface-variant">
+                        <span class="material-symbols-outlined text-sm">groups</span>
+                        <span class="text-sm font-medium">4 membros registrados</span>
+                    </div>
+                </div>
+                <a id="btn-iniciar-contagem-gamma"
+                    class="btn-iniciar-contagem w-full py-3 bg-primary-container text-on-primary-container font-bold rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all"
+                    href="admin-equipe-detalhe.html">
+                    Acessar <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
+            </div>
+            <!-- Helios Team Card -->
+            <div
+                class="group bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(25,28,30,0.06)] transition-all flex flex-col justify-between h-64 border border-outline/5 relative overflow-hidden">
+                <div
+                    class="absolute top-0 right-0 w-32 h-32 bg-primary-container/10 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform pointer-events-none">
+                </div>
+                <div>
+                    <div class="flex justify-end items-start mb-4">
+                        <span class="btn-editar-equipe material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors" data-equipe="helios">more_vert</span>
+                    </div>
+                    <h3 id="titulo-card-equipe-helios" class="text-2xl font-bold text-on-surface mb-1">Helios</h3>
+                    <div class="flex items-center gap-2 text-on-surface-variant">
+                        <span class="material-symbols-outlined text-sm">groups</span>
+                        <span class="text-sm font-medium">5 membros registrados</span>
+                    </div>
+                </div>
+                <a id="btn-iniciar-contagem-helios"
+                    class="btn-iniciar-contagem w-full py-3 bg-primary-container text-on-primary-container font-bold rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all"
+                    href="admin-equipe-detalhe.html">
+                    Acessar <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
+            </div>
+            <!-- New Team Special Card -->
+            <button id="btn-nova-equipe" aria-label="Adicionar nova equipe"
+                class="group border-2 border-dashed border-outline/20 rounded-xl p-6 flex flex-col items-center justify-center h-64 hover:border-primary/40 hover:bg-green-50/20 transition-all">
+                <div
+                    class="w-16 h-16 bg-surface-container rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-primary text-3xl">add</span>
+                </div>
+                <span class="text-lg font-bold text-on-surface-variant">+ Nova Equipe</span>
+                <p class="text-sm text-outline mt-2 text-center">Adicione um novo grupo para acompanhamento estratégico
+                </p>
+            </button>
+            <!-- Human-Centric Insight (Asymmetric Element) -->
+
+        </div>
+    </main>
+    <!-- Bottom Navigation Bar (Mobile Only) -->
+    <nav
+        class="lg:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around items-center px-4 py-3 pb-safe z-50 border-t border-slate-100">
+        <button class="btn-home flex flex-col items-center justify-center text-slate-400 cursor-pointer">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[10px] font-manrope font-semibold">Home</span>
         </button>
-<div class="pt-4 border-t border-slate-200/50 space-y-2">
-<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-100 rounded-lg text-sm" href="#">
-<span class="material-symbols-outlined">help</span> Ajuda
-            </a>
-<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-100 rounded-lg text-sm" href="#">
-<span class="material-symbols-outlined">logout</span> Sair
-            </a>
-</div>
-</aside>
-<!-- Main Content Area -->
-<main class="lg:ml-64 pt-24 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
-<!-- Header Section -->
-<header class="mb-12">
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
-<div class="max-w-2xl">
-<h1 class="text-4xl md:text-5xl font-extrabold text-on-surface tracking-tight mb-3">Diretório de Equipes</h1>
-<p class="text-on-surface-variant text-lg leading-relaxed">Gerencie o engajamento e a dinâmica das suas frentes de trabalho. Acompanhe o progresso e estimule a cultura de empatia.</p>
-</div>
-<!-- Search Component -->
-<div class="relative w-full md:w-80 group">
-<input class="w-full h-12 pl-4 pr-12 bg-surface-container-lowest border border-outline/15 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none text-on-surface-variant" id="input-buscar-equipes" placeholder="Buscar equipes..." type="text" aria-label="Buscar equipes"/>
-<div class="absolute right-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">
-<span class="material-symbols-outlined">search</span>
-</div>
-</div>
-</div>
-</header>
-<!-- Bento Grid Layout -->
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-<!-- Alpha Team Card (Primary Action) -->
-<div class="group bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(25,28,30,0.06)] transition-all flex flex-col justify-between h-64 border border-outline/5 relative overflow-hidden">
-<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/10 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform"></div>
-<div>
-<div class="flex justify-between items-start mb-4">
-<span class="px-3 py-1 bg-primary-container/20 text-primary text-xs font-bold rounded-full uppercase tracking-wider">Ativa</span>
-<span class="material-symbols-outlined text-outline">more_vert</span>
-</div>
-<h3 id="titulo-card-equipe-alpha" class="text-2xl font-bold text-on-surface mb-1">Alpha</h3>
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-sm">groups</span>
-<span class="text-sm font-medium">6 membros registrados</span>
-</div>
-</div>
-<a id="btn-iniciar-contagem-alpha" class="btn-iniciar-contagem w-full py-3 bg-primary-container text-on-primary-container font-bold rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all" href="admin-equipe-detalhe.html">
-                    Iniciar Contagem <span class="material-symbols-outlined">arrow_forward</span>
-</a>
-</div>
-<!-- Beta Team Card -->
-<div class="group bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(25,28,30,0.06)] transition-all flex flex-col justify-between h-64 border border-outline/5">
-<div>
-<div class="flex justify-between items-start mb-4">
-<span class="px-3 py-1 bg-surface-container text-on-surface-variant text-xs font-bold rounded-full uppercase tracking-wider">Pendente</span>
-<span class="material-symbols-outlined text-outline">more_vert</span>
-</div>
-<h3 id="titulo-card-equipe-beta" class="text-2xl font-bold text-on-surface mb-1">Beta</h3>
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-sm">groups</span>
-<span class="text-sm font-medium">5 membros registrados</span>
-</div>
-</div>
-<a id="btn-iniciar-contagem-beta" class="btn-iniciar-contagem w-full py-3 bg-surface-container text-on-surface-variant font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all" href="admin-equipe-detalhe.html">
-                    Iniciar Contagem <span class="material-symbols-outlined">arrow_forward</span>
-</a>
-</div>
-<!-- Gamma Team Card -->
-<div class="group bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(25,28,30,0.06)] transition-all flex flex-col justify-between h-64 border border-outline/5">
-<div>
-<div class="flex justify-between items-start mb-4">
-<span class="px-3 py-1 bg-surface-container text-on-surface-variant text-xs font-bold rounded-full uppercase tracking-wider">Pendente</span>
-<span class="material-symbols-outlined text-outline">more_vert</span>
-</div>
-<h3 id="titulo-card-equipe-gamma" class="text-2xl font-bold text-on-surface mb-1">Gamma</h3>
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-sm">groups</span>
-<span class="text-sm font-medium">4 membros registrados</span>
-</div>
-</div>
-<a id="btn-iniciar-contagem-gamma" class="btn-iniciar-contagem w-full py-3 bg-surface-container text-on-surface-variant font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all" href="admin-equipe-detalhe.html">
-                    Iniciar Contagem <span class="material-symbols-outlined">arrow_forward</span>
-</a>
-</div>
-<!-- Helios Team Card -->
-<div class="group bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(25,28,30,0.06)] transition-all flex flex-col justify-between h-64 border border-outline/5">
-<div>
-<div class="flex justify-between items-start mb-4">
-<span class="px-3 py-1 bg-surface-container text-on-surface-variant text-xs font-bold rounded-full uppercase tracking-wider">Pendente</span>
-<span class="material-symbols-outlined text-outline">more_vert</span>
-</div>
-<h3 id="titulo-card-equipe-helios" class="text-2xl font-bold text-on-surface mb-1">Helios</h3>
-<div class="flex items-center gap-2 text-on-surface-variant">
-<span class="material-symbols-outlined text-sm">groups</span>
-<span class="text-sm font-medium">5 membros registrados</span>
-</div>
-</div>
-<a id="btn-iniciar-contagem-helios" class="btn-iniciar-contagem w-full py-3 bg-surface-container text-on-surface-variant font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-surface-variant transition-all" href="admin-equipe-detalhe.html">
-                    Iniciar Contagem <span class="material-symbols-outlined">arrow_forward</span>
-</a>
-</div>
-<!-- New Team Special Card -->
-<button id="btn-nova-equipe" aria-label="Adicionar nova equipe" class="group border-2 border-dashed border-outline/20 rounded-xl p-6 flex flex-col items-center justify-center h-64 hover:border-primary/40 hover:bg-green-50/20 transition-all">
-<div class="w-16 h-16 bg-surface-container rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-primary text-3xl">add</span>
-</div>
-<span class="text-lg font-bold text-on-surface-variant">+ Nova Equipe</span>
-<p class="text-sm text-outline mt-2 text-center">Adicione um novo grupo para acompanhamento estratégico</p>
-</button>
-<!-- Human-Centric Insight (Asymmetric Element) -->
-<div class="xl:col-span-1 bg-tertiary-fixed/10 rounded-xl p-6 flex flex-col justify-center border-l-4 border-tertiary">
-<span class="material-symbols-outlined text-tertiary mb-3" style="font-variation-settings: 'FILL' 1;">format_quote</span>
-<p class="font-headline text-lg italic text-on-tertiary-container leading-snug">"A verdadeira autoridade nasce do espaço que você cria para que outros possam crescer."</p>
-<p class="mt-4 text-xs font-bold uppercase tracking-widest text-tertiary">Leadership Insights</p>
-</div>
-</div>
-</main>
-<!-- Bottom Navigation Bar (Mobile Only) -->
-<nav class="lg:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around items-center px-4 py-3 pb-safe z-50 border-t border-slate-100">
-<a class="btn-home flex flex-col items-center justify-center text-slate-400 cursor-pointer">
-<span class="material-symbols-outlined">home</span>
-<span class="text-[10px] font-manrope font-semibold">Home</span>
-</a>
-<a class="flex flex-col items-center justify-center bg-green-100 text-green-800 rounded-xl px-4 py-1" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
-<span class="text-[10px] font-manrope font-semibold">Equipes</span>
-</a>
-<a class="flex flex-col items-center justify-center text-slate-400" href="#">
-<span class="material-symbols-outlined">person</span>
-<span class="text-[10px] font-manrope font-semibold">Perfil</span>
-</a>
-</nav>
-</body></html>
+        <div class="flex flex-col items-center justify-center bg-green-100 text-green-800 rounded-xl px-4 py-1">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+            <span class="text-[10px] font-manrope font-semibold">Equipes</span>
+        </div>
+        <button class="btn-perfil flex flex-col items-center justify-center text-slate-400 cursor-pointer">
+            <span class="material-symbols-outlined">person</span>
+            <span class="text-[10px] font-manrope font-semibold">Perfil</span>
+        </button>
+    </nav>
+    <!-- Modal: Nova Equipe -->
+    <div id="modal-nova-equipe" class="fixed inset-0 z-[100] bg-on-surface/20 backdrop-blur-sm hidden">
+        <div
+            class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[110] bg-surface-bright w-[calc(100%-2rem)] max-w-lg rounded-xl shadow-2xl overflow-hidden">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <div>
+                        <h2 class="font-headline text-2xl font-bold text-on-surface">Criar Nova Equipe</h2>
+                        <p class="text-sm text-on-surface-variant">Defina o nome, membros e mentores da equipe.</p>
+                    </div>
+                    <button id="btn-close-modal-equipe" type="button" class="text-on-surface-variant hover:text-on-surface">
+                        <span class="material-symbols-outlined" data-icon="close">close</span>
+                    </button>
+                </div>
+                <form id="form-nova-equipe" class="space-y-6">
+                    <!-- Nome da Equipe -->
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Nome
+                            da Equipe</label>
+                        <input
+                            class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
+                            id="input-nome-equipe" placeholder="Ex: Equipe Delta" type="text" autocomplete="off">
+                    </div>
+
+                    <!-- Mentores -->
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Mentores</label>
+                        <div class="relative">
+                            <input
+                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 pr-12 focus:border-primary focus:ring-0 focus:outline-none transition-all"
+                                id="input-buscar-mentor" placeholder="Buscar mentor pelo nome..." type="text" autocomplete="off">
+                            <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline text-lg">search</span>
+                        </div>
+                        <!-- Resultados da busca -->
+                        <div id="resultados-mentor" class="search-results mt-2 bg-surface-container-lowest ghost-border rounded-lg hidden"></div>
+                        <!-- Chips dos selecionados -->
+                        <div id="chips-mentores" class="flex flex-wrap gap-2 mt-3"></div>
+                    </div>
+
+                    <!-- Membros (Alunos) -->
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Membros
+                            (Alunos)</label>
+                        <div class="relative">
+                            <input
+                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 pr-12 focus:border-primary focus:ring-0 focus:outline-none transition-all"
+                                id="input-buscar-membro" placeholder="Buscar aluno pelo nome..." type="text" autocomplete="off">
+                            <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline text-lg">search</span>
+                        </div>
+                        <!-- Resultados da busca -->
+                        <div id="resultados-membro" class="search-results mt-2 bg-surface-container-lowest ghost-border rounded-lg hidden"></div>
+                        <!-- Chips dos selecionados -->
+                        <div id="chips-membros" class="flex flex-wrap gap-2 mt-3"></div>
+                    </div>
+
+                    <!-- Botões -->
+                    <div class="pt-4 flex gap-3">
+                        <button id="btn-cancel-modal-equipe"
+                            class="flex-1 ghost-border text-on-surface font-semibold py-3 rounded-lg hover:bg-surface-container transition-all"
+                            type="button">Cancelar</button>
+                        <button
+                            class="flex-1 bg-primary text-on-primary font-bold py-3 rounded-lg hover:opacity-90 transition-all shadow-lg shadow-primary/20"
+                            type="submit">Salvar Equipe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // ── Avatar dropdown toggle ─────────────────────────
+        const avatarBtn = document.getElementById('btn-avatar-menu');
+        const avatarDropdown = document.getElementById('avatar-dropdown');
+        avatarBtn.addEventListener('click', (e) => { e.stopPropagation(); avatarDropdown.classList.toggle('hidden'); });
+        document.addEventListener('click', () => avatarDropdown.classList.add('hidden'));
+        avatarDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+        // ── Modal elements ──────────────────────────────
+        const btnNovaEquipe = document.getElementById('btn-nova-equipe');
+        const modal = document.getElementById('modal-nova-equipe');
+        const btnClose = document.getElementById('btn-close-modal-equipe');
+        const btnCancel = document.getElementById('btn-cancel-modal-equipe');
+        const modalTitle = modal.querySelector('h2');
+        const modalSubtitle = modal.querySelector('p');
+        const modalSubmitBtn = modal.querySelector('button[type="submit"]');
+        const inputNomeEquipe = document.getElementById('input-nome-equipe');
+
+        // ── Dados simulados (substituir por API) ─────────
+        const mentoresDB = [
+            { id: 1, nome: 'João Silva' },
+            { id: 2, nome: 'Ana Pereira' },
+            { id: 3, nome: 'Roberto Gomes' },
+            { id: 4, nome: 'Fernanda Costa' },
+            { id: 5, nome: 'Marcos Oliveira' },
+        ];
+
+        const membrosDB = [
+            { id: 1, nome: 'Maria Oliveira', curso: 'Eng. Software', ra: '12345678' },
+            { id: 2, nome: 'Carlos Souza', curso: 'Ciência da Computação', ra: '87654321' },
+            { id: 3, nome: 'Beatriz Lima', curso: 'Administração', ra: '11223344' },
+            { id: 4, nome: 'Pedro Santos', curso: 'Eng. Mecânica', ra: '44332211' },
+            { id: 5, nome: 'Julia Ferreira', curso: 'Direito', ra: '55667788' },
+            { id: 6, nome: 'Lucas Almeida', curso: 'Medicina', ra: '99887766' },
+            { id: 7, nome: 'Camila Rocha', curso: 'Psicologia', ra: '33445566' },
+        ];
+
+        // Dados simulados por equipe (substituir por API)
+        const equipesDB = {
+            alpha: {
+                nome: 'Alpha',
+                mentores: [1, 2],       // IDs dos mentores
+                membros: [1, 2, 4],     // IDs dos membros
+            },
+            beta: {
+                nome: 'Beta',
+                mentores: [3],
+                membros: [3, 5],
+            },
+            gamma: {
+                nome: 'Gamma',
+                mentores: [4],
+                membros: [6, 7],
+            },
+            helios: {
+                nome: 'Helios',
+                mentores: [5],
+                membros: [1, 3, 5],
+            },
+        };
+
+        // ── Search + chip logic ───────────────────────────
+        const selecionadosMentores = new Set();
+        const selecionadosMembros = new Set();
+
+        function resetModal() {
+            selecionadosMentores.clear();
+            selecionadosMembros.clear();
+            inputNomeEquipe.value = '';
+            document.getElementById('input-buscar-mentor').value = '';
+            document.getElementById('input-buscar-membro').value = '';
+            document.getElementById('resultados-mentor').classList.add('hidden');
+            document.getElementById('resultados-membro').classList.add('hidden');
+            renderChips(document.getElementById('chips-mentores'), mentoresDB, selecionadosMentores, (p) => p.nome);
+            renderChips(document.getElementById('chips-membros'), membrosDB, selecionadosMembros, (p) => `${p.nome} · ${p.ra}`);
+        }
+
+        // ── Abrir modal (Criar) ───────────────────────────
+        btnNovaEquipe.addEventListener('click', () => {
+            resetModal();
+            modalTitle.textContent = 'Criar Nova Equipe';
+            modalSubtitle.textContent = 'Defina o nome, membros e mentores da equipe.';
+            modalSubmitBtn.textContent = 'Salvar Equipe';
+            modal.classList.remove('hidden');
+        });
+
+        // ── Abrir modal (Editar) ──────────────────────────
+        document.querySelectorAll('.btn-editar-equipe').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const equipeKey = btn.dataset.equipe;
+                const equipe = equipesDB[equipeKey];
+                if (!equipe) return;
+
+                resetModal();
+
+                // Preencher nome
+                inputNomeEquipe.value = equipe.nome;
+
+                // Preencher mentores
+                equipe.mentores.forEach(id => selecionadosMentores.add(id));
+                renderChips(document.getElementById('chips-mentores'), mentoresDB, selecionadosMentores, (p) => p.nome);
+
+                // Preencher membros
+                equipe.membros.forEach(id => selecionadosMembros.add(id));
+                renderChips(document.getElementById('chips-membros'), membrosDB, selecionadosMembros, (p) => `${p.nome} · ${p.ra}`);
+
+                modalTitle.textContent = 'Editar Equipe';
+                modalSubtitle.textContent = `Editando a equipe ${equipe.nome}. Altere nome, membros ou mentores.`;
+                modalSubmitBtn.textContent = 'Salvar Alterações';
+                modal.classList.remove('hidden');
+            });
+        });
+
+        // ── Fechar modal ─────────────────────────────────
+        btnClose.addEventListener('click', () => modal.classList.add('hidden'));
+        btnCancel.addEventListener('click', () => modal.classList.add('hidden'));
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
+
+        // ── Search setup ─────────────────────────────────
+        function setupSearch(inputId, resultsId, chipsId, database, selecionados, labelFn) {
+            const input = document.getElementById(inputId);
+            const results = document.getElementById(resultsId);
+            const chips = document.getElementById(chipsId);
+
+            input.addEventListener('input', function () {
+                const query = this.value.trim().toLowerCase();
+                if (query.length < 2) { results.classList.add('hidden'); results.innerHTML = ''; return; }
+
+                const filtrados = database.filter(p =>
+                    p.nome.toLowerCase().includes(query) && !selecionados.has(p.id)
+                );
+
+                if (filtrados.length === 0) {
+                    results.innerHTML = '<div class="px-4 py-3 text-sm text-on-surface-variant">Nenhum resultado encontrado</div>';
+                } else {
+                    results.innerHTML = filtrados.map(p => `
+                        <div class="px-4 py-3 text-sm text-on-surface hover:bg-primary-container/10 cursor-pointer transition-colors flex justify-between items-center" data-id="${p.id}">
+                            <div>
+                                <span class="font-bold">${p.nome}</span>
+                                ${p.curso ? '<span class="text-on-surface-variant ml-2 text-xs">' + p.curso + ' · RA ' + p.ra + '</span>' : ''}
+                            </div>
+                            <span class="material-symbols-outlined text-primary text-lg">add_circle</span>
+                        </div>
+                    `).join('');
+                }
+                results.classList.remove('hidden');
+
+                results.querySelectorAll('[data-id]').forEach(el => {
+                    el.addEventListener('click', function () {
+                        const id = parseInt(this.dataset.id);
+                        const pessoa = database.find(p => p.id === id);
+                        if (!pessoa || selecionados.has(id)) return;
+                        selecionados.add(id);
+                        renderChips(chips, database, selecionados, labelFn);
+                        input.value = '';
+                        results.classList.add('hidden');
+                        results.innerHTML = '';
+                    });
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!input.contains(e.target) && !results.contains(e.target)) {
+                    results.classList.add('hidden');
+                }
+            });
+        }
+
+        function renderChips(container, database, selecionados, labelFn) {
+            container.innerHTML = '';
+            selecionados.forEach(id => {
+                const pessoa = database.find(p => p.id === id);
+                if (!pessoa) return;
+                const chip = document.createElement('span');
+                chip.className = 'chip';
+                chip.innerHTML = `${labelFn(pessoa)} <button type="button" data-remove="${id}"><span class="material-symbols-outlined" style="font-size:14px">close</span></button>`;
+                chip.querySelector('button').addEventListener('click', () => {
+                    selecionados.delete(id);
+                    renderChips(container, database, selecionados, labelFn);
+                });
+                container.appendChild(chip);
+            });
+        }
+
+        // Inicializar buscas
+        setupSearch('input-buscar-mentor', 'resultados-mentor', 'chips-mentores', mentoresDB, selecionadosMentores,
+            (p) => p.nome
+        );
+        setupSearch('input-buscar-membro', 'resultados-membro', 'chips-membros', membrosDB, selecionadosMembros,
+            (p) => `${p.nome} · ${p.ra}`
+        );
+    });
+    </script>
+</body>
+
+</html>

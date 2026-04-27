@@ -15,10 +15,10 @@ st.set_page_config(
 
 st.markdown("""
     <style>
-        .block-container { padding: 0; max-width: 100%; }
-        header, #MainMenu, footer { visibility: hidden; }
+        .block-container { padding: 0 !important; max-width: 100% !important; margin: 0 !important; }
+        header, #MainMenu, footer { display: none !important; }
         .stApp { background-color: #f7f9fc !important; }
-        iframe { width: 100%; height: 100vh; border: none; }
+        iframe { width: 100vw !important; border: none !important; display: block; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -86,6 +86,18 @@ def _renderizar_simples(nome_arquivo: str, altura: int = 1000):
     html_content = carregar_html(nome_arquivo)
     components.html(html_content, height=altura, scrolling=True)
 
+
+def _handle_resultado(resultado):
+    """Trata navegação comum (perfil/sair) e retorna True se processou."""
+    if resultado in ("aluno_perfil", "admin_perfil", "login", "cadastro",
+                     "admin_home", "admin_equipes", "admin_detalhes_equipe",
+                     "aluno_home", "aluno_minha_equipe"):
+        st.session_state["pagina_atual"] = resultado
+        st.rerun()
+        return True
+    return False
+
+
 if "pagina_atual" not in st.session_state:
     st.session_state["pagina_atual"] = "login"
 
@@ -129,6 +141,12 @@ if pagina == "login":
                 alert('Credenciais inválidas. Tente:\\nAdmin: admin@le.com\\nAluno: aluno@le.com');
             }
         });
+        document.querySelectorAll('.btn-criar-conta').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                setComponentValue('cadastro');
+            });
+        });
     </script>
     """
     html_content = html_content.replace("</body>", script_login + "\n</body>")
@@ -141,22 +159,36 @@ if pagina == "login":
     login_comp = components.declare_component("login_component", path=component_dir)
     resultado = login_comp(key="login")
 
-    if resultado in ["admin_home", "aluno_home"]:
+    if resultado in ["admin_home", "aluno_home", "cadastro"]:
         st.session_state["pagina_atual"] = resultado
         st.rerun()
+
+# ── CADASTRO ──────────────────────────────────
+elif pagina == "cadastro":
+    html_content = carregar_html("cadastro.html")
+    resultado = _renderizar_como_componente(
+        html_content,
+        mapeamento={".btn-voltar-login": "login"},
+        chave="cadastro",
+        altura=900,
+    )
+    _handle_resultado(resultado)
 
 # ── ADMIN HOME ────────────────────────────────
 elif pagina == "admin_home":
     html_content = carregar_html("admin_home.html")
     resultado = _renderizar_como_componente(
         html_content,
-        mapeamento={"#btn-acessar-equipes": "admin_equipes"},
+        mapeamento={
+            "#btn-acessar-equipes": "admin_equipes",
+            ".btn-equipes-mobile": "admin_equipes",
+            ".btn-perfil": "admin_perfil",
+            ".btn-sair": "login",
+        },
         chave="admin_home",
         altura=1000,
     )
-    if resultado == "admin_equipes":
-        st.session_state["pagina_atual"] = "admin_equipes"
-        st.rerun()
+    _handle_resultado(resultado)
 
 # ── ADMIN EQUIPES ─────────────────────────────
 elif pagina == "admin_equipes":
@@ -165,26 +197,86 @@ elif pagina == "admin_equipes":
         html_content,
         mapeamento={
             ".btn-iniciar-contagem": "admin_detalhes_equipe",
-            ".btn-home": "admin_home"
+            ".btn-home": "admin_home",
+            ".btn-perfil": "admin_perfil",
+            ".btn-sair": "login",
         },
         chave="admin_equipes",
         altura=1000,
     )
-    if resultado == "admin_detalhes_equipe":
-        st.session_state["pagina_atual"] = "admin_detalhes_equipe"
-        st.rerun()
-    elif resultado == "admin_home":
-        st.session_state["pagina_atual"] = "admin_home"
-        st.rerun()
+    _handle_resultado(resultado)
 
 # ── ADMIN DETALHES EQUIPE ─────────────────────
 elif pagina == "admin_detalhes_equipe":
-    _renderizar_simples("admin_detalhes_equipe.html", altura=1200)
+    html_content = carregar_html("admin_detalhes_equipe.html")
+    resultado = _renderizar_como_componente(
+        html_content,
+        mapeamento={
+            ".btn-equipes": "admin_equipes",
+            ".btn-home": "admin_home",
+            ".btn-perfil": "admin_perfil",
+            ".btn-sair": "login",
+        },
+        chave="admin_detalhes_equipe",
+        altura=1500,
+    )
+    _handle_resultado(resultado)
+
+# ── ADMIN PERFIL ──────────────────────────────
+elif pagina == "admin_perfil":
+    html_content = carregar_html("admin_perfil.html")
+    resultado = _renderizar_como_componente(
+        html_content,
+        mapeamento={
+            ".btn-admin-home": "admin_home",
+            ".btn-equipes-mobile": "admin_equipes",
+            ".btn-sair": "login",
+        },
+        chave="admin_perfil",
+        altura=1200,
+    )
+    _handle_resultado(resultado)
 
 # ── ALUNO HOME ────────────────────────────────
 elif pagina == "aluno_home":
-    _renderizar_simples("aluno_home.html", altura=1000)
+    html_content = carregar_html("aluno_home.html")
+    resultado = _renderizar_como_componente(
+        html_content,
+        mapeamento={
+            ".btn-acessar-equipe": "aluno_minha_equipe",
+            ".btn-perfil": "aluno_perfil",
+            ".btn-sair": "login",
+        },
+        chave="aluno_home",
+        altura=1000,
+    )
+    _handle_resultado(resultado)
 
 # ── ALUNO MINHA EQUIPE ───────────────────────
 elif pagina == "aluno_minha_equipe":
-    _renderizar_simples("aluno_minha_equipe.html", altura=1000)
+    html_content = carregar_html("aluno_minha_equipe.html")
+    resultado = _renderizar_como_componente(
+        html_content,
+        mapeamento={
+            ".btn-aluno-home": "aluno_home",
+            ".btn-perfil": "aluno_perfil",
+            ".btn-sair": "login",
+        },
+        chave="aluno_minha_equipe",
+        altura=1500,
+    )
+    _handle_resultado(resultado)
+
+# ── ALUNO PERFIL ──────────────────────────────
+elif pagina == "aluno_perfil":
+    html_content = carregar_html("aluno_perfil.html")
+    resultado = _renderizar_como_componente(
+        html_content,
+        mapeamento={
+            ".btn-aluno-home": "aluno_home",
+            ".btn-sair": "login",
+        },
+        chave="aluno_perfil",
+        altura=1200,
+    )
+    _handle_resultado(resultado)

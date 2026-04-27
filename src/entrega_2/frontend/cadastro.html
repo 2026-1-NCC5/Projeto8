@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@500;700;800&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f7f9fc", "on-primary": "#ffffff", "surface-container-low": "#f2f4f7",
+                        "error-container": "#ffdad6", "on-tertiary": "#ffffff", "on-primary-container": "#004b1e",
+                        "on-error-container": "#93000a", "surface-container": "#eceef1", "surface-variant": "#e0e3e6",
+                        "on-secondary-container": "#24703e", "on-surface": "#191c1e", "surface-container-highest": "#e0e3e6",
+                        "surface": "#f7f9fc", "surface-tint": "#006e2f", "surface-container-high": "#e6e8eb",
+                        "secondary": "#1f6c3a", "secondary-container": "#a4f1b2", "inverse-primary": "#4ae176",
+                        "tertiary-container": "#ff8b7c", "inverse-surface": "#2d3133", "on-surface-variant": "#3d4a3d",
+                        "on-tertiary-container": "#76231b", "surface-dim": "#d8dadd", "tertiary": "#9e4036",
+                        "error": "#ba1a1a", "on-background": "#191c1e", "primary-container": "#22c55e",
+                        "on-secondary": "#ffffff", "on-error": "#ffffff", "primary": "#006e2f",
+                        "outline-variant": "#bccbb9", "inverse-on-surface": "#eff1f4", "outline": "#6d7b6c",
+                        "surface-container-lowest": "#ffffff", "on-primary-fixed": "#002109", "background": "#f7f9fc"
+                    },
+                    "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                    "fontFamily": { "headline": ["Manrope"], "body": ["Inter"], "label": ["Inter"] }
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .ghost-border { border: 1px solid rgba(109, 123, 108, 0.15); }
+        /* Tab active */
+        .tab-btn.active { background: white; color: #006e2f; box-shadow: 0 2px 8px rgba(25,28,30,0.08); }
+        .tab-btn { transition: all 0.2s ease; }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+    <main class="flex-grow flex">
+        <section class="w-full flex flex-col items-center justify-center p-6 sm:p-12 bg-surface">
+            <div class="w-full max-w-lg space-y-8">
+                <!-- Branding -->
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white">
+                        <span class="material-symbols-outlined" style='font-variation-settings: "FILL" 1;'>groups</span>
+                    </div>
+                    <span class="text-xl font-extrabold tracking-tight text-primary font-headline">Conta Certo Portal</span>
+                </div>
+
+                <!-- Registration Card -->
+                <div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] space-y-6">
+                    <header class="space-y-1">
+                        <h1 class="text-[24px] font-medium font-headline text-on-surface">Criar Conta</h1>
+                        <p class="text-[14px] text-on-surface-variant">Preencha seus dados para se cadastrar na plataforma.</p>
+                    </header>
+
+                    <!-- Type Toggle -->
+                    <div class="flex bg-surface-container-low p-1.5 rounded-full">
+                        <button id="tab-aluno" type="button"
+                            class="tab-btn active flex-1 py-2.5 rounded-full text-sm font-bold text-center cursor-pointer">
+                            <span class="flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined text-lg">school</span> Aluno
+                            </span>
+                        </button>
+                        <button id="tab-mentor" type="button"
+                            class="tab-btn flex-1 py-2.5 rounded-full text-sm font-bold text-center text-on-surface-variant cursor-pointer">
+                            <span class="flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined text-lg">psychology</span> Mentor
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- Form -->
+                    <form class="space-y-5" id="cadastro-form">
+                        <!-- Nome -->
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant px-1" for="reg-nome">Nome Completo</label>
+                            <div class="relative group">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">person</span>
+                                <input class="w-full pl-11 pr-4 py-3 bg-surface-container-lowest border border-outline/15 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm"
+                                    id="reg-nome" placeholder="Seu nome completo" type="text" required />
+                            </div>
+                        </div>
+
+                        <!-- RA (aluno only) -->
+                        <div id="campo-ra" class="space-y-1.5">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant px-1" for="reg-ra">RA</label>
+                            <div class="relative group">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">badge</span>
+                                <input class="w-full pl-11 pr-4 py-3 bg-surface-container-lowest border border-outline/15 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm"
+                                    id="reg-ra" placeholder="Ex: 12345678" type="text" inputmode="numeric" pattern="[0-9]*" required />
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant px-1" for="reg-email">E-mail</label>
+                            <div class="relative group">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">mail</span>
+                                <input class="w-full pl-11 pr-4 py-3 bg-surface-container-lowest border border-outline/15 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm"
+                                    id="reg-email" placeholder="nome@dominio.com" type="email" required />
+                            </div>
+                        </div>
+
+                        <!-- Telefone -->
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant px-1" for="reg-telefone">Telefone</label>
+                            <div class="relative group">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">phone</span>
+                                <input class="w-full pl-11 pr-4 py-3 bg-surface-container-lowest border border-outline/15 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm"
+                                    id="reg-telefone" placeholder="(11) 91234-5678" type="tel" required />
+                            </div>
+                        </div>
+
+                        <!-- Curso (aluno only) -->
+                        <div id="campo-curso" class="space-y-1.5">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant px-1" for="reg-curso">Curso</label>
+                            <div class="relative group">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">menu_book</span>
+                                <select class="w-full pl-11 pr-4 py-3 bg-surface-container-lowest border border-outline/15 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm appearance-none cursor-pointer"
+                                    id="reg-curso" required>
+                                    <option value="" disabled selected>Selecione seu curso</option>
+                                    <option value="Administração">Administração</option>
+                                    <option value="Análise e Desenvolvimento de Sistemas">Análise e Desenvolvimento de Sistemas</option>
+                                    <option value="Ciência da Computação">Ciência da Computação</option>
+                                    <option value="Ciências Contábeis">Ciências Contábeis</option>
+                                    <option value="Ciências Econômicas">Ciências Econômicas</option>
+                                    <option value="Contabilidade para Graduados">Contabilidade para Graduados</option>
+                                    <option value="Publicidade e Propaganda">Publicidade e Propaganda</option>
+                                    <option value="Relações Públicas">Relações Públicas</option>
+                                    <option value="Relações Internacionais">Relações Internacionais</option>
+                                    <option value="Secretariado e Assessoria Executiva">Secretariado e Assessoria Executiva</option>
+                                </select>
+                                <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-lg">expand_more</span>
+                            </div>
+                        </div>
+
+                        <!-- Senha -->
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant px-1" for="reg-senha">Senha</label>
+                            <div class="relative group">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock</span>
+                                <input class="w-full pl-11 pr-11 py-3 bg-surface-container-lowest border border-outline/15 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm"
+                                    id="reg-senha" placeholder="Mínimo 6 caracteres" type="password" minlength="6" required />
+                                <button type="button" id="toggle-senha" tabindex="-1" class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors focus:outline-none">
+                                    <span class="material-symbols-outlined text-xl" id="toggle-icon-senha">visibility</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Confirmar Senha -->
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-semibold uppercase tracking-wider text-on-surface-variant px-1" for="reg-confirmar-senha">Confirmar Senha</label>
+                            <div class="relative group">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock</span>
+                                <input class="w-full pl-11 pr-4 py-3 bg-surface-container-lowest border border-outline/15 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm"
+                                    id="reg-confirmar-senha" placeholder="Repita a senha" type="password" minlength="6" required />
+                            </div>
+                        </div>
+
+                        <!-- Submit -->
+                        <button type="submit"
+                            class="w-full bg-primary-container hover:bg-primary transition-colors text-on-primary-container font-bold py-3.5 rounded-lg flex items-center justify-center gap-2 group">
+                            Criar Conta
+                            <span class="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Info Banner -->
+                <div class="flex items-start gap-4 p-4 bg-surface-container-low rounded-lg border border-outline/5">
+                    <span class="material-symbols-outlined text-secondary" style='font-variation-settings: "FILL" 1;'>shield</span>
+                    <p class="text-xs text-on-surface-variant leading-relaxed">
+                        Sua segurança é nossa prioridade. Utilizamos criptografia de ponta a ponta para proteger seus dados.
+                    </p>
+                </div>
+
+                <!-- Footer -->
+                <p class="text-center text-sm text-on-surface-variant">
+                    Já tem uma conta? <a class="btn-voltar-login text-primary font-semibold hover:underline cursor-pointer" href="#">Entrar</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // ── Tab Toggle (Aluno / Mentor) ────────────────────
+        const tabAluno = document.getElementById('tab-aluno');
+        const tabMentor = document.getElementById('tab-mentor');
+        const campoRA = document.getElementById('campo-ra');
+        const campoCurso = document.getElementById('campo-curso');
+        const inputRA = document.getElementById('reg-ra');
+        const selectCurso = document.getElementById('reg-curso');
+
+        let tipoSelecionado = 'aluno';
+
+        function setTab(tipo) {
+            tipoSelecionado = tipo;
+            if (tipo === 'aluno') {
+                tabAluno.classList.add('active');
+                tabMentor.classList.remove('active');
+                tabMentor.classList.add('text-on-surface-variant');
+                tabAluno.classList.remove('text-on-surface-variant');
+                campoRA.classList.remove('hidden');
+                campoCurso.classList.remove('hidden');
+                inputRA.required = true;
+                selectCurso.required = true;
+            } else {
+                tabMentor.classList.add('active');
+                tabAluno.classList.remove('active');
+                tabAluno.classList.add('text-on-surface-variant');
+                tabMentor.classList.remove('text-on-surface-variant');
+                campoRA.classList.add('hidden');
+                campoCurso.classList.add('hidden');
+                inputRA.required = false;
+                selectCurso.required = false;
+            }
+        }
+
+        tabAluno.addEventListener('click', () => setTab('aluno'));
+        tabMentor.addEventListener('click', () => setTab('mentor'));
+
+        // ── Toggle Password Visibility ─────────────────────
+        const toggleSenha = document.getElementById('toggle-senha');
+        const senhaInput = document.getElementById('reg-senha');
+        const toggleIconSenha = document.getElementById('toggle-icon-senha');
+
+        toggleSenha.addEventListener('click', function () {
+            const type = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            senhaInput.setAttribute('type', type);
+            toggleIconSenha.textContent = type === 'password' ? 'visibility' : 'visibility_off';
+        });
+
+        // ── Form Submission ────────────────────────────────
+        document.getElementById('cadastro-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const senha = document.getElementById('reg-senha').value;
+            const confirmar = document.getElementById('reg-confirmar-senha').value;
+
+            if (senha !== confirmar) {
+                alert('As senhas não coincidem!');
+                return;
+            }
+
+            // Coletar dados para envio ao backend
+            const dados = {
+                tipo: tipoSelecionado,
+                nome: document.getElementById('reg-nome').value,
+                email: document.getElementById('reg-email').value,
+                telefone: document.getElementById('reg-telefone').value,
+                senha: senha,
+            };
+
+            if (tipoSelecionado === 'aluno') {
+                dados.ra = document.getElementById('reg-ra').value;
+                dados.curso = document.getElementById('reg-curso').value;
+            }
+
+            console.log('Dados de cadastro:', dados);
+            alert('Conta criada com sucesso! Redirecionando para o login...');
+            // TODO: Enviar dados para API backend aqui
+        });
+    </script>
+</body>
+
+</html>

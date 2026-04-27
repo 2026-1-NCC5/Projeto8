@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Meu Perfil - Lideranças Empáticas</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@500;700;800&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-bright": "#f7f9fc", "on-primary": "#ffffff", "surface-container-low": "#f2f4f7",
+            "error-container": "#ffdad6", "on-tertiary": "#ffffff", "on-primary-container": "#004b1e",
+            "on-error-container": "#93000a", "surface-container": "#eceef1", "surface-variant": "#e0e3e6",
+            "on-secondary-container": "#24703e", "on-surface": "#191c1e", "surface-container-highest": "#e0e3e6",
+            "surface": "#f7f9fc", "surface-tint": "#006e2f", "surface-container-high": "#e6e8eb",
+            "secondary": "#1f6c3a", "secondary-container": "#a4f1b2", "inverse-primary": "#4ae176",
+            "tertiary-container": "#ff8b7c", "inverse-surface": "#2d3133", "on-surface-variant": "#3d4a3d",
+            "on-tertiary-container": "#76231b", "surface-dim": "#d8dadd", "tertiary": "#9e4036",
+            "error": "#ba1a1a", "on-background": "#191c1e", "primary-container": "#22c55e",
+            "on-secondary": "#ffffff", "on-error": "#ffffff", "primary": "#006e2f",
+            "outline-variant": "#bccbb9", "inverse-on-surface": "#eff1f4", "outline": "#6d7b6c",
+            "surface-container-lowest": "#ffffff", "background": "#f7f9fc"
+          },
+          "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+          "fontFamily": { "headline": ["Manrope"], "body": ["Inter"], "label": ["Inter"] }
+        },
+      },
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-manrope { font-family: 'Manrope', sans-serif; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    html, body { min-height: 100vh; }
+    .ghost-border { border: 1px solid rgba(109, 123, 108, 0.15); }
+  </style>
+</head>
+
+<body class="bg-surface text-on-surface min-h-screen">
+  <!-- Top Navigation Bar -->
+  <nav class="bg-white/70 backdrop-blur-md fixed top-0 w-full z-50 shadow-sm">
+    <div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
+      <div class="flex items-center gap-8">
+        <span class="text-xl font-bold tracking-tight text-green-800 font-manrope">Lideranças Empáticas</span>
+        <div class="hidden md:flex gap-6 items-center">
+          <a class="btn-aluno-home text-slate-600 font-manrope text-sm font-medium hover:text-green-600 transition-colors cursor-pointer">Home</a>
+          <a class="text-green-700 border-b-2 border-green-600 pb-1 font-manrope text-sm font-medium" href="#">Perfil</a>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="relative">
+          <button id="btn-avatar-menu" class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden cursor-pointer hover:ring-2 hover:ring-primary/40 transition-all">
+            <img alt="User avatar"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6f_WigLQvZiDvHFmGPcubJXsWfVl9RNXIFl8CU1Hd7MHTJ6XUABQG_KlqlPVgN6xkFqzBW20Lw4pZUJxFDuCsXfE9qSltys8s0FOwE2qZmioHC7CNIlEBpH71AuVBO0wNxNVkDJH2vOAr8ftVWj4ahm2fsVYH6wAYLaWMY_czZO9eQMtn0Se2oSsy8-GpRHcgKX_CxajYYZHf48gDe3714_wJglnVHpB-8oGR95NyYCkxVYdGgfO_iCBMmbjy998EwllUVn5_oKWX"
+              class="w-full h-full object-cover" />
+          </button>
+          <div id="avatar-dropdown" class="hidden absolute right-0 top-12 w-48 bg-white rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.12)] border border-slate-100 py-2 z-[200]">
+            <a class="btn-sair flex items-center gap-3 px-4 py-3 text-sm font-medium text-error hover:bg-error-container/20 transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-lg">logout</span> Sair
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="pt-24 pb-20 px-4 md:px-10 max-w-3xl mx-auto">
+    <!-- Breadcrumb -->
+    <nav class="flex mb-6 text-xs font-medium text-slate-400 gap-2 items-center">
+      <a class="btn-aluno-home cursor-pointer" href="#">Home</a>
+      <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+      <span class="text-secondary font-bold">Meu Perfil</span>
+    </nav>
+
+    <h1 class="text-4xl font-extrabold text-[#166534] font-manrope tracking-tight mb-10">Meu Perfil</h1>
+
+    <!-- Profile Photo Section -->
+    <div class="bg-surface-container-lowest rounded-2xl shadow-sm border border-slate-100/50 p-8 mb-8">
+      <h2 class="text-lg font-bold text-on-surface font-manrope mb-6">Foto de Perfil</h2>
+      <div class="flex items-center gap-8">
+        <div class="relative group">
+          <div id="avatar-preview" class="w-24 h-24 rounded-full bg-surface-container-high overflow-hidden ring-4 ring-primary-container/20">
+            <img id="avatar-img" alt="Foto de perfil"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6f_WigLQvZiDvHFmGPcubJXsWfVl9RNXIFl8CU1Hd7MHTJ6XUABQG_KlqlPVgN6xkFqzBW20Lw4pZUJxFDuCsXfE9qSltys8s0FOwE2qZmioHC7CNIlEBpH71AuVBO0wNxNVkDJH2vOAr8ftVWj4ahm2fsVYH6wAYLaWMY_czZO9eQMtn0Se2oSsy8-GpRHcgKX_CxajYYZHf48gDe3714_wJglnVHpB-8oGR95NyYCkxVYdGgfO_iCBMmbjy998EwllUVn5_oKWX"
+              class="w-full h-full object-cover" />
+          </div>
+          <button onclick="document.getElementById('file-upload').click()"
+            class="absolute bottom-0 right-0 w-8 h-8 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-lg hover:bg-secondary transition-colors">
+            <span class="material-symbols-outlined text-sm">photo_camera</span>
+          </button>
+          <input type="file" id="file-upload" accept="image/*" class="hidden" onchange="previewImage(event)" />
+        </div>
+        <div>
+          <p class="text-sm font-bold text-on-surface">Alterar foto</p>
+          <p class="text-xs text-on-surface-variant mt-1">JPG, PNG ou GIF. Máximo 2MB.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Personal Info Form -->
+    <form id="form-perfil" class="bg-surface-container-lowest rounded-2xl shadow-sm border border-slate-100/50 p-8 mb-8">
+      <h2 class="text-lg font-bold text-on-surface font-manrope mb-6">Informações Pessoais</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Nome -->
+        <div>
+          <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Nome Completo</label>
+          <input type="text" id="input-nome" value="Maria Oliveira"
+            class="w-full bg-surface ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all text-on-surface" />
+        </div>
+        <!-- Email -->
+        <div>
+          <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Email</label>
+          <input type="email" id="input-email" value="maria.oliveira@email.com"
+            class="w-full bg-surface ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all text-on-surface" />
+        </div>
+        <!-- Telefone -->
+        <div>
+          <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Telefone</label>
+          <input type="tel" id="input-telefone" value="(11) 98765-4321"
+            class="w-full bg-surface ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all text-on-surface" />
+        </div>
+        <!-- Curso (não editável) -->
+        <div>
+          <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Curso</label>
+          <input type="text" value="Engenharia de Software" disabled
+            class="w-full bg-surface-container-low ghost-border rounded-lg px-4 py-3 text-on-surface-variant cursor-not-allowed" />
+          <p class="text-[10px] text-on-surface-variant mt-1 flex items-center gap-1">
+            <span class="material-symbols-outlined text-[12px]">lock</span> Campo não editável
+          </p>
+        </div>
+        <!-- RA (não editável) -->
+        <div>
+          <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">RA</label>
+          <input type="text" value="12345678" disabled
+            class="w-full bg-surface-container-low ghost-border rounded-lg px-4 py-3 text-on-surface-variant cursor-not-allowed" />
+          <p class="text-[10px] text-on-surface-variant mt-1 flex items-center gap-1">
+            <span class="material-symbols-outlined text-[12px]">lock</span> Campo não editável
+          </p>
+        </div>
+      </div>
+      <div class="mt-8 flex justify-end">
+        <button type="submit"
+          class="bg-primary text-on-primary font-bold py-3 px-8 rounded-lg hover:bg-secondary transition-all shadow-lg shadow-primary/20">
+          Salvar Alterações
+        </button>
+      </div>
+    </form>
+
+    <!-- Change Password -->
+    <form id="form-senha" class="bg-surface-container-lowest rounded-2xl shadow-sm border border-slate-100/50 p-8 mb-8">
+      <h2 class="text-lg font-bold text-on-surface font-manrope mb-6">Alterar Senha</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Senha Atual</label>
+          <input type="password" id="input-senha-atual" placeholder="••••••••"
+            class="w-full bg-surface ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all" />
+        </div>
+        <div></div>
+        <div>
+          <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Nova Senha</label>
+          <input type="password" id="input-nova-senha" placeholder="••••••••"
+            class="w-full bg-surface ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Confirmar Nova Senha</label>
+          <input type="password" id="input-confirmar-senha" placeholder="••••••••"
+            class="w-full bg-surface ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all" />
+        </div>
+      </div>
+      <div class="mt-8 flex justify-end">
+        <button type="submit"
+          class="bg-primary text-on-primary font-bold py-3 px-8 rounded-lg hover:bg-secondary transition-all shadow-lg shadow-primary/20">
+          Atualizar Senha
+        </button>
+      </div>
+    </form>
+
+    <!-- Danger Zone -->
+    <div class="bg-error-container/10 rounded-2xl border border-error/15 p-8">
+      <h2 class="text-lg font-bold text-error font-manrope mb-2">Zona de Perigo</h2>
+      <p class="text-sm text-on-surface-variant mb-6">
+        Ao excluir sua conta, todos os seus dados serão removidos permanentemente. Esta ação não pode ser desfeita.
+      </p>
+      <button id="btn-excluir-conta" type="button"
+        class="bg-error text-on-error font-bold py-3 px-8 rounded-lg hover:opacity-90 transition-all shadow-lg shadow-error/20 flex items-center gap-2">
+        <span class="material-symbols-outlined text-lg">delete_forever</span>
+        Excluir Minha Conta
+      </button>
+    </div>
+  </main>
+
+  <!-- Bottom Nav (Mobile) -->
+  <footer class="lg:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-white z-50 rounded-t-2xl shadow-[0_-4px_12px_rgba(0,0,0,0.05)] border-t border-slate-100">
+    <button class="btn-aluno-home flex flex-col items-center justify-center text-slate-400 py-1 cursor-pointer">
+      <span class="material-symbols-outlined">home</span>
+      <span class="text-[10px] font-manrope font-semibold mt-1">Home</span>
+    </button>
+    <button class="flex flex-col items-center justify-center bg-green-100 text-green-800 rounded-xl px-6 py-2">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+      <span class="text-[10px] font-manrope font-semibold mt-1">Perfil</span>
+    </button>
+  </footer>
+
+  <script>
+    // Avatar dropdown toggle
+    const avatarBtn = document.getElementById('btn-avatar-menu');
+    const dropdown = document.getElementById('avatar-dropdown');
+    avatarBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
+    document.addEventListener('click', () => dropdown.classList.add('hidden'));
+    dropdown.addEventListener('click', (e) => e.stopPropagation());
+
+    function previewImage(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById('avatar-img').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    document.getElementById('form-perfil').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('Perfil atualizado com sucesso!');
+    });
+
+    document.getElementById('form-senha').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const nova = document.getElementById('input-nova-senha').value;
+      const confirmar = document.getElementById('input-confirmar-senha').value;
+      if (nova !== confirmar) {
+        alert('As senhas não coincidem!');
+        return;
+      }
+      alert('Senha atualizada com sucesso!');
+    });
+
+    document.getElementById('btn-excluir-conta').addEventListener('click', function () {
+      if (confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível.')) {
+        alert('Conta excluída. (Implementar no backend)');
+      }
+    });
+  </script>
+</body>
+</html>

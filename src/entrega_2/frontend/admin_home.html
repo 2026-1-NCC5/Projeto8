@@ -133,10 +133,19 @@
                 </div>
             </div>
             <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2 ml-2 pl-4 border-l border-slate-200/50">
-                    <div
-                        class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs">
+                <div class="relative">
+                    <button id="btn-avatar-menu"
+                        class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs cursor-pointer hover:ring-2 hover:ring-primary/40 transition-all">
                         AR
+                    </button>
+                    <div id="avatar-dropdown" class="hidden absolute right-0 top-12 w-48 bg-white rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.12)] border border-slate-100 py-2 z-[200]">
+                        <a class="btn-perfil flex items-center gap-3 px-4 py-3 text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-lg text-on-surface-variant">person</span> Perfil
+                        </a>
+                        <hr class="my-1 border-slate-100" />
+                        <a class="btn-sair flex items-center gap-3 px-4 py-3 text-sm font-medium text-error hover:bg-error-container/20 transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-lg">logout</span> Sair
+                        </a>
                     </div>
                 </div>
             </div>
@@ -220,17 +229,17 @@
     <div
         class="lg:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around items-center px-4 py-3 pb-safe z-50 rounded-t-2xl shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
         <div class="flex flex-col items-center justify-center bg-green-100 text-green-800 rounded-xl px-4 py-1">
-            <span class="material-symbols-outlined" data-icon="home">home</span>
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
             <span class="text-[10px] font-semibold">Home</span>
         </div>
-        <div class="flex flex-col items-center justify-center text-slate-400">
-            <span class="material-symbols-outlined" data-icon="group">group</span>
+        <button class="btn-equipes-mobile flex flex-col items-center justify-center text-slate-400 cursor-pointer">
+            <span class="material-symbols-outlined">group</span>
             <span class="text-[10px] font-semibold">Equipes</span>
-        </div>
-        <div class="flex flex-col items-center justify-center text-slate-400">
-            <span class="material-symbols-outlined" data-icon="person">person</span>
+        </button>
+        <button class="btn-perfil flex flex-col items-center justify-center text-slate-400 cursor-pointer">
+            <span class="material-symbols-outlined">person</span>
             <span class="text-[10px] font-semibold">Perfil</span>
-        </div>
+        </button>
     </div>
     <!-- Modal: Novo Semestre (Simplified Overlay) -->
     <!-- Note: Modal is hidden by default using 'hidden' class. Remove for visualization. -->
@@ -345,6 +354,13 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // ── Avatar dropdown toggle ─────────────────────────
+            const avatarBtn = document.getElementById('btn-avatar-menu');
+            const avatarDropdown = document.getElementById('avatar-dropdown');
+            avatarBtn.addEventListener('click', (e) => { e.stopPropagation(); avatarDropdown.classList.toggle('hidden'); });
+            document.addEventListener('click', () => avatarDropdown.classList.add('hidden'));
+            avatarDropdown.addEventListener('click', (e) => e.stopPropagation());
+
             const btnNovoSemestre = document.getElementById('btn-novo-semestre');
             const modalNovoSemestre = document.getElementById('modal-novo-semestre');
             const btnCloseModal = document.getElementById('btn-close-modal');

@@ -1,334 +1,370 @@
 <!DOCTYPE html>
 
-<html lang="pt-br"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Minha Equipe | Portal de Liderança</title>
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-<!-- Material Symbols -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "tertiary": "#9e4036",
-                    "on-surface": "#191c1e",
-                    "error-container": "#ffdad6",
-                    "on-primary-fixed-variant": "#005321",
-                    "on-background": "#191c1e",
-                    "tertiary-container": "#ff8b7c",
-                    "secondary": "#1f6c3a",
-                    "on-secondary-fixed": "#00210b",
-                    "on-secondary": "#ffffff",
-                    "outline": "#6d7b6c",
-                    "inverse-surface": "#2d3133",
-                    "surface-container-high": "#e6e8eb",
-                    "surface-container": "#eceef1",
-                    "surface": "#f7f9fc",
-                    "surface-bright": "#f7f9fc",
-                    "on-primary-container": "#004b1e",
-                    "on-error-container": "#93000a",
-                    "surface-tint": "#006e2f",
-                    "secondary-fixed-dim": "#8bd79b",
-                    "secondary-fixed": "#a6f4b5",
-                    "outline-variant": "#bccbb9",
-                    "surface-container-highest": "#e0e3e6",
-                    "secondary-container": "#a4f1b2",
-                    "primary-container": "#22c55e",
-                    "on-error": "#ffffff",
-                    "on-tertiary": "#ffffff",
-                    "surface-container-lowest": "#ffffff",
-                    "primary": "#006e2f",
-                    "surface-container-low": "#f2f4f7",
-                    "on-primary": "#ffffff",
-                    "inverse-on-surface": "#eff1f4",
-                    "on-tertiary-fixed": "#410001",
-                    "surface-variant": "#e0e3e6",
-                    "inverse-primary": "#4ae176",
-                    "error": "#ba1a1a",
-                    "surface-dim": "#d8dadd",
-                    "on-secondary-container": "#24703e",
-                    "tertiary-fixed": "#ffdad5",
-                    "on-surface-variant": "#3d4a3d",
-                    "on-primary-fixed": "#002109",
-                    "on-tertiary-fixed-variant": "#7f2a21",
-                    "primary-fixed": "#6bff8f",
-                    "background": "#f7f9fc",
-                    "primary-fixed-dim": "#4ae176",
-                    "tertiary-fixed-dim": "#ffb4a9",
-                    "on-tertiary-container": "#76231b",
-                    "on-secondary-fixed-variant": "#005226"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "fontFamily": {
-                    "headline": ["Manrope"],
-                    "display": ["Manrope"],
-                    "body": ["Inter"],
-                    "label": ["Inter"]
-            }
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Minha Equipe - Lideranças Empáticas</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@500;700;800&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-bright": "#f7f9fc",
+            "on-primary": "#ffffff",
+            "surface-container-low": "#f2f4f7",
+            "error-container": "#ffdad6",
+            "on-tertiary": "#ffffff",
+            "on-primary-container": "#004b1e",
+            "on-error-container": "#93000a",
+            "surface-container": "#eceef1",
+            "on-tertiary-fixed": "#410001",
+            "surface-variant": "#e0e3e6",
+            "on-secondary-container": "#24703e",
+            "on-surface": "#191c1e",
+            "surface-container-highest": "#e0e3e6",
+            "surface": "#f7f9fc",
+            "surface-tint": "#006e2f",
+            "surface-container-high": "#e6e8eb",
+            "secondary": "#1f6c3a",
+            "secondary-container": "#a4f1b2",
+            "on-secondary-fixed": "#00210b",
+            "inverse-primary": "#4ae176",
+            "tertiary-container": "#ff8b7c",
+            "inverse-surface": "#2d3133",
+            "secondary-fixed-dim": "#8bd79b",
+            "on-surface-variant": "#3d4a3d",
+            "on-tertiary-container": "#76231b",
+            "surface-dim": "#d8dadd",
+            "tertiary": "#9e4036",
+            "error": "#ba1a1a",
+            "tertiary-fixed-dim": "#ffb4a9",
+            "on-background": "#191c1e",
+            "primary-container": "#22c55e",
+            "on-tertiary-fixed-variant": "#7f2a21",
+            "on-secondary": "#ffffff",
+            "on-error": "#ffffff",
+            "primary-fixed-dim": "#4ae176",
+            "secondary-fixed": "#a6f4b5",
+            "on-secondary-fixed-variant": "#005226",
+            "primary-fixed": "#6bff8f",
+            "primary": "#006e2f",
+            "outline-variant": "#bccbb9",
+            "inverse-on-surface": "#eff1f4",
+            "on-primary-fixed-variant": "#005321",
+            "outline": "#6d7b6c",
+            "tertiary-fixed": "#ffdad5",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#002109",
+            "background": "#f7f9fc"
           },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
         },
-      }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .editorial-shadow {
-            box-shadow: 0 20px 40px rgba(25, 28, 30, 0.06);
-        }
-        .glass-header {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-        }
-    </style>
+      },
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .font-manrope {
+      font-family: 'Manrope', sans-serif;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
 </head>
-<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
-<!-- TopNavBar -->
-<nav class="fixed top-0 w-full z-50 glass-header flex justify-between items-center px-8 h-16 shadow-[0_20px_40px_rgba(25,28,30,0.06)]">
-<div class="flex items-center gap-8">
-<span class="text-xl font-headline font-extrabold text-on-surface">Portal de Liderança</span>
-<div class="hidden md:flex items-center gap-6">
-<a class="text-on-surface-variant font-medium hover:bg-surface-container-low transition-colors px-3 py-1 rounded-lg" href="#">Home</a>
-<a class="text-primary font-bold border-b-2 border-primary px-3 py-1" href="#">Equipes</a>
-<a class="text-on-surface-variant font-medium hover:bg-surface-container-low transition-colors px-3 py-1 rounded-lg" href="#">Semestres</a>
-<a class="text-on-surface-variant font-medium hover:bg-surface-container-low transition-colors px-3 py-1 rounded-lg" href="#">Relatórios</a>
-</div>
-</div>
-<div class="flex items-center gap-4">
-<div class="flex items-center gap-2">
-<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-200">
-<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
-</button>
-<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-200">
-<span class="material-symbols-outlined text-on-surface-variant">settings</span>
-</button>
-</div>
-<img alt="User profile" class="w-10 h-10 rounded-full bg-surface-container-highest object-cover" data-alt="Modern profile avatar of a student leader with minimalist artistic style on neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBo1Hi9z68CqJDPoh9Im0-VO_4m9lmQ4WO1L8aGGUerSZIxXtJ_6t8uYjGHBCOnORRlE8iCAndkR4g4WACnn20hvIARgz9TflpIzrzDpr5V_-lI1LY76JmsSHVYirnIFhjOdTSXd3AOsLw4vyeHe18XzUPC5CDbOyQQQ4tDg3sopWOoT09A36sHYG8OkJe3edWdPhVn3JOliJ8m-JgzvsssErICJspQbuXPXd7PndT5p6YzsJTaMuXBTkD7b2hkHfVaSuNbEg6l8SyW"/>
-</div>
-</nav>
-<!-- SideNavBar -->
-<aside class="hidden lg:flex flex-col gap-2 h-screen w-64 fixed left-0 top-0 pt-16 bg-surface-container-low pr-4 py-6 border-r border-outline/5">
-<div class="px-6 py-8 mb-4">
-<h2 class="font-headline font-bold text-lg text-primary">Área do Líder</h2>
-<p class="text-xs text-on-surface-variant font-medium">Gestão Estudantil</p>
-</div>
-<nav class="flex flex-col gap-1">
-<a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:translate-x-1 transition-transform duration-200" href="#">
-<span class="material-symbols-outlined">home</span>
-<span class="text-sm font-medium">Home</span>
-</a>
-<a class="flex items-center gap-3 px-6 py-3 bg-primary/10 text-primary rounded-r-full font-bold" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
-<span class="text-sm">Equipes</span>
-</a>
-<a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:translate-x-1 transition-transform duration-200" href="#">
-<span class="material-symbols-outlined">calendar_today</span>
-<span class="text-sm font-medium">Semestres</span>
-</a>
-<a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:translate-x-1 transition-transform duration-200" href="#">
-<span class="material-symbols-outlined">analytics</span>
-<span class="text-sm font-medium">Relatórios</span>
-</a>
-</nav>
-</aside>
-<!-- Main Content Canvas -->
-<main class="pt-24 pb-12 px-6 lg:pl-72 lg:pr-12 max-w-[1440px] mx-auto">
-<!-- Header Section -->
-<header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
-<div>
-<nav class="flex items-center gap-2 text-on-surface-variant text-sm mb-2">
-<span>Equipes</span>
-<span class="material-symbols-outlined text-xs">chevron_right</span>
-<span class="font-bold text-primary">Alpha</span>
-</nav>
-<h1 class="text-4xl md:text-5xl font-headline font-extrabold text-on-surface tracking-tight">Equipe Alpha</h1>
-</div>
-<!-- Highlight Total Card -->
-<div class="bg-primary-container/10 p-6 rounded-xl border border-primary/10 min-w-[240px] flex items-center justify-between">
-<div>
-<p class="text-xs font-bold uppercase tracking-widest text-primary mb-1">Arrecadação Total</p>
-<p class="text-3xl font-headline font-extrabold text-on-primary-container">4.820 itens</p>
-</div>
-<div class="bg-primary-container p-3 rounded-lg text-on-primary-container">
-<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
-</div>
-</div>
-</header>
-<!-- Bento Grid Layout -->
-<div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
-<!-- Team Members Section -->
-<section class="xl:col-span-8 bg-surface-container-lowest rounded-xl editorial-shadow p-8">
-<div class="flex items-center justify-between mb-8">
-<h2 class="text-2xl font-headline font-bold text-on-surface">Minha Equipe</h2>
-<span class="text-on-surface-variant text-sm font-medium">6 Integrantes ativos</span>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-<!-- Member Card -->
-<div class="group p-4 bg-surface hover:bg-primary/5 transition-colors rounded-xl border border-outline/5">
-<div class="flex items-center gap-4">
-<img alt="Maria Silva" class="w-12 h-12 rounded-full bg-surface-container-high" data-alt="Professional avatar portrait of a female student with glasses and friendly expression on a soft green background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1fqtEiUsm-UJY8stW62Dn1Z0HqJetRjugQl1ICmY3EnDfBOdV8PfV9SFTdiR4u-Wh_GDBOjRphru-OLEmab5N77v-iRrRoWRXuzVs280gHc-WuelbE-6F2Ygk0y8Mi_BmM8bRrZH1t8U-Z1UKtmxIqLhZsB_lIG5ZRs0NaKpIcCmo6Nxmq7eQ3KsRd1NoIzPS4VdxA3SBVOy-QNwTWh262CHCWWmWacCb3vKWUoYx9sQDg9IzrinevH-HxNsPXx2dJtliPC_yKUX9"/>
-<div>
-<h3 class="font-bold text-on-surface group-hover:text-primary transition-colors">Maria Silva</h3>
-<p class="text-xs text-on-surface-variant font-medium">Líder de Equipe</p>
-</div>
-</div>
-</div>
-<div class="group p-4 bg-surface hover:bg-primary/5 transition-colors rounded-xl border border-outline/5">
-<div class="flex items-center gap-4">
-<img alt="João Pereira" class="w-12 h-12 rounded-full bg-surface-container-high" data-alt="Professional avatar portrait of a male student with short hair and casual attire on a soft blue background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDt7NNHhH_zbqzWxb8zDU57EVRm-qSPHBpVcQvWx1kf2KR3yQJxV24qjcBTpDoVcCQjb-7loTUlHDUudDqWj9VSLVcCB-K-YpgTt7tod2ZHSOMqQ-OoyHi1zubafT570rITPaZFF55MpX3qhnJtKf9AdpEat09GAYKZLEYaNPJjTss3w0xlAxFBaGKoyTEusB_li8LphQx9BKLBfs5wOJbEyS0d_w2IgvjRCU5SE9PSiTD2pRzWFna0FkP3KYkadVyuQQPz-gZKDKWV"/>
-<div>
-<h3 class="font-bold text-on-surface group-hover:text-primary transition-colors">João Pereira</h3>
-<p class="text-xs text-on-surface-variant font-medium">Logística</p>
-</div>
-</div>
-</div>
-<div class="group p-4 bg-surface hover:bg-primary/5 transition-colors rounded-xl border border-outline/5">
-<div class="flex items-center gap-4">
-<img alt="Ana Costa" class="w-12 h-12 rounded-full bg-surface-container-high" data-alt="Professional avatar portrait of a female student with long hair and bright clothing on a soft yellow background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAn0iL7-uA9mjxG3hz466ofUuQtngwlaQWrNCDWJlglXPHg2oTBN72oHgitdKxVOKir0KK1oCSzwftgt4C9hPWyKt6KXFVnS9Z1CwzJkbjzdQW2OROH_noEV2v_XNJf5ybeHV4ApVZtzQ9-e_yvdCzNnc9Ulhl8e45KWU3jb7Z2bGeyce-r0tBycUzIAlwBlIL_JYollCNLmyIzlzK1fUQIeScSoAcCCli_Jxwy-SYJxu0XML9TYPJv86SSw-mJttC8zt-VMFz-bGCK"/>
-<div>
-<h3 class="font-bold text-on-surface group-hover:text-primary transition-colors">Ana Costa</h3>
-<p class="text-xs text-on-surface-variant font-medium">Comunicação</p>
-</div>
-</div>
-</div>
-<div class="group p-4 bg-surface hover:bg-primary/5 transition-colors rounded-xl border border-outline/5">
-<div class="flex items-center gap-4">
-<img alt="Pedro Santos" class="w-12 h-12 rounded-full bg-surface-container-high" data-alt="Professional avatar portrait of a male student with dark hair and thoughtful expression on a soft orange background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqaJOQGxM8_6qAyqSUyytx48e9HVKmbQzBfmRqHYs-3FD-mTsC56-zRryE4tAuTZ6BI65DSNd4LyCPQZ2v--htuCq3aR83Jm-6QqMEKxV34Dh-XzBhUbJsuT2YuDbiuI_WcO3D6JChLKPICdxbp_MgFjSgZNFFVeQpJADHTPuzK8eiveQ_5saCgpEbzgTvDTROB7qA2rKjLyW95sSNtfRXMTXt9Y0q4ITz7n3NjKGaGjhU8jhokfdCOZu-x7_CQKcceHg7Miyu79V7"/>
-<div>
-<h3 class="font-bold text-on-surface group-hover:text-primary transition-colors">Pedro Santos</h3>
-<p class="text-xs text-on-surface-variant font-medium">Financeiro</p>
-</div>
-</div>
-</div>
-<div class="group p-4 bg-surface hover:bg-primary/5 transition-colors rounded-xl border border-outline/5">
-<div class="flex items-center gap-4">
-<img alt="Carla Dias" class="w-12 h-12 rounded-full bg-surface-container-high" data-alt="Professional avatar portrait of a female student with curly hair and cheerful expression on a soft purple background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuDJxR2lCLXDZAsL5NvHDRvR0dfHixV_CtXEOz7Hn_ztGEDuVe9lxevKLJ9n6CcC8pWgtJXtTRmakCnICQAdxKpKAmfB7HJ64N_HT703A8dCo8xVY-5kvnSDfBUdUvKK54ivUmjF2-C-VSl1osKllN_Uj1pdR3o2RWSCoyuLnbYXbPdF27aQUsbfhdAuIj1jmfjum90EMHIz64kWbD2ZKo6U4GgKmg_0ZAzCKkt1QaDpZzKBYoWPYjt1PaWo-tU5X2K00_fx_iB7Ui"/>
-<div>
-<h3 class="font-bold text-on-surface group-hover:text-primary transition-colors">Carla Dias</h3>
-<p class="text-xs text-on-surface-variant font-medium">Engajamento</p>
-</div>
-</div>
-</div>
-<div class="group p-4 bg-surface hover:bg-primary/5 transition-colors rounded-xl border border-outline/5">
-<div class="flex items-center gap-4">
-<img alt="Lucas Lima" class="w-12 h-12 rounded-full bg-surface-container-high" data-alt="Professional avatar portrait of a male student with glasses and modern hairstyle on a soft red background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhDp5ipE4co0M5j_BQJQEvAu6VzBMi28fAO4LW_UXfEoxzy9DOp229462DklpURcF62lJ42kfrlfpuvdigZ_j7O75XfyfFOs6r-m1j4YZqyFHa-u-suj68uwu5iWyw_ifGz-4ICxyWXGM-HTxljE82mx_ijszcpmEbgh_N2DeeUkpjDXI-wNn0ve7lhhyF7xb4ieGCmnbnIMYUZCgGqUiydjwrFIVuCDIF5zZBuomop361PjCBJu03iRBVx6KXrSojGz-weKUTA8nc"/>
-<div>
-<h3 class="font-bold text-on-surface group-hover:text-primary transition-colors">Lucas Lima</h3>
-<p class="text-xs text-on-surface-variant font-medium">Operações</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Chart Section -->
-<section class="xl:col-span-4 flex flex-col gap-8">
-<div class="bg-surface-container-lowest rounded-xl editorial-shadow p-8 h-full">
-<header class="mb-8">
-<h2 class="text-xl font-headline font-bold text-on-surface">Arrecadação 2024.1</h2>
-<p class="text-sm text-on-surface-variant">Desempenho por categoria (Agosto — Novembro)</p>
-</header>
-<div class="relative h-64 w-full">
-<!-- Custom CSS-based Bar Chart Representation to avoid JS requirements while keeping visual fidelity -->
-<div class="flex h-full items-end justify-between gap-2 border-b border-outline/15 pb-2">
-<!-- Ago -->
-<div class="flex flex-col gap-1 items-center flex-1">
-<div class="w-full flex flex-col-reverse gap-0.5 h-full">
-<div class="bg-primary/30 w-full rounded-t-sm" style="height: 15%"></div>
-<div class="bg-secondary w-full" style="height: 25%"></div>
-<div class="bg-primary w-full" style="height: 40%"></div>
-</div>
-<span class="text-[10px] font-bold text-on-surface-variant uppercase mt-2">Ago</span>
-</div>
-<!-- Set -->
-<div class="flex flex-col gap-1 items-center flex-1">
-<div class="w-full flex flex-col-reverse gap-0.5 h-full">
-<div class="bg-primary/30 w-full rounded-t-sm" style="height: 20%"></div>
-<div class="bg-secondary w-full" style="height: 30%"></div>
-<div class="bg-primary w-full" style="height: 45%"></div>
-</div>
-<span class="text-[10px] font-bold text-on-surface-variant uppercase mt-2">Set</span>
-</div>
-<!-- Out -->
-<div class="flex flex-col gap-1 items-center flex-1">
-<div class="w-full flex flex-col-reverse gap-0.5 h-full">
-<div class="bg-primary/30 w-full rounded-t-sm" style="height: 25%"></div>
-<div class="bg-secondary w-full" style="height: 40%"></div>
-<div class="bg-primary w-full" style="height: 30%"></div>
-</div>
-<span class="text-[10px] font-bold text-on-surface-variant uppercase mt-2">Out</span>
-</div>
-<!-- Nov -->
-<div class="flex flex-col gap-1 items-center flex-1">
-<div class="w-full flex flex-col-reverse gap-0.5 h-full">
-<div class="bg-primary/30 w-full rounded-t-sm" style="height: 40%"></div>
-<div class="bg-secondary w-full" style="height: 20%"></div>
-<div class="bg-primary w-full" style="height: 35%"></div>
-</div>
-<span class="text-[10px] font-bold text-on-surface-variant uppercase mt-2">Nov</span>
-</div>
-</div>
-</div>
-<!-- Legend -->
-<div class="mt-8 grid grid-cols-2 gap-4">
-<div class="flex items-center gap-2">
-<span class="w-3 h-3 rounded-full bg-primary"></span>
-<span class="text-xs font-medium text-on-surface-variant">Arroz</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="w-3 h-3 rounded-full bg-secondary"></span>
-<span class="text-xs font-medium text-on-surface-variant">Feijão</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="w-3 h-3 rounded-full bg-primary/30"></span>
-<span class="text-xs font-medium text-on-surface-variant">Outros</span>
-</div>
-</div>
-</div>
-</section>
-</div>
-<!-- Asymmetric Detail Section -->
-<div class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8">
-<div class="lg:col-span-5 bg-tertiary-container/10 p-8 rounded-xl border border-tertiary/10">
-<h3 class="text-tertiary font-headline font-bold text-xl mb-4">Próximos Passos</h3>
-<p class="text-on-surface-variant leading-relaxed text-sm">
-                    Nossa meta para Dezembro é alcançar os 5.000 itens. Foco total em 'Outros' para diversificar nossas cestas de auxílio.
-                </p>
-<div class="mt-6 flex gap-4">
-<button class="bg-primary text-on-primary px-6 py-3 rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:bg-secondary transition-all">Ver Detalhes</button>
-<button class="border border-outline/20 text-on-surface-variant px-6 py-3 rounded-lg text-sm font-bold hover:bg-surface-container transition-all">Exportar PDF</button>
-</div>
-</div>
-</div>
-</main>
-<!-- BottomNavBar (Mobile) -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-lowest glass-header h-16 flex justify-around items-center z-50 border-t border-outline/5">
-<button class="flex flex-col items-center gap-1 text-on-surface-variant">
-<span class="material-symbols-outlined">home</span>
-<span class="text-[10px] font-medium">Home</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-primary">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
-<span class="text-[10px] font-bold">Equipe</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-on-surface-variant">
-<span class="material-symbols-outlined">calendar_today</span>
-<span class="text-[10px] font-medium">Semestre</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-on-surface-variant">
-<span class="material-symbols-outlined">analytics</span>
-<span class="text-[10px] font-medium">Relatório</span>
-</button>
-</nav>
-</body></html>
+
+<body class="bg-surface text-on-surface min-h-screen">
+  <!-- Top Navigation Bar -->
+  <nav class="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md fixed top-0 w-full z-50 shadow-sm dark:shadow-none">
+    <div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
+      <div class="flex items-center gap-8">
+        <span class="text-xl font-bold tracking-tight text-green-800 dark:text-green-200 font-manrope">Lideranças
+          Empáticas</span>
+        <div class="hidden md:flex gap-6 items-center">
+          <a
+            class="btn-aluno-home text-slate-600 dark:text-slate-400 font-manrope text-sm font-medium hover:text-green-600 transition-colors cursor-pointer">Home</a>
+          <a class="text-green-700 dark:text-green-400 border-b-2 border-green-600 pb-1 font-manrope text-sm font-medium cursor-pointer"
+            href="#">Minha Equipe</a>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="relative">
+          <button id="btn-avatar-menu" class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden cursor-pointer hover:ring-2 hover:ring-primary/40 transition-all">
+            <img alt="User avatar"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCr9dcEzDyTwOpJo4z5ToaHiSCLuVvEyii31QPG10VzmzWL0SlFm_GdtE5XvdWLJAV8QZzpQwG7DKXkZeZNAn4jOU3SWG8b-n3HFnFC-6p6RsWCiPqe6pfGA_bv9wELWsBy8ewx8d6VwA5zRl6RZivirMj69Qgurbp0UoEmUjN1XoUdXHdKbe69koBy_D6WIljE_BX7A5DLxlDijQAvI9j9_4S_ABrr_MTHvHJVMgWYOe4W8QIxxml4nBwEkQBmtmH2MClVschYiFzc"
+              class="w-full h-full object-cover" />
+          </button>
+          <div id="avatar-dropdown" class="hidden absolute right-0 top-12 w-48 bg-white rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.12)] border border-slate-100 py-2 z-[200]">
+            <a class="btn-perfil flex items-center gap-3 px-4 py-3 text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-lg text-on-surface-variant">person</span> Perfil
+            </a>
+            <hr class="my-1 border-slate-100" />
+            <a class="btn-sair flex items-center gap-3 px-4 py-3 text-sm font-medium text-error hover:bg-error-container/20 transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-lg">logout</span> Sair
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- Main Content Canvas -->
+  <main class="pt-24 pb-20 px-4 md:px-10 max-w-screen-2xl mx-auto">
+    <!-- Header Section: Asymmetric Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-end mb-12">
+      <div class="lg:col-span-2">
+        <nav class="flex mb-4 text-xs font-medium text-slate-400 gap-2 items-center">
+          <a class="btn-aluno-home cursor-pointer" href="#">Home</a>
+          <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="text-secondary font-bold">Minha Equipe</span>
+        </nav>
+        <p class="text-on-surface-variant font-manrope text-lg mb-1">Histórico da Unidade:</p>
+        <h1 class="text-5xl font-extrabold text-[#166534] font-manrope tracking-tight leading-tight">Equipe Alpha</h1>
+      </div>
+      <div class="lg:col-span-1">
+        <!-- Metric Card: Glassmorphism / Editorial Style -->
+        <div
+          class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] flex items-center gap-5 border border-white/20">
+          <div
+            class="w-14 h-14 bg-secondary-container text-on-secondary-container flex items-center justify-center rounded-xl">
+            <span class="material-symbols-outlined text-3xl" data-icon="inventory_2"
+              style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+          </div>
+          <div>
+            <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Total Arrecadado</p>
+            <p class="text-3xl font-extrabold text-on-surface font-manrope">4.820 itens</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- History Table Section Title -->
+    <div class="mb-6 mt-12">
+      <h2 class="text-2xl font-extrabold text-[#166534] font-manrope">Histórico de Alimentos</h2>
+    </div>
+    <!-- Filters & Actions Section -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+      <div class="flex bg-surface-container-low p-1.5 rounded-full self-start">
+        <button class="px-6 py-2 rounded-full text-sm font-bold bg-white text-secondary shadow-sm">2026.1</button>
+        <button class="px-6 py-2 rounded-full text-sm font-medium text-slate-500 hover:text-slate-700">2025.2</button>
+        <button class="px-6 py-2 rounded-full text-sm font-medium text-slate-500 hover:text-slate-700">2025.1</button>
+      </div>
+      <div class="flex items-center gap-3 w-full md:w-auto">
+        <button
+          class="flex items-center gap-2 bg-surface-container-lowest px-4 py-2.5 rounded-lg border border-slate-200/50 text-slate-600 text-sm font-bold hover:bg-slate-50 active:scale-95 transition-all">
+          <span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+          Exportar
+        </button>
+      </div>
+    </div>
+    <!-- History Table: Editorial Typography -->
+    <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-slate-100/50">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-50/50 border-b border-slate-100">
+              <th class="px-8 py-5 text-[11px] font-extrabold uppercase tracking-widest text-slate-400 font-manrope">
+                Date</th>
+              <th class="px-8 py-5 text-[11px] font-extrabold uppercase tracking-widest text-slate-400 font-manrope">
+                Item</th>
+              <th class="px-8 py-5 text-[11px] font-extrabold uppercase tracking-widest text-slate-400 font-manrope">
+                Quantity</th>
+              <th class="px-8 py-5 text-[11px] font-extrabold uppercase tracking-widest text-slate-400 font-manrope">
+                Status</th>
+              <th
+                class="px-8 py-5 text-[11px] font-extrabold uppercase tracking-widest text-slate-400 font-manrope text-right">
+                Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-50">
+            <tr class="hover:bg-slate-50/50 transition-colors">
+              <td class="px-8 py-5 text-sm font-medium text-slate-600">24/05/2024</td>
+              <td class="px-8 py-5 text-sm font-bold text-on-surface">Cestas Básicas Premium</td>
+              <td class="px-8 py-5 text-sm font-bold text-secondary">450 un</td>
+              <td class="px-8 py-5">
+                <span
+                  class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-[11px] font-bold uppercase tracking-wider">Concluído</span>
+              </td>
+              <td class="px-8 py-5 text-right">
+                <button class="material-symbols-outlined text-slate-400 hover:text-secondary transition-colors"
+                  data-icon="more_vert">more_vert</button>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 transition-colors">
+              <td class="px-8 py-5 text-sm font-medium text-slate-600">21/05/2024</td>
+              <td class="px-8 py-5 text-sm font-bold text-on-surface">Kits Higiene (Master)</td>
+              <td class="px-8 py-5 text-sm font-bold text-secondary">1.200 un</td>
+              <td class="px-8 py-5">
+                <span
+                  class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-[11px] font-bold uppercase tracking-wider">Concluído</span>
+              </td>
+              <td class="px-8 py-5 text-right">
+                <button class="material-symbols-outlined text-slate-400 hover:text-secondary transition-colors"
+                  data-icon="more_vert">more_vert</button>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 transition-colors">
+              <td class="px-8 py-5 text-sm font-medium text-slate-600">18/05/2024</td>
+              <td class="px-8 py-5 text-sm font-bold text-on-surface">Agasalhos Térmicos</td>
+              <td class="px-8 py-5 text-sm font-bold text-secondary">85 un</td>
+              <td class="px-8 py-5">
+                <span
+                  class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-[11px] font-bold uppercase tracking-wider">Concluído</span>
+              </td>
+              <td class="px-8 py-5 text-right">
+                <button class="material-symbols-outlined text-slate-400 hover:text-secondary transition-colors"
+                  data-icon="more_vert">more_vert</button>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 transition-colors">
+              <td class="px-8 py-5 text-sm font-medium text-slate-600">15/05/2024</td>
+              <td class="px-8 py-5 text-sm font-bold text-on-surface">Leite em Pó Integral</td>
+              <td class="px-8 py-5 text-sm font-bold text-secondary">2.085 un</td>
+              <td class="px-8 py-5">
+                <span
+                  class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-[11px] font-bold uppercase tracking-wider">Concluído</span>
+              </td>
+              <td class="px-8 py-5 text-right">
+                <button class="material-symbols-outlined text-slate-400 hover:text-secondary transition-colors"
+                  data-icon="more_vert">more_vert</button>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 transition-colors">
+              <td class="px-8 py-5 text-sm font-medium text-slate-600">12/05/2024</td>
+              <td class="px-8 py-5 text-sm font-bold text-on-surface">Mantas de Lã</td>
+              <td class="px-8 py-5 text-sm font-bold text-secondary">1.000 un</td>
+              <td class="px-8 py-5">
+                <span
+                  class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-[11px] font-bold uppercase tracking-wider">Concluído</span>
+              </td>
+              <td class="px-8 py-5 text-right">
+                <button class="material-symbols-outlined text-slate-400 hover:text-secondary transition-colors"
+                  data-icon="more_vert">more_vert</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Pagination -->
+      <div class="px-8 py-5 bg-slate-50/30 flex justify-between items-center">
+        <span class="text-xs font-medium text-slate-500">Exibindo 1-5 de 24 registros</span>
+        <div class="flex gap-2">
+          <button
+            class="p-2 rounded-lg border border-slate-200 text-slate-400 hover:bg-white active:scale-90 transition-all">
+            <span class="material-symbols-outlined text-lg">chevron_left</span>
+          </button>
+          <button
+            class="p-2 rounded-lg border border-slate-200 text-slate-600 hover:bg-white active:scale-90 transition-all font-bold text-xs px-4">1</button>
+          <button
+            class="p-2 rounded-lg border border-slate-200 text-slate-400 hover:bg-white active:scale-90 transition-all font-medium text-xs px-4">2</button>
+          <button
+            class="p-2 rounded-lg border border-slate-200 text-slate-400 hover:bg-white active:scale-90 transition-all">
+            <span class="material-symbols-outlined text-lg">chevron_right</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mentors Section -->
+    <div class="mb-6 mt-12">
+      <h2 class="text-2xl font-extrabold text-[#166534] font-manrope">Mentores</h2>
+    </div>
+    <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-slate-100/50 mb-8">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-50/50 border-b border-slate-100">
+              <th class="px-8 py-5 text-[11px] font-extrabold uppercase tracking-widest text-slate-400 font-manrope">
+                Nome</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-50">
+            <tr class="hover:bg-slate-50/50 transition-colors">
+              <td class="px-8 py-5 text-sm font-bold text-on-surface">João Silva</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Members Section -->
+    <div class="mb-6 mt-12">
+      <h2 class="text-2xl font-extrabold text-[#166534] font-manrope">Membros (Alunos)</h2>
+    </div>
+    <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-slate-100/50 mb-8">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-50/50 border-b border-slate-100">
+              <th class="px-8 py-5 text-[11px] font-extrabold uppercase tracking-widest text-slate-400 font-manrope">
+                Nome</th>
+              <th class="px-8 py-5 text-[11px] font-extrabold uppercase tracking-widest text-slate-400 font-manrope">
+                Curso</th>
+              <th class="px-8 py-5 text-[11px] font-extrabold uppercase tracking-widest text-slate-400 font-manrope">
+                RA</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-50">
+            <tr class="hover:bg-slate-50/50 transition-colors">
+              <td class="px-8 py-5 text-sm font-bold text-on-surface">Maria Oliveira</td>
+              <td class="px-8 py-5 text-sm font-medium text-slate-600">Engenharia de Software</td>
+              <td class="px-8 py-5 text-sm font-medium text-secondary">12345678</td>
+            </tr>
+            <tr class="hover:bg-slate-50/50 transition-colors">
+              <td class="px-8 py-5 text-sm font-bold text-on-surface">Carlos Souza</td>
+              <td class="px-8 py-5 text-sm font-medium text-slate-600">Ciência da Computação</td>
+              <td class="px-8 py-5 text-sm font-medium text-secondary">87654321</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+  <!-- Bottom Navigation Bar (Mobile Only) -->
+  <footer
+    class="lg:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 pb-safe bg-white z-50 rounded-t-2xl shadow-[0_-4px_12px_rgba(0,0,0,0.05)] border-t border-slate-100">
+    <button
+      class="btn-aluno-home flex flex-col items-center justify-center text-slate-400 py-1 cursor-pointer">
+      <span class="material-symbols-outlined">home</span>
+      <span class="text-[10px] font-manrope font-semibold mt-1">Home</span>
+    </button>
+    <button class="btn-perfil flex flex-col items-center justify-center text-slate-400 py-1 cursor-pointer">
+      <span class="material-symbols-outlined">person</span>
+      <span class="text-[10px] font-manrope font-semibold mt-1">Perfil</span>
+    </button>
+  </footer>
+  <script>
+    const avatarBtn = document.getElementById('btn-avatar-menu');
+    const dropdown = document.getElementById('avatar-dropdown');
+    avatarBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
+    document.addEventListener('click', () => dropdown.classList.add('hidden'));
+    dropdown.addEventListener('click', (e) => e.stopPropagation());
+  </script>
+</body>
+
+</html>
