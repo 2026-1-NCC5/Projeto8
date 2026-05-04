@@ -92,14 +92,25 @@ def _handle_resultado(resultado):
     if resultado in ("aluno_perfil", "admin_perfil", "login", "cadastro",
                      "admin_home", "admin_equipes", "admin_detalhes_equipe",
                      "aluno_home", "aluno_minha_equipe"):
+        if resultado == "login":
+            # Limpar sessão ao sair
+            st.session_state["token"] = None
+            st.session_state["usuario"] = None
         st.session_state["pagina_atual"] = resultado
         st.rerun()
         return True
     return False
 
 
+# ── URL da API Backend ──────────────────────────
+API_URL = "http://localhost:8000"
+
 if "pagina_atual" not in st.session_state:
     st.session_state["pagina_atual"] = "login"
+if "token" not in st.session_state:
+    st.session_state["token"] = None
+if "usuario" not in st.session_state:
+    st.session_state["usuario"] = None
 
 pagina = st.session_state["pagina_atual"]
 
@@ -133,18 +144,46 @@ if pagina == "login":
         document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
             var email = document.getElementById('email').value;
-            if (email === 'admin@le.com') {
-                setComponentValue('admin_home');
-            } else if (email === 'aluno@le.com') {
-                setComponentValue('aluno_home');
-            } else {
-                alert('Credenciais inválidas. Tente:\\nAdmin: admin@le.com\\nAluno: aluno@le.com');
-            }
+            var senha = document.getElementById('password').value;
+
+            var submitBtn = e.target.querySelector('button[type="submit"]');
+            var originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = 'Entrando...';
+            submitBtn.disabled = true;
+
+            fetch('""" + API_URL + """/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, senha: senha })
+            })
+            .then(function(resp) {
+                if (!resp.ok) {
+                    return resp.json().then(function(err) { throw new Error(err.detail || 'Erro no login'); });
+                }
+                return resp.json();
+            })
+            .then(function(data) {
+                var destino = 'aluno_home';
+                if (data.usuario.tipo === 'admin') {
+                    destino = 'admin_home';
+                }
+                var payload = JSON.stringify({
+                    destino: destino,
+                    token: data.access_token,
+                    usuario: data.usuario
+                });
+                setComponentValue(payload);
+            })
+            .catch(function(err) {
+                alert(err.message || 'Erro ao conectar com o servidor.');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
         });
         document.querySelectorAll('.btn-criar-conta').forEach(function(el) {
             el.addEventListener('click', function(e) {
                 e.preventDefault();
-                setComponentValue('cadastro');
+                setComponentValue(JSON.stringify({ destino: 'cadastro' }));
             });
         });
     </script>
@@ -159,9 +198,21 @@ if pagina == "login":
     login_comp = components.declare_component("login_component", path=component_dir)
     resultado = login_comp(key="login")
 
-    if resultado in ["admin_home", "aluno_home", "cadastro"]:
-        st.session_state["pagina_atual"] = resultado
-        st.rerun()
+    if resultado:
+        try:
+            import json
+            dados = json.loads(resultado)
+            destino = dados.get("destino", "login")
+            if dados.get("token"):
+                st.session_state["token"] = dados["token"]
+                st.session_state["usuario"] = dados["usuario"]
+            st.session_state["pagina_atual"] = destino
+            st.rerun()
+        except (json.JSONDecodeError, TypeError):
+            # Fallback para navegação simples (ex: cadastro)
+            if resultado in ["admin_home", "aluno_home", "cadastro"]:
+                st.session_state["pagina_atual"] = resultado
+                st.rerun()
 
 # ── CADASTRO ──────────────────────────────────
 elif pagina == "cadastro":
