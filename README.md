@@ -27,9 +27,11 @@ Nossa plataforma não apenas conta pacotes, ela valoriza o esforço de cada equi
 ## 🚀 Ferramentas e Funcionalidades
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
-![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
 ![Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=microsoftazure&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![YOLO](https://img.shields.io/badge/YOLO-00FFFF?style=for-the-badge&logo=yolo&logoColor=black)
+![Label Studio](https://img.shields.io/badge/Label%20Studio-FF7139?style=for-the-badge&logo=labelstudio&logoColor=white)
 ![IA](https://img.shields.io/badge/AI-FF6F00?style=for-the-badge&logo=google-cloud&logoColor=white)
 
 ✨ <b>Principais Funcionalidades</b>  
