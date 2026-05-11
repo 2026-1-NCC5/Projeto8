@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard · Lideranças Empáticas</title>
+
+  <!-- Mesmas fontes do projeto -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind com plugins (igual às outras páginas) -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+
+  <!-- Tokens de cor do projeto (Material Design 3) -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            body: ["Inter", "sans-serif"],
+            headline: ["Manrope", "sans-serif"],
+            manrope: ["Manrope", "sans-serif"],
+          },
+          colors: {
+            "surface-bright": "#f7f9fc",
+            "on-primary": "#ffffff",
+            "surface-container-low": "#f2f4f7",
+            "error-container": "#ffdad6",
+            "on-tertiary": "#ffffff",
+            "on-primary-container": "#004b1e",
+            "on-error-container": "#93000a",
+            "surface-container": "#eceef1",
+            "surface-variant": "#e0e3e6",
+            "on-secondary-container": "#24703e",
+            "on-surface": "#191c1e",
+            "surface-container-highest": "#e0e3e6",
+            "surface": "#f7f9fc",
+            "surface-tint": "#006e2f",
+            "surface-container-high": "#e6e8eb",
+            "secondary": "#1f6c3a",
+            "secondary-container": "#b7f1cb",
+            "on-secondary": "#ffffff",
+            "primary-container": "#b7f1cb",
+            "primary": "#006e2f",
+            "on-surface-variant": "#41484d",
+            "surface-container-lowest": "#ffffff",
+            "error": "#ba1a1a",
+            "tertiary": "#b91c1c",
+            "tertiary-container": "#ffdad6",
+            "on-tertiary-container": "#410001",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html, body {
+      background-color: #f7f9fc;
+      /* SEM overflow:hidden — dentro do iframe do Streamlit o scroll é do próprio iframe */
+    }
+    /* Vidro da navbar — igual ao admin_home */
+    .glass-nav {
+      background: rgba(247, 249, 252, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(65, 72, 77, 0.1);
+    }
+    /* Cards */
+    .metric-card {
+      background: #ffffff;
+      border: 1px solid #e0e3e6;
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .metric-card:hover {
+      box-shadow: 0 8px 24px rgba(0, 110, 47, .08);
+      transform: translateY(-2px);
+    }
+    .chart-card {
+      background: #ffffff;
+      border: 1px solid #e0e3e6;
+      border-radius: 16px;
+      padding: 1.5rem;
+    }
+    /* Barra horizontal */
+    .bar-track {
+      height: 6px;
+      background: #eceef1;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width .8s ease;
+    }
+    /* Spinner */
+    .spinner {
+      border: 3px solid #e0e3e6;
+      border-top-color: #006e2f;
+      border-radius: 50%;
+      width: 36px; height: 36px;
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* Pill de filtro */
+    .pill {
+      cursor: pointer;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: 'Manrope', sans-serif;
+      border: 1.5px solid #e0e3e6;
+      background: #ffffff;
+      color: #41484d;
+      transition: all .15s;
+    }
+    .pill.active, .pill:hover {
+      border-color: #006e2f;
+      background: #b7f1cb;
+      color: #004b1e;
+    }
+    /* Select */
+    select {
+      border: 1.5px solid #e0e3e6;
+      border-radius: 10px;
+      padding: 6px 12px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #191c1e;
+      background: #ffffff;
+      outline: none;
+      cursor: pointer;
+    }
+    select:focus { border-color: #006e2f; }
+    /* Legend dot */
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 3px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+  </style>
+<script>window._TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidGlwbyI6ImFkbWluIiwiZXhwIjoxNzc4NTQ1OTcwfQ.OL29QyMcQyLY84B2ky3360hW2GDiWaLiMKjo00F562Y';</script>
+</head>
+<body class="bg-surface font-body text-on-surface">
+
+  <!-- ── Navbar (padrão do projeto) ─────────────────────────────────────── -->
+  <nav class="fixed top-0 w-full z-50 glass-nav shadow-sm">
+    <div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
+      <div class="flex items-center gap-8">
+        <span class="text-xl font-bold tracking-tight text-green-800 font-headline">Lideranças Empáticas</span>
+        <div class="hidden md:flex gap-6 items-center">
+          <a class="btn-home text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Home</a>
+          <a class="text-sm font-semibold text-primary border-b-2 border-primary pb-1 transition-colors">Dashboard</a>
+          <a class="btn-equipes text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Equipes</a>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="relative">
+          <button id="btn-avatar-menu"
+            class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs cursor-pointer hover:ring-2 hover:ring-primary/40 transition-all">
+            AD
+          </button>
+          <div id="avatar-dropdown"
+            class="hidden absolute right-0 top-12 w-48 bg-white rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.12)] border border-slate-100 py-2 z-[200]">
+            <a class="btn-perfil flex items-center gap-3 px-4 py-3 text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-lg text-on-surface-variant">person</span> Perfil
+            </a>
+            <hr class="my-1 border-slate-100" />
+            <a class="btn-sair flex items-center gap-3 px-4 py-3 text-sm font-medium text-error hover:bg-error-container/20 transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-lg">logout</span> Sair
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Main ───────────────────────────────────────────────────────────── -->
+  <main class="pt-24 pb-20 px-6 max-w-screen-xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-8">
+      <p class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">Visão geral</p>
+      <h1 class="text-4xl font-extrabold tracking-tight text-primary font-headline">Dashboard de Arrecadação</h1>
+      <p class="text-on-surface-variant mt-2 text-base">Distribuição dos alimentos coletados por equipe e tipo de item.</p>
+    </div>
+
+    <!-- Filtros -->
+    <div class="flex flex-wrap items-center gap-3 mb-8">
+      <span class="text-sm font-semibold text-on-surface-variant">Equipe:</span>
+      <button class="pill active" data-equipe="todas">Todas</button>
+      <button class="pill" data-equipe="1">Alpha</button>
+      <button class="pill" data-equipe="2">Beta</button>
+      <button class="pill" data-equipe="3">Gamma</button>
+      <button class="pill" data-equipe="4">Helios</button>
+
+      <div class="ml-auto flex items-center gap-2">
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size:18px;">calendar_month</span>
+        <select id="selectSemestre">
+          <option value="">Todos os semestres</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Metric Cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div class="metric-card col-span-2 md:col-span-1">
+        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Total arrecadado</p>
+        <p id="metricTotal" class="text-3xl font-extrabold text-primary font-headline">—</p>
+        <p class="text-xs text-on-surface-variant mt-1">unidades</p>
+      </div>
+      <div class="metric-card col-span-2 md:col-span-1">
+        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Tipos de item</p>
+        <p id="metricTipos" class="text-3xl font-extrabold text-primary font-headline">—</p>
+        <p class="text-xs text-on-surface-variant mt-1">categorias</p>
+      </div>
+      <div class="metric-card col-span-2 md:col-span-1">
+        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Item mais arrecadado</p>
+        <p id="metricTop" class="text-lg font-extrabold leading-tight text-primary font-headline">—</p>
+        <p id="metricTopPct" class="text-xs text-on-surface-variant mt-1">—</p>
+      </div>
+      <div class="metric-card col-span-2 md:col-span-1">
+        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Registros</p>
+        <p id="metricRegistros" class="text-3xl font-extrabold text-primary font-headline">—</p>
+        <p class="text-xs text-on-surface-variant mt-1">entradas no histórico</p>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- Pizza -->
+      <div class="chart-card">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-base font-bold text-on-surface font-headline">Distribuição por item</h2>
+          <span class="material-symbols-outlined text-on-surface-variant">donut_large</span>
+        </div>
+        <div id="loadingPizza" class="flex items-center justify-center" style="height:300px;">
+          <div class="spinner"></div>
+        </div>
+        <div id="chartPizzaWrap" class="hidden">
+          <div style="position:relative; width:100%; height:280px;">
+            <canvas id="pizzaChart" role="img" aria-label="Gráfico de rosca — distribuição dos alimentos arrecadados"></canvas>
+          </div>
+          <div id="legendPizza" class="flex flex-wrap gap-x-4 gap-y-2 mt-4"></div>
+        </div>
+      </div>
+
+      <!-- Barras horizontais -->
+      <div class="chart-card">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-base font-bold text-on-surface font-headline">Quantidade por item</h2>
+          <span class="material-symbols-outlined text-on-surface-variant">bar_chart</span>
+        </div>
+        <div id="loadingBarra" class="flex items-center justify-center" style="height:300px;">
+          <div class="spinner"></div>
+        </div>
+        <div id="barrasWrap" class="hidden flex flex-col gap-4 mt-2"></div>
+      </div>
+
+    </div>
+
+    <!-- Erro -->
+    <div id="errorBox"
+      class="hidden mt-8 p-4 rounded-xl border border-red-200 bg-red-50 text-error text-sm font-semibold flex items-center gap-2">
+      <span class="material-symbols-outlined" style="font-size:20px;">error</span>
+      <span id="errorMsg">Erro ao carregar dados.</span>
+    </div>
+
+  </main>
+
+  <!-- ── Mobile bottom nav (padrão das outras páginas admin) ────────────── -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-surface-container-high flex justify-around py-2 z-50">
+    <button class="btn-home flex flex-col items-center justify-center text-on-surface-variant cursor-pointer">
+      <span class="material-symbols-outlined">home</span>
+      <span class="text-[10px] font-manrope font-semibold">Home</span>
+    </button>
+    <div class="flex flex-col items-center justify-center bg-green-100 text-green-800 rounded-xl px-4 py-1">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bar_chart</span>
+      <span class="text-[10px] font-manrope font-semibold">Dashboard</span>
+    </div>
+    <button class="btn-equipes flex flex-col items-center justify-center text-on-surface-variant cursor-pointer">
+      <span class="material-symbols-outlined">group</span>
+      <span class="text-[10px] font-manrope font-semibold">Equipes</span>
+    </button>
+    <button class="btn-perfil flex flex-col items-center justify-center text-on-surface-variant cursor-pointer">
+      <span class="material-symbols-outlined">person</span>
+      <span class="text-[10px] font-manrope font-semibold">Perfil</span>
+    </button>
+  </nav>
+
+  <script>
+    // ── Configuração ──────────────────────────────────────────────────────────
+    const API_BASE = 'http://localhost:8000/api';
+    // Token injetado pelo app.py via window._TOKEN (tag <script> no <head>)
+    const TOKEN = window._TOKEN || '';
+
+    const CORES = [
+      '#006e2f', '#1D9E75', '#378ADD', '#7F77DD',
+      '#EF9F27', '#D4537E', '#D85A30', '#639922',
+      '#5DCAA5', '#85B7EB', '#AFA9EC', '#FAC775',
+    ];
+
+    // ── Estado ────────────────────────────────────────────────────────────────
+    let equipeAtiva   = 'todas';
+    let semestreAtivo = '';
+    let pizzaChart    = null;
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
+    const fmt = n => n.toLocaleString('pt-BR');
+
+    function showError(msg) {
+      document.getElementById('errorBox').classList.remove('hidden');
+      document.getElementById('errorMsg').textContent = msg;
+    }
+    function hideError() {
+      document.getElementById('errorBox').classList.add('hidden');
+    }
+    function setLoading(show) {
+      ['loadingPizza', 'loadingBarra'].forEach(id =>
+        document.getElementById(id).classList.toggle('hidden', !show));
+      ['chartPizzaWrap', 'barrasWrap'].forEach(id =>
+        document.getElementById(id).classList.toggle('hidden', show));
+    }
+
+    // ── Avatar dropdown ───────────────────────────────────────────────────────
+    document.getElementById('btn-avatar-menu').addEventListener('click', () => {
+      document.getElementById('avatar-dropdown').classList.toggle('hidden');
+    });
+    document.addEventListener('click', e => {
+      const menu   = document.getElementById('avatar-dropdown');
+      const btn    = document.getElementById('btn-avatar-menu');
+      if (!menu.contains(e.target) && !btn.contains(e.target))
+        menu.classList.add('hidden');
+    });
+
+    // ── Carregar semestres via API ────────────────────────────────────────────
+    async function carregarSemestres() {
+      try {
+        const res = await fetch(`${API_BASE}/semestres`, {
+          headers: { Authorization: `Bearer ${TOKEN}` }
+        });
+        if (!res.ok) return;
+        const data = await res.json();
+        const sel  = document.getElementById('selectSemestre');
+        // A rota /api/semestres retorna array direto (list[SemestreResponse])
+        const lista = Array.isArray(data) ? data : (data.items || []);
+        lista.forEach(s => {
+          const opt = document.createElement('option');
+          opt.value       = s.id;
+          opt.textContent = s.nome;
+          sel.appendChild(opt);
+        });
+      } catch (_) { /* silencioso — filtro de semestre fica vazio */ }
+    }
+
+    // ── Buscar histórico via API ──────────────────────────────────────────────
+    // Endpoint: GET /api/equipes/{id}/historico?por_pagina=50[&semestre_id=X]
+    // Retorna HistoricoPaginado { items, total, pagina, por_pagina, total_paginas }
+    // O backend limita por_pagina a 50, então paginamos até buscar tudo.
+    async function buscarTodasPaginas(equipeId) {
+      const qs = semestreAtivo ? `&semestre_id=${semestreAtivo}` : '';
+      let todos = [];
+      let pagina = 1;
+      let totalPaginas = 1;
+
+      do {
+        const url = `${API_BASE}/equipes/${equipeId}/historico?por_pagina=50&pagina=${pagina}${qs}`;
+        const res = await fetch(url, {
+          headers: { Authorization: `Bearer ${TOKEN}` }
+        });
+        if (!res.ok) break;
+        const json = await res.json();
+        todos = todos.concat(json.items || []);
+        totalPaginas = json.total_paginas || 1;
+        pagina++;
+      } while (pagina <= totalPaginas);
+
+      return todos;
+    }
+
+    async function buscarHistorico() {
+      setLoading(true);
+      hideError();
+
+      try {
+        const equipes = equipeAtiva === 'todas' ? [1, 2, 3, 4] : [parseInt(equipeAtiva)];
+
+        const resultados = await Promise.all(equipes.map(id => buscarTodasPaginas(id)));
+        const todos = resultados.flat();
+
+        renderizar(todos);
+
+      } catch (err) {
+        showError('Não foi possível conectar ao servidor. Verifique se o backend está rodando.');
+        setLoading(false);
+      }
+    }
+
+    // ── Renderizar gráficos e métricas ────────────────────────────────────────
+    function renderizar(registros) {
+      // Agrupa por item somando quantidade
+      const agrupado = {};
+      registros.forEach(r => {
+        agrupado[r.item] = (agrupado[r.item] || 0) + r.quantidade;
+      });
+
+      const itens = Object.entries(agrupado)
+        .sort((a, b) => b[1] - a[1])
+        .map(([item, qtd], i) => ({ item, qtd, cor: CORES[i % CORES.length] }));
+
+      const total = itens.reduce((s, d) => s + d.qtd, 0);
+
+      // Métricas
+      document.getElementById('metricTotal').textContent     = fmt(total);
+      document.getElementById('metricTipos').textContent     = itens.length;
+      document.getElementById('metricRegistros').textContent = registros.length;
+
+      if (itens.length > 0) {
+        document.getElementById('metricTop').textContent    = itens[0].item;
+        document.getElementById('metricTopPct').textContent =
+          Math.round(itens[0].qtd / total * 100) + '% do total';
+      } else {
+        document.getElementById('metricTop').textContent    = '—';
+        document.getElementById('metricTopPct').textContent = '—';
+      }
+
+      // Pizza
+      if (pizzaChart) { pizzaChart.destroy(); pizzaChart = null; }
+
+      if (itens.length > 0) {
+        const ctx = document.getElementById('pizzaChart').getContext('2d');
+        pizzaChart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: itens.map(d => d.item),
+            datasets: [{
+              data: itens.map(d => d.qtd),
+              backgroundColor: itens.map(d => d.cor),
+              borderColor: '#fff',
+              borderWidth: 2,
+              hoverOffset: 10,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '58%',
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: ctx => {
+                    const pct = Math.round(ctx.parsed / total * 100);
+                    return ' ' + fmt(ctx.parsed) + ' un (' + pct + '%)';
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // Legenda customizada da pizza
+      const leg = document.getElementById('legendPizza');
+      leg.innerHTML = '';
+      itens.forEach(d => {
+        const pct = Math.round(d.qtd / total * 100);
+        leg.innerHTML += `
+          <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:#41484d;">
+            <span class="legend-dot" style="background:${d.cor};"></span>
+            ${d.item} <strong style="color:#191c1e;">${pct}%</strong>
+          </span>`;
+      });
+
+      // Barras horizontais
+      const wrap   = document.getElementById('barrasWrap');
+      wrap.innerHTML = '';
+      const maxQtd = itens.length > 0 ? itens[0].qtd : 1;
+      itens.forEach(d => {
+        const pct    = Math.round(d.qtd / total * 100);
+        const largura = Math.round(d.qtd / maxQtd * 100);
+        wrap.innerHTML += `
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:#41484d;margin-bottom:5px;">
+              <span style="font-weight:700;font-family:'Manrope',sans-serif;">${d.item}</span>
+              <span style="color:#191c1e;font-weight:700;">${fmt(d.qtd)} un · ${pct}%</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:${largura}%;background:${d.cor};"></div>
+            </div>
+          </div>`;
+      });
+
+      if (itens.length === 0) {
+        wrap.innerHTML = `<p class="text-on-surface-variant text-sm text-center py-8">Nenhum dado encontrado para os filtros selecionados.</p>`;
+      }
+
+      setLoading(false);
+    }
+
+    // ── Eventos de filtro ─────────────────────────────────────────────────────
+    document.querySelectorAll('.pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        equipeAtiva = btn.dataset.equipe;
+        buscarHistorico();
+      });
+    });
+
+    document.getElementById('selectSemestre').addEventListener('change', e => {
+      semestreAtivo = e.target.value;
+      buscarHistorico();
+    });
+
+    // ── Init ──────────────────────────────────────────────────────────────────
+    carregarSemestres();
+    buscarHistorico();
+  </script>
+
+    <script>
+        function sendMessageToStreamlitClient(type, data) {
+            var outData = Object.assign({ isStreamlitMessage: true, type: type }, data);
+            window.parent.postMessage(outData, "*");
+        }
+        function init() {
+            sendMessageToStreamlitClient("streamlit:componentReady", {apiVersion: 1});
+        }
+        function setComponentValue(value) {
+            sendMessageToStreamlitClient("streamlit:setComponentValue", {value: value});
+        }
+        window.addEventListener("message", function(event) {
+            if (event.data.type === "streamlit:render") {
+                sendMessageToStreamlitClient("streamlit:setFrameHeight", {height: document.body.scrollHeight || 900});
+            }
+        });
+        init();
+        
+        document.querySelectorAll('.btn-home').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                setComponentValue('admin_home');
+            });
+        });
+
+        document.querySelectorAll('.btn-equipes').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                setComponentValue('admin_equipes');
+            });
+        });
+
+        document.querySelectorAll('.btn-perfil').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                setComponentValue('admin_perfil');
+            });
+        });
+
+        document.querySelectorAll('.btn-sair').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                setComponentValue('login');
+            });
+        });
+
+    </script>
+    
+</body>
+</html>

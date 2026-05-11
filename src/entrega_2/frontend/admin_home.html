@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Portal Lideranças - Admin Home</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f7f9fc",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f2f4f7",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#004b1e",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#eceef1",
+                        "on-tertiary-fixed": "#410001",
+                        "surface-variant": "#e0e3e6",
+                        "on-secondary-container": "#24703e",
+                        "on-surface": "#191c1e",
+                        "surface-container-highest": "#e0e3e6",
+                        "surface": "#f7f9fc",
+                        "surface-tint": "#006e2f",
+                        "surface-container-high": "#e6e8eb",
+                        "secondary": "#1f6c3a",
+                        "secondary-container": "#a4f1b2",
+                        "on-secondary-fixed": "#00210b",
+                        "inverse-primary": "#4ae176",
+                        "tertiary-container": "#ff8b7c",
+                        "inverse-surface": "#2d3133",
+                        "secondary-fixed-dim": "#8bd79b",
+                        "on-surface-variant": "#3d4a3d",
+                        "on-tertiary-container": "#76231b",
+                        "surface-dim": "#d8dadd",
+                        "tertiary": "#9e4036",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ffb4a9",
+                        "on-background": "#191c1e",
+                        "primary-container": "#22c55e",
+                        "on-tertiary-fixed-variant": "#7f2a21",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#4ae176",
+                        "secondary-fixed": "#a6f4b5",
+                        "on-secondary-fixed-variant": "#005226",
+                        "primary-fixed": "#6bff8f",
+                        "primary": "#006e2f",
+                        "outline-variant": "#bccbb9",
+                        "inverse-on-surface": "#eff1f4",
+                        "on-primary-fixed-variant": "#005321",
+                        "outline": "#6d7b6c",
+                        "tertiary-fixed": "#ffdad5",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#002109",
+                        "background": "#f7f9fc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+        }
+
+        .cloud-shadow {
+            box-shadow: 0 20px 40px rgba(25, 28, 30, 0.06);
+        }
+
+        .ghost-border {
+            border: 1px solid rgba(109, 123, 108, 0.15);
+        }
+
+        html, body {
+            background-color: #f7f9fc;
+            /* SEM overflow:hidden — dentro do iframe do Streamlit o scroll é do próprio iframe */
+        }
+    </style>
+
+</head>
+
+<body class="bg-surface font-body text-on-surface min-h-[1024px]" data-stitch-vh="min-h-[1024px]===min-h-screen"
+    data-mode="connect">
+    <!-- Top Navigation Bar -->
+    <nav class="fixed top-0 w-full z-50 glass-nav shadow-sm">
+        <div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
+            <div class="flex items-center gap-8">
+                <span class="text-xl font-bold tracking-tight text-green-800 font-headline">Lideranças Empáticas</span>
+                <div class="hidden md:flex gap-6 items-center">
+                    <a class="text-green-700 border-b-2 border-green-600 pb-1 font-medium text-sm transition-colors"
+                    href="#">Home</a>
+                    <a class="btn-dashboard font-medium text-sm text-slate-600 hover:text-green-700 transition-colors cursor-pointer">
+                        Dashboard
+                    </a>
+                    <a class="btn-equipes-nav font-medium text-sm text-slate-600 hover:text-green-700 transition-colors cursor-pointer">
+                        Equipes
+                    </a>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="relative">
+                    <button id="btn-avatar-menu"
+                        class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs cursor-pointer hover:ring-2 hover:ring-primary/40 transition-all">
+                        AR
+                    </button>
+                    <div id="avatar-dropdown" class="hidden absolute right-0 top-12 w-48 bg-white rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.12)] border border-slate-100 py-2 z-[200]">
+                        <a class="btn-perfil flex items-center gap-3 px-4 py-3 text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-lg text-on-surface-variant">person</span> Perfil
+                        </a>
+                        <hr class="my-1 border-slate-100" />
+                        <a class="btn-sair flex items-center gap-3 px-4 py-3 text-sm font-medium text-error hover:bg-error-container/20 transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-lg">logout</span> Sair
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Canvas -->
+    <main class="pt-32 pb-24 px-6 max-w-screen-xl mx-auto">
+        <!-- Header Section -->
+        <header class="text-center mb-20">
+            <h1 class="font-headline text-[28px] font-semibold text-on-surface mb-2">Seja bem vindo, Admin</h1>
+            <p class="text-sm text-on-surface-variant max-w-md mx-auto">Gerencie o progresso das turmas, visualize
+                métricas de empatia e configure os novos ciclos de liderança da organização.</p>
+        </header>
+        <!-- Semester Grid — renderizado dinamicamente via API -->
+        <div id="semestres-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Spinner de carregamento -->
+            <div id="grid-loading" class="col-span-3 flex justify-center py-16">
+                <div style="border:3px solid #e0e3e6;border-top-color:#006e2f;border-radius:50%;width:36px;height:36px;animation:spin .7s linear infinite;"></div>
+            </div>
+        </div>
+        <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+    </main>
+
+    <!-- Bottom Nav (Mobile) -->
+    <div
+        class="lg:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around items-center px-4 py-3 pb-safe z-50 rounded-t-2xl shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+        <div class="flex flex-col items-center justify-center bg-green-100 text-green-800 rounded-xl px-4 py-1">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+            <span class="text-[10px] font-semibold">Home</span>
+        </div>
+        <button class="btn-equipes-mobile flex flex-col items-center justify-center text-slate-400 cursor-pointer">
+            <span class="material-symbols-outlined">group</span>
+            <span class="text-[10px] font-semibold">Equipes</span>
+        </button>
+        <button class="btn-perfil flex flex-col items-center justify-center text-slate-400 cursor-pointer">
+            <span class="material-symbols-outlined">person</span>
+            <span class="text-[10px] font-semibold">Perfil</span>
+        </button>
+    </div>
+
+    <!-- Modal: Novo Semestre -->
+    <div id="modal-novo-semestre" class="fixed inset-0 z-[100] bg-on-surface/20 backdrop-blur-sm hidden">
+        <div
+            class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[110] bg-surface-bright w-[calc(100%-2rem)] max-w-lg rounded-xl shadow-2xl overflow-hidden">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <div>
+                        <h2 class="font-headline text-2xl font-bold text-on-surface">Configurar Novo Semestre</h2>
+                        <p class="text-sm text-on-surface-variant">Defina os parâmetros do próximo ciclo.</p>
+                    </div>
+                    <button id="btn-close-modal" type="button" class="text-on-surface-variant hover:text-on-surface">
+                        <span class="material-symbols-outlined" data-icon="close">close</span>
+                    </button>
+                </div>
+                <form id="form-novo-semestre" class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="col-span-2">
+                            <label
+                                class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Nome
+                                do Semestre</label>
+                            <input
+                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
+                                id="input-nome-semestre" placeholder="Ex: 2024.2" type="text"
+                                pattern="[A-Za-zÀ-ÿ0-9 .\-]+"
+                                title="Nome do semestre (letras, números, ponto e hífen)" autocomplete="off">
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Ano</label>
+                            <input
+                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
+                                id="input-ano-semestre" placeholder="2024" type="number" min="2000" max="2100" step="1"
+                                inputmode="numeric" title="Digite apenas o ano (ex: 2024)">
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Período</label>
+                            <select id="input-periodo-semestre"
+                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all">
+                                <option value="1º Semestre">1º Semestre</option>
+                                <option value="2º Semestre">2º Semestre</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Data
+                                Início</label>
+                            <input
+                                id="input-data-inicio"
+                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
+                                type="date">
+                        </div>
+                        <div>
+                            <label
+                                class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Data
+                                Término</label>
+                            <input
+                                id="input-data-termino"
+                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
+                                type="date">
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-span-2 pt-2">
+                            <label
+                                class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Status
+                                do Semestre</label>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <input type="radio" name="status_semestre" id="status-ativo" value="ativo"
+                                        class="peer hidden" checked>
+                                    <label for="status-ativo"
+                                        class="flex flex-col items-start gap-2 p-4 border-2 border-outline-variant rounded-xl cursor-pointer transition-all peer-checked:border-primary peer-checked:bg-primary-fixed-dim/10 hover:bg-surface-container-highest">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-container text-on-primary-container">
+                                            <span class="mr-1.5 h-1.5 w-1.5 rounded-full bg-on-primary-container"></span>
+                                            ATIVO
+                                        </span>
+                                        <span class="text-xs font-medium text-on-surface-variant">Semestre atual e visível</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="status_semestre" id="status-inativo" value="inativo"
+                                        class="peer hidden">
+                                    <label for="status-inativo"
+                                        class="flex flex-col items-start gap-2 p-4 border-2 border-outline-variant rounded-xl cursor-pointer transition-all peer-checked:border-slate-400 peer-checked:bg-surface-variant/30 hover:bg-surface-container-highest">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-variant text-on-surface-variant">
+                                            OFFLINE
+                                        </span>
+                                        <span class="text-xs font-medium text-on-surface-variant">Semestre encerrado/inativo</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-4 flex gap-3">
+                        <button id="btn-cancel-modal"
+                            class="flex-1 ghost-border text-on-surface font-semibold py-3 rounded-lg hover:bg-surface-container transition-all"
+                            type="button">Cancelar</button>
+                        <button id="btn-submit-semestre"
+                            class="flex-1 bg-primary text-on-primary font-bold py-3 rounded-lg hover:opacity-90 transition-all shadow-lg shadow-primary/20"
+                            type="submit">Salvar Período</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ── Renderizar grid de semestres ───────────────────────────
+        function renderizarSemestres(semestres) {
+            const grid = document.getElementById('semestres-grid');
+            grid.innerHTML = '';
+
+            semestres.forEach(function(s) {
+                const isAtivo = s.status === 'ativo';
+                const card = document.createElement('div');
+
+                if (isAtivo) {
+                    card.className = 'bg-surface-container-lowest rounded-xl p-8 cloud-shadow relative flex flex-col items-start transition-transform hover:-translate-y-1';
+                    card.innerHTML = `
+                        <div class="flex justify-between w-full items-start mb-6">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-container text-on-primary-container">
+                                <span class="mr-1.5 h-1.5 w-1.5 rounded-full bg-on-primary-container"></span>ATIVO
+                            </span>
+                            <span class="btn-editar-semestre material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors" data-id="${s.id}">more_vert</span>
+                        </div>
+                        <div class="mb-8">
+                            <h2 class="font-headline text-5xl font-extrabold text-primary tracking-tighter">${s.nome}</h2>
+                            <p class="text-xs font-medium text-on-surface-variant mt-2 uppercase tracking-widest">Semestre em Curso</p>
+                        </div>
+                        <button id="btn-acessar-equipes" class="w-full bg-primary-container text-on-primary-container font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all">
+                            Acessar Equipes
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </button>`;
+                } else {
+                    card.className = 'bg-surface-container-low rounded-xl p-8 flex flex-col items-start transition-transform hover:-translate-y-1';
+                    card.innerHTML = `
+                        <div class="flex justify-between w-full items-start mb-6">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-variant text-on-surface-variant">OFFLINE</span>
+                            <span class="btn-editar-semestre material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors" data-id="${s.id}">more_vert</span>
+                        </div>
+                        <div class="mb-8">
+                            <h2 class="font-headline text-5xl font-extrabold text-on-surface-variant opacity-60 tracking-tighter">${s.nome}</h2>
+                            <p class="text-xs font-medium text-on-surface-variant mt-2 uppercase tracking-widest">Período Encerrado</p>
+                        </div>
+                        <button class="w-full ghost-border text-on-surface font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all">
+                            Verificar Edição
+                            <span class="material-symbols-outlined text-sm">refresh</span>
+                        </button>`;
+                }
+
+                grid.appendChild(card);
+            });
+
+            // Card "+ Novo Semestre"
+            const novoCard = document.createElement('div');
+            novoCard.id = 'btn-novo-semestre';
+            novoCard.className = 'bg-transparent rounded-xl p-8 border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary/40 hover:bg-primary-fixed-dim/5 transition-all group';
+            novoCard.innerHTML = `
+                <div class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-primary text-3xl">add</span>
+                </div>
+                <h3 class="font-headline font-bold text-on-surface tracking-tight">+ Novo Semestre</h3>
+                <p class="text-[10px] font-bold text-on-surface-variant mt-1 tracking-widest uppercase">ADICIONAR PERÍODO</p>`;
+            grid.appendChild(novoCard);
+
+            // Re-associar eventos após render dinâmico
+            associarEventos();
+        }
+
+        // ── Buscar semestres da API ────────────────────────────────
+        async function carregarSemestres() {
+            try {
+                const res = await fetch((window._API_BASE || '') + '/semestres', {
+                    headers: { 'Authorization': 'Bearer ' + (window._TOKEN || '') }
+                });
+                if (!res.ok) throw new Error('Erro ao carregar semestres');
+                const semestres = await res.json();
+                renderizarSemestres(semestres);
+            } catch (err) {
+                document.getElementById('semestres-grid').innerHTML =
+                    '<p class="col-span-3 text-center text-error text-sm py-8">Erro ao carregar semestres: ' + err.message + '</p>';
+            }
+        }
+
+        // ── Associar eventos (chamado após render) ─────────────────
+        function associarEventos() {
+            const modalNovoSemestre = document.getElementById('modal-novo-semestre');
+            const modalTitle        = document.querySelector('#modal-novo-semestre h2');
+
+            // Botão novo semestre
+            const btnNovoSemestre = document.getElementById('btn-novo-semestre');
+            if (btnNovoSemestre) {
+                btnNovoSemestre.addEventListener('click', () => {
+                    if (modalTitle) modalTitle.innerText = 'Configurar Novo Semestre';
+                    modalNovoSemestre.classList.remove('hidden');
+                });
+            }
+
+            // Botões editar semestre
+            document.querySelectorAll('.btn-editar-semestre').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (modalTitle) modalTitle.innerText = 'Editar Semestre';
+                    modalNovoSemestre.classList.remove('hidden');
+                });
+            });
+
+            // Botão acessar equipes
+            const btnAcessar = document.getElementById('btn-acessar-equipes');
+            if (btnAcessar) {
+                btnAcessar.addEventListener('click', function() {
+                    if (typeof setComponentValue === 'function') setComponentValue('admin_equipes');
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // ── Carregar semestres da API ──────────────────────────
+            carregarSemestres();
+
+            // ── Avatar dropdown ────────────────────────────────────
+            const avatarBtn = document.getElementById('btn-avatar-menu');
+            const avatarDropdown = document.getElementById('avatar-dropdown');
+            avatarBtn.addEventListener('click', (e) => { e.stopPropagation(); avatarDropdown.classList.toggle('hidden'); });
+            document.addEventListener('click', () => avatarDropdown.classList.add('hidden'));
+            avatarDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+            // ── Modal ──────────────────────────────────────────────
+            const modalNovoSemestre = document.getElementById('modal-novo-semestre');
+            const btnCloseModal     = document.getElementById('btn-close-modal');
+            const btnCancelModal    = document.getElementById('btn-cancel-modal');
+
+            // Fechar Modal
+            btnCloseModal.addEventListener('click', () => modalNovoSemestre.classList.add('hidden'));
+            btnCancelModal.addEventListener('click', () => modalNovoSemestre.classList.add('hidden'));
+            modalNovoSemestre.addEventListener('click', (e) => {
+                if (e.target === modalNovoSemestre) modalNovoSemestre.classList.add('hidden');
+            });
+
+            // ── Validação: Ano só aceita números ──────────────────
+            const inputAnoSemestre = document.getElementById('input-ano-semestre');
+            if (inputAnoSemestre) {
+                inputAnoSemestre.addEventListener('keydown', function(e) {
+                    const permitidos = ['Backspace','Tab','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'];
+                    if (permitidos.includes(e.key) || (e.key >= '0' && e.key <= '9')) return;
+                    e.preventDefault();
+                });
+                inputAnoSemestre.addEventListener('paste', function(e) {
+                    var texto = (e.clipboardData || window.clipboardData).getData('text');
+                    if (!/^\d+$/.test(texto)) e.preventDefault();
+                });
+            }
+
+            // ── Submit: Criar Semestre via API ────────────────────
+            const formSemestre  = document.getElementById('form-novo-semestre');
+            const submitBtn     = document.getElementById('btn-submit-semestre');
+
+            formSemestre.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const nome       = document.getElementById('input-nome-semestre').value.trim();
+                const ano        = parseInt(document.getElementById('input-ano-semestre').value);
+                const periodo    = document.getElementById('input-periodo-semestre').value;
+                const dataInicio = document.getElementById('input-data-inicio').value || null;
+                const dataTerm   = document.getElementById('input-data-termino').value || null;
+                const statusEl   = document.querySelector('input[name="status_semestre"]:checked');
+                const status     = statusEl ? statusEl.value : 'ativo';
+
+                if (!nome || !ano) {
+                    alert('Preencha pelo menos Nome e Ano.');
+                    return;
+                }
+
+                const textoOriginal = submitBtn.textContent;
+                submitBtn.textContent = 'Salvando...';
+                submitBtn.disabled = true;
+
+                try {
+                    const res = await fetch((window._API_BASE || '') + '/semestres', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + (window._TOKEN || '')
+                        },
+                        body: JSON.stringify({
+                            nome:         nome,
+                            ano:          ano,
+                            periodo:      periodo,
+                            data_inicio:  dataInicio,
+                            data_termino: dataTerm,
+                            status:       status
+                        })
+                    });
+
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.detail || 'Erro ao criar semestre.');
+                    }
+
+                    const semestre = await res.json();
+                    alert('Semestre "' + semestre.nome + '" criado com sucesso!');
+                    modalNovoSemestre.classList.add('hidden');
+                    carregarSemestres();
+
+                } catch (err) {
+                    alert(err.message || 'Erro ao conectar com o servidor.');
+                } finally {
+                    submitBtn.textContent = textoOriginal;
+                    submitBtn.disabled = false;
+                }
+            });
+
+        });
+    </script>
+</body>
+
+</html>
