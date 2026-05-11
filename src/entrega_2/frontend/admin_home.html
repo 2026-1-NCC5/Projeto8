@@ -12,9 +12,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet">
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -102,19 +99,9 @@
             border: 1px solid rgba(109, 123, 108, 0.15);
         }
 
-        /* Prevenir rolagem dupla (body fixo, apenas <main> rola) e garantir fundo cobrindo toda a tela */
-        html,
-        body {
-            overflow: hidden !important;
-            height: 100vh;
-            min-height: 100vh;
+        html, body {
             background-color: #f7f9fc;
-            /* Fundo "surface" */
-        }
-
-        main {
-            overflow-y: auto !important;
-            height: 100vh;
+            /* SEM overflow:hidden — dentro do iframe do Streamlit o scroll é do próprio iframe */
         }
     </style>
 
@@ -129,7 +116,13 @@
                 <span class="text-xl font-bold tracking-tight text-green-800 font-headline">Lideranças Empáticas</span>
                 <div class="hidden md:flex gap-6 items-center">
                     <a class="text-green-700 border-b-2 border-green-600 pb-1 font-medium text-sm transition-colors"
-                        href="#">Home</a>
+                    href="#">Home</a>
+                    <a class="btn-dashboard font-medium text-sm text-slate-600 hover:text-green-700 transition-colors cursor-pointer">
+                        Dashboard
+                    </a>
+                    <a class="btn-equipes-nav font-medium text-sm text-slate-600 hover:text-green-700 transition-colors cursor-pointer">
+                        Equipes
+                    </a>
                 </div>
             </div>
             <div class="flex items-center gap-4">
@@ -151,6 +144,7 @@
             </div>
         </div>
     </nav>
+
     <!-- Main Content Canvas -->
     <main class="pt-32 pb-24 px-6 max-w-screen-xl mx-auto">
         <!-- Header Section -->
@@ -159,72 +153,16 @@
             <p class="text-sm text-on-surface-variant max-w-md mx-auto">Gerencie o progresso das turmas, visualize
                 métricas de empatia e configure os novos ciclos de liderança da organização.</p>
         </header>
-        <!-- Semester Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Active Semester Card -->
-            <div
-                class="bg-surface-container-lowest rounded-xl p-8 cloud-shadow relative flex flex-col items-start transition-transform hover:-translate-y-1">
-                <div class="flex justify-between w-full items-start mb-6">
-                    <span
-                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-container text-on-primary-container">
-                        <span class="mr-1.5 h-1.5 w-1.5 rounded-full bg-on-primary-container"></span>
-                        ATIVO
-                    </span>
-                    <span
-                        id="btn-opcoes-semestre-2024-1" class="btn-editar-semestre material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors" aria-label="Opções do semestre 2024.1"
-                        data-icon="more_vert">more_vert</span>
-                </div>
-                <div class="mb-8">
-                    <h2 id="titulo-semestre-ativo" class="font-headline text-5xl font-extrabold text-primary tracking-tighter">2024.1</h2>
-                    <p class="text-xs font-medium text-on-surface-variant mt-2 uppercase tracking-widest">Semestre em
-                        Curso</p>
-                </div>
-                <button
-                    id="btn-acessar-equipes" class="w-full bg-primary-container text-on-primary-container font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all" aria-label="Acessar equipes do semestre 2024.1">
-                    Acessar Equipes
-                    <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
-                </button>
-            </div>
-            <!-- Offline Semester Card -->
-            <div
-                class="bg-surface-container-low rounded-xl p-8 flex flex-col items-start transition-transform hover:-translate-y-1">
-                <div class="flex justify-between w-full items-start mb-6">
-                    <span
-                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-variant text-on-surface-variant">
-                        OFFLINE
-                    </span>
-                    <span
-                        id="btn-opcoes-semestre-2023-2" class="btn-editar-semestre material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors" aria-label="Opções do semestre 2023.2"
-                        data-icon="more_vert">more_vert</span>
-                </div>
-                <div class="mb-8">
-                    <h2 id="titulo-semestre-inativo"
-                        class="font-headline text-5xl font-extrabold text-on-surface-variant opacity-60 tracking-tighter">
-                        2023.2</h2>
-                    <p class="text-xs font-medium text-on-surface-variant mt-2 uppercase tracking-widest">Período
-                        Encerrado</p>
-                </div>
-                <button
-                    class="w-full ghost-border text-on-surface font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all">
-                    Verificar Edição
-                    <span class="material-symbols-outlined text-sm" data-icon="refresh">refresh</span>
-                </button>
-            </div>
-            <!-- Add New Semester Trigger -->
-            <div id="btn-novo-semestre"
-                class="bg-transparent rounded-xl p-8 border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary/40 hover:bg-primary-fixed-dim/5 transition-all group">
-                <div
-                    class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-primary text-3xl" data-icon="add">add</span>
-                </div>
-                <h3 class="font-headline font-bold text-on-surface tracking-tight">+ Novo Semestre</h3>
-                <p class="text-[10px] font-bold text-on-surface-variant mt-1 tracking-widest uppercase">ADICIONAR
-                    PERÍODO</p>
+        <!-- Semester Grid — renderizado dinamicamente via API -->
+        <div id="semestres-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Spinner de carregamento -->
+            <div id="grid-loading" class="col-span-3 flex justify-center py-16">
+                <div style="border:3px solid #e0e3e6;border-top-color:#006e2f;border-radius:50%;width:36px;height:36px;animation:spin .7s linear infinite;"></div>
             </div>
         </div>
-        <!-- Signature Leadership Quote -->
-
+        <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
     </main>
+
     <!-- Bottom Nav (Mobile) -->
     <div
         class="lg:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around items-center px-4 py-3 pb-safe z-50 rounded-t-2xl shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
@@ -241,8 +179,8 @@
             <span class="text-[10px] font-semibold">Perfil</span>
         </button>
     </div>
-    <!-- Modal: Novo Semestre (Simplified Overlay) -->
-    <!-- Note: Modal is hidden by default using 'hidden' class. Remove for visualization. -->
+
+    <!-- Modal: Novo Semestre -->
     <div id="modal-novo-semestre" class="fixed inset-0 z-[100] bg-on-surface/20 backdrop-blur-sm hidden">
         <div
             class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[110] bg-surface-bright w-[calc(100%-2rem)] max-w-lg rounded-xl shadow-2xl overflow-hidden">
@@ -256,7 +194,7 @@
                         <span class="material-symbols-outlined" data-icon="close">close</span>
                     </button>
                 </div>
-                <form class="space-y-6">
+                <form id="form-novo-semestre" class="space-y-6">
                     <div class="grid grid-cols-2 gap-4">
                         <div class="col-span-2">
                             <label
@@ -264,22 +202,25 @@
                                 do Semestre</label>
                             <input
                                 class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
-                                id="input-nome-semestre" placeholder="Ex: 2024.2 - Primavera" type="text" pattern="[A-Za-zÀ-ÿ0-9 .\-]+" title="Nome do semestre (letras, números, ponto e hífen)" autocomplete="off">
+                                id="input-nome-semestre" placeholder="Ex: 2024.2" type="text"
+                                pattern="[A-Za-zÀ-ÿ0-9 .\-]+"
+                                title="Nome do semestre (letras, números, ponto e hífen)" autocomplete="off">
                         </div>
                         <div>
                             <label
                                 class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Ano</label>
                             <input
                                 class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
-                                id="input-ano-semestre" placeholder="2024" type="number" min="2000" max="2100" step="1" inputmode="numeric" title="Digite apenas o ano (ex: 2024)">
+                                id="input-ano-semestre" placeholder="2024" type="number" min="2000" max="2100" step="1"
+                                inputmode="numeric" title="Digite apenas o ano (ex: 2024)">
                         </div>
                         <div>
                             <label
                                 class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Período</label>
-                            <select
+                            <select id="input-periodo-semestre"
                                 class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all">
-                                <option>1º Semestre</option>
-                                <option>2º Semestre</option>
+                                <option value="1º Semestre">1º Semestre</option>
+                                <option value="2º Semestre">2º Semestre</option>
                             </select>
                         </div>
                         <div>
@@ -287,7 +228,8 @@
                                 class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Data
                                 Início</label>
                             <input
-                                id="input-data-inicio" class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
+                                id="input-data-inicio"
+                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
                                 type="date">
                         </div>
                         <div>
@@ -295,17 +237,17 @@
                                 class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Data
                                 Término</label>
                             <input
-                                id="input-data-termino" class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
+                                id="input-data-termino"
+                                class="w-full bg-surface-container-lowest ghost-border rounded-lg px-4 py-3 focus:border-primary focus:ring-0 focus:outline-none transition-all"
                                 type="date">
                         </div>
 
-                        <!-- Status Selection -->
+                        <!-- Status -->
                         <div class="col-span-2 pt-2">
                             <label
                                 class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Status
                                 do Semestre</label>
                             <div class="grid grid-cols-2 gap-4">
-                                <!-- Opção Ativo -->
                                 <div>
                                     <input type="radio" name="status_semestre" id="status-ativo" value="ativo"
                                         class="peer hidden" checked>
@@ -313,15 +255,12 @@
                                         class="flex flex-col items-start gap-2 p-4 border-2 border-outline-variant rounded-xl cursor-pointer transition-all peer-checked:border-primary peer-checked:bg-primary-fixed-dim/10 hover:bg-surface-container-highest">
                                         <span
                                             class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-container text-on-primary-container">
-                                            <span
-                                                class="mr-1.5 h-1.5 w-1.5 rounded-full bg-on-primary-container"></span>
+                                            <span class="mr-1.5 h-1.5 w-1.5 rounded-full bg-on-primary-container"></span>
                                             ATIVO
                                         </span>
-                                        <span class="text-xs font-medium text-on-surface-variant">Semestre atual e
-                                            visível</span>
+                                        <span class="text-xs font-medium text-on-surface-variant">Semestre atual e visível</span>
                                     </label>
                                 </div>
-                                <!-- Opção Inativo -->
                                 <div>
                                     <input type="radio" name="status_semestre" id="status-inativo" value="inativo"
                                         class="peer hidden">
@@ -331,8 +270,7 @@
                                             class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-variant text-on-surface-variant">
                                             OFFLINE
                                         </span>
-                                        <span class="text-xs font-medium text-on-surface-variant">Semestre
-                                            encerrado/inativo</span>
+                                        <span class="text-xs font-medium text-on-surface-variant">Semestre encerrado/inativo</span>
                                     </label>
                                 </div>
                             </div>
@@ -342,7 +280,7 @@
                         <button id="btn-cancel-modal"
                             class="flex-1 ghost-border text-on-surface font-semibold py-3 rounded-lg hover:bg-surface-container transition-all"
                             type="button">Cancelar</button>
-                        <button
+                        <button id="btn-submit-semestre"
                             class="flex-1 bg-primary text-on-primary font-bold py-3 rounded-lg hover:opacity-90 transition-all shadow-lg shadow-primary/20"
                             type="submit">Salvar Período</button>
                     </div>
@@ -350,63 +288,141 @@
             </div>
         </div>
     </div>
-    </div>
 
     <script>
+        // ── Renderizar grid de semestres ───────────────────────────
+        function renderizarSemestres(semestres) {
+            const grid = document.getElementById('semestres-grid');
+            grid.innerHTML = '';
+
+            semestres.forEach(function(s) {
+                const isAtivo = s.status === 'ativo';
+                const card = document.createElement('div');
+
+                if (isAtivo) {
+                    card.className = 'bg-surface-container-lowest rounded-xl p-8 cloud-shadow relative flex flex-col items-start transition-transform hover:-translate-y-1';
+                    card.innerHTML = `
+                        <div class="flex justify-between w-full items-start mb-6">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-container text-on-primary-container">
+                                <span class="mr-1.5 h-1.5 w-1.5 rounded-full bg-on-primary-container"></span>ATIVO
+                            </span>
+                            <span class="btn-editar-semestre material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors" data-id="${s.id}">more_vert</span>
+                        </div>
+                        <div class="mb-8">
+                            <h2 class="font-headline text-5xl font-extrabold text-primary tracking-tighter">${s.nome}</h2>
+                            <p class="text-xs font-medium text-on-surface-variant mt-2 uppercase tracking-widest">Semestre em Curso</p>
+                        </div>
+                        <button id="btn-acessar-equipes" class="w-full bg-primary-container text-on-primary-container font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all">
+                            Acessar Equipes
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </button>`;
+                } else {
+                    card.className = 'bg-surface-container-low rounded-xl p-8 flex flex-col items-start transition-transform hover:-translate-y-1';
+                    card.innerHTML = `
+                        <div class="flex justify-between w-full items-start mb-6">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-variant text-on-surface-variant">OFFLINE</span>
+                            <span class="btn-editar-semestre material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors" data-id="${s.id}">more_vert</span>
+                        </div>
+                        <div class="mb-8">
+                            <h2 class="font-headline text-5xl font-extrabold text-on-surface-variant opacity-60 tracking-tighter">${s.nome}</h2>
+                            <p class="text-xs font-medium text-on-surface-variant mt-2 uppercase tracking-widest">Período Encerrado</p>
+                        </div>
+                        <button class="w-full ghost-border text-on-surface font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all">
+                            Verificar Edição
+                            <span class="material-symbols-outlined text-sm">refresh</span>
+                        </button>`;
+                }
+
+                grid.appendChild(card);
+            });
+
+            // Card "+ Novo Semestre"
+            const novoCard = document.createElement('div');
+            novoCard.id = 'btn-novo-semestre';
+            novoCard.className = 'bg-transparent rounded-xl p-8 border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary/40 hover:bg-primary-fixed-dim/5 transition-all group';
+            novoCard.innerHTML = `
+                <div class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-primary text-3xl">add</span>
+                </div>
+                <h3 class="font-headline font-bold text-on-surface tracking-tight">+ Novo Semestre</h3>
+                <p class="text-[10px] font-bold text-on-surface-variant mt-1 tracking-widest uppercase">ADICIONAR PERÍODO</p>`;
+            grid.appendChild(novoCard);
+
+            // Re-associar eventos após render dinâmico
+            associarEventos();
+        }
+
+        // ── Buscar semestres da API ────────────────────────────────
+        async function carregarSemestres() {
+            try {
+                const res = await fetch((window._API_BASE || '') + '/semestres', {
+                    headers: { 'Authorization': 'Bearer ' + (window._TOKEN || '') }
+                });
+                if (!res.ok) throw new Error('Erro ao carregar semestres');
+                const semestres = await res.json();
+                renderizarSemestres(semestres);
+            } catch (err) {
+                document.getElementById('semestres-grid').innerHTML =
+                    '<p class="col-span-3 text-center text-error text-sm py-8">Erro ao carregar semestres: ' + err.message + '</p>';
+            }
+        }
+
+        // ── Associar eventos (chamado após render) ─────────────────
+        function associarEventos() {
+            const modalNovoSemestre = document.getElementById('modal-novo-semestre');
+            const modalTitle        = document.querySelector('#modal-novo-semestre h2');
+
+            // Botão novo semestre
+            const btnNovoSemestre = document.getElementById('btn-novo-semestre');
+            if (btnNovoSemestre) {
+                btnNovoSemestre.addEventListener('click', () => {
+                    if (modalTitle) modalTitle.innerText = 'Configurar Novo Semestre';
+                    modalNovoSemestre.classList.remove('hidden');
+                });
+            }
+
+            // Botões editar semestre
+            document.querySelectorAll('.btn-editar-semestre').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (modalTitle) modalTitle.innerText = 'Editar Semestre';
+                    modalNovoSemestre.classList.remove('hidden');
+                });
+            });
+
+            // Botão acessar equipes
+            const btnAcessar = document.getElementById('btn-acessar-equipes');
+            if (btnAcessar) {
+                btnAcessar.addEventListener('click', function() {
+                    if (typeof setComponentValue === 'function') setComponentValue('admin_equipes');
+                });
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
-            // ── Avatar dropdown toggle ─────────────────────────
+            // ── Carregar semestres da API ──────────────────────────
+            carregarSemestres();
+
+            // ── Avatar dropdown ────────────────────────────────────
             const avatarBtn = document.getElementById('btn-avatar-menu');
             const avatarDropdown = document.getElementById('avatar-dropdown');
             avatarBtn.addEventListener('click', (e) => { e.stopPropagation(); avatarDropdown.classList.toggle('hidden'); });
             document.addEventListener('click', () => avatarDropdown.classList.add('hidden'));
             avatarDropdown.addEventListener('click', (e) => e.stopPropagation());
 
-            const btnNovoSemestre = document.getElementById('btn-novo-semestre');
+            // ── Modal ──────────────────────────────────────────────
             const modalNovoSemestre = document.getElementById('modal-novo-semestre');
-            const btnCloseModal = document.getElementById('btn-close-modal');
-            const btnCancelModal = document.getElementById('btn-cancel-modal');
+            const btnCloseModal     = document.getElementById('btn-close-modal');
+            const btnCancelModal    = document.getElementById('btn-cancel-modal');
 
-            const btnsEditarSemestre = document.querySelectorAll('.btn-editar-semestre');
-            const modalTitle = document.querySelector('#modal-novo-semestre h2');
-
-            // Abrir Modal (Cadastro)
-            if (btnNovoSemestre) {
-                btnNovoSemestre.addEventListener('click', () => {
-                    if (modalTitle) modalTitle.innerText = "Configurar Novo Semestre";
-                    modalNovoSemestre.classList.remove('hidden');
-                });
-            }
-
-            // Abrir Modal (Edição)
-            btnsEditarSemestre.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (modalTitle) modalTitle.innerText = "Editar Semestre";
-                    modalNovoSemestre.classList.remove('hidden');
-                });
-            });
-
-            // Fechar Modal (Botão X)
-            btnCloseModal.addEventListener('click', () => {
-                modalNovoSemestre.classList.add('hidden');
-            });
-
-            // Fechar Modal (Botão Cancelar)
-            btnCancelModal.addEventListener('click', () => {
-                modalNovoSemestre.classList.add('hidden');
-            });
-
-            // Fechar ao clicar fora do Modal
+            // Fechar Modal
+            btnCloseModal.addEventListener('click', () => modalNovoSemestre.classList.add('hidden'));
+            btnCancelModal.addEventListener('click', () => modalNovoSemestre.classList.add('hidden'));
             modalNovoSemestre.addEventListener('click', (e) => {
-                if (e.target === modalNovoSemestre) {
-                    modalNovoSemestre.classList.add('hidden');
-                }
+                if (e.target === modalNovoSemestre) modalNovoSemestre.classList.add('hidden');
             });
-        
-            // ── Validação de campos do modal ──────────────────────
-            const inputNomeSemestre = document.getElementById('input-nome-semestre');
-            const inputAnoSemestre  = document.getElementById('input-ano-semestre');
 
-            // "Ano": bloqueia teclas não-numéricas (permite: 0-9, Backspace, Tab, Delete, setas)
+            // ── Validação: Ano só aceita números ──────────────────
+            const inputAnoSemestre = document.getElementById('input-ano-semestre');
             if (inputAnoSemestre) {
                 inputAnoSemestre.addEventListener('keydown', function(e) {
                     const permitidos = ['Backspace','Tab','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'];
@@ -419,9 +435,64 @@
                 });
             }
 
-            // "Nome do Semestre": bloqueia dígitos isolados (evita que seja só número)
-            // Regra: aceita letras, espaços, ponto, hífen e dígitos dentro de texto
-            // Para simplificar: o campo text já tem o atributo pattern para validação no submit
+            // ── Submit: Criar Semestre via API ────────────────────
+            const formSemestre  = document.getElementById('form-novo-semestre');
+            const submitBtn     = document.getElementById('btn-submit-semestre');
+
+            formSemestre.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const nome       = document.getElementById('input-nome-semestre').value.trim();
+                const ano        = parseInt(document.getElementById('input-ano-semestre').value);
+                const periodo    = document.getElementById('input-periodo-semestre').value;
+                const dataInicio = document.getElementById('input-data-inicio').value || null;
+                const dataTerm   = document.getElementById('input-data-termino').value || null;
+                const statusEl   = document.querySelector('input[name="status_semestre"]:checked');
+                const status     = statusEl ? statusEl.value : 'ativo';
+
+                if (!nome || !ano) {
+                    alert('Preencha pelo menos Nome e Ano.');
+                    return;
+                }
+
+                const textoOriginal = submitBtn.textContent;
+                submitBtn.textContent = 'Salvando...';
+                submitBtn.disabled = true;
+
+                try {
+                    const res = await fetch((window._API_BASE || '') + '/semestres', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + (window._TOKEN || '')
+                        },
+                        body: JSON.stringify({
+                            nome:         nome,
+                            ano:          ano,
+                            periodo:      periodo,
+                            data_inicio:  dataInicio,
+                            data_termino: dataTerm,
+                            status:       status
+                        })
+                    });
+
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.detail || 'Erro ao criar semestre.');
+                    }
+
+                    const semestre = await res.json();
+                    alert('Semestre "' + semestre.nome + '" criado com sucesso!');
+                    modalNovoSemestre.classList.add('hidden');
+                    carregarSemestres();
+
+                } catch (err) {
+                    alert(err.message || 'Erro ao conectar com o servidor.');
+                } finally {
+                    submitBtn.textContent = textoOriginal;
+                    submitBtn.disabled = false;
+                }
+            });
 
         });
     </script>

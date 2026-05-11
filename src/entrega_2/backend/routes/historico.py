@@ -42,6 +42,11 @@ def listar_historico(
     if not equipe:
         raise HTTPException(status_code=404, detail="Equipe não encontrada.")
 
+    # Se semestre_id foi passado, valida se a equipe pertence a esse semestre
+    if semestre_id and equipe.semestre_id != semestre_id:
+        # Equipe não pertence a esse semestre — retorna vazio
+        return HistoricoPaginado(items=[], total=0, pagina=pagina, por_pagina=por_pagina, total_paginas=1)
+
     query = db.query(HistoricoAlimento).filter(HistoricoAlimento.equipe_id == equipe_id)
     total = query.count()
     items = (

@@ -91,7 +91,7 @@ def _handle_resultado(resultado):
     """Trata navegação comum (perfil/sair) e retorna True se processou."""
     if resultado in ("aluno_perfil", "admin_perfil", "login", "cadastro",
                      "admin_home", "admin_equipes", "admin_detalhes_equipe",
-                     "aluno_home", "aluno_minha_equipe"):
+                     "aluno_home", "aluno_minha_equipe", "admin_dashboard"):
         if resultado == "login":
             # Limpar sessão ao sair
             st.session_state["token"] = None
@@ -228,16 +228,43 @@ elif pagina == "cadastro":
 # ── ADMIN HOME ────────────────────────────────
 elif pagina == "admin_home":
     html_content = carregar_html("admin_home.html")
+    token = st.session_state.get("token") or ""
+    script_token = f"""<script>
+        window._TOKEN = '{token}';
+        window._API_BASE = '{API_URL}/api';
+    </script>"""
+    html_content = html_content.replace("</head>", script_token + "\n</head>")
     resultado = _renderizar_como_componente(
         html_content,
         mapeamento={
             "#btn-acessar-equipes": "admin_equipes",
-            ".btn-equipes-mobile": "admin_equipes",
-            ".btn-perfil": "admin_perfil",
-            ".btn-sair": "login",
+            ".btn-equipes-mobile":  "admin_equipes",
+            ".btn-equipes-nav":     "admin_equipes",
+            ".btn-dashboard":       "admin_dashboard",
+            ".btn-perfil":          "admin_perfil",
+            ".btn-sair":            "login",
         },
         chave="admin_home",
         altura=1000,
+    )
+    _handle_resultado(resultado)
+
+# ── ADMIN DASHBOARD ───────────────────────────
+elif pagina == "admin_dashboard":
+    html_content = carregar_html("admin_dashboard.html")
+    token = st.session_state.get("token") or ""
+    script_token = f"<script>window._TOKEN = '{token}';</script>"
+    html_content = html_content.replace("</head>", script_token + "\n</head>")
+    resultado = _renderizar_como_componente(
+        html_content,
+        mapeamento={
+            ".btn-home":    "admin_home",
+            ".btn-equipes": "admin_equipes",
+            ".btn-perfil":  "admin_perfil",
+            ".btn-sair":    "login",
+        },
+        chave="admin_dashboard",
+        altura=2200,
     )
     _handle_resultado(resultado)
 

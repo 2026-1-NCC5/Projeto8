@@ -148,7 +148,6 @@
       flex-shrink: 0;
     }
   </style>
-<script>window._TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidGlwbyI6ImFkbWluIiwiZXhwIjoxNzc4NTQ1OTcwfQ.OL29QyMcQyLY84B2ky3360hW2GDiWaLiMKjo00F562Y';</script>
 </head>
 <body class="bg-surface font-body text-on-surface">
 
@@ -527,54 +526,5 @@
     carregarSemestres();
     buscarHistorico();
   </script>
-
-    <script>
-        function sendMessageToStreamlitClient(type, data) {
-            var outData = Object.assign({ isStreamlitMessage: true, type: type }, data);
-            window.parent.postMessage(outData, "*");
-        }
-        function init() {
-            sendMessageToStreamlitClient("streamlit:componentReady", {apiVersion: 1});
-        }
-        function setComponentValue(value) {
-            sendMessageToStreamlitClient("streamlit:setComponentValue", {value: value});
-        }
-        window.addEventListener("message", function(event) {
-            if (event.data.type === "streamlit:render") {
-                sendMessageToStreamlitClient("streamlit:setFrameHeight", {height: document.body.scrollHeight || 900});
-            }
-        });
-        init();
-        
-        document.querySelectorAll('.btn-home').forEach(function(el) {
-            el.addEventListener('click', function(e) {
-                e.preventDefault();
-                setComponentValue('admin_home');
-            });
-        });
-
-        document.querySelectorAll('.btn-equipes').forEach(function(el) {
-            el.addEventListener('click', function(e) {
-                e.preventDefault();
-                setComponentValue('admin_equipes');
-            });
-        });
-
-        document.querySelectorAll('.btn-perfil').forEach(function(el) {
-            el.addEventListener('click', function(e) {
-                e.preventDefault();
-                setComponentValue('admin_perfil');
-            });
-        });
-
-        document.querySelectorAll('.btn-sair').forEach(function(el) {
-            el.addEventListener('click', function(e) {
-                e.preventDefault();
-                setComponentValue('login');
-            });
-        });
-
-    </script>
-    
 </body>
 </html>
