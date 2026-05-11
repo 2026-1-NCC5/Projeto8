@@ -13,7 +13,7 @@ class Settings:
     # ── Database ────────────────────────────────
     DATABASE_URL: str = os.getenv(
         "DATABASE_URL",
-        "postgresql://admin_liderancas:@Radonix@liderancasempaticas.postgres.database.azure.com:5432/dbcontacerto",
+        "postgresql://admin_liderancas:%40Radonix@liderancasempaticas.postgres.database.azure.com:5432/dbcontacerto",
     )
 
     # ── JWT ─────────────────────────────────────
