@@ -193,6 +193,10 @@
   </footer>
 
   <script>
+    const API_BASE = window._API_BASE || 'http://localhost:8000/api';
+    const TOKEN    = window._TOKEN || '';
+    const USUARIO  = window._USUARIO || {};
+
     // Avatar dropdown toggle
     const avatarBtn = document.getElementById('btn-avatar-menu');
     const avatarDropdown = document.getElementById('avatar-dropdown');
@@ -200,39 +204,154 @@
     document.addEventListener('click', () => avatarDropdown.classList.add('hidden'));
     avatarDropdown.addEventListener('click', (e) => e.stopPropagation());
 
-    function previewImage(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
+    // ── Carregar dados do perfil via API ────────────────
+    async function carregarPerfil() {
+      try {
+        const res = await fetch(API_BASE + '/usuarios/me', {
+          headers: { 'Authorization': 'Bearer ' + TOKEN }
+        });
+        if (!res.ok) return;
+        const user = await res.json();
+
+        document.getElementById('input-nome').value     = user.nome     || '';
+        document.getElementById('input-email').value    = user.email    || '';
+        document.getElementById('input-telefone').value = user.telefone || '';
+
+        // Iniciais do avatar
+        const initials = (user.nome || 'AD').split(' ').map(p => p[0]).join('').substring(0, 2).toUpperCase();
+        document.getElementById('avatar-initials').textContent = initials;
+        document.getElementById('btn-avatar-menu').textContent = initials;
+
+        // Foto de perfil
+        if (user.foto_url) {
           const img = document.getElementById('avatar-img');
-          img.src = e.target.result;
+          img.src = (window._API_BASE || '').replace('/api', '') + user.foto_url;
           img.classList.remove('hidden');
           document.getElementById('avatar-initials').classList.add('hidden');
-        };
-        reader.readAsDataURL(file);
-      }
+        }
+      } catch (_) { /* silencioso */ }
     }
 
-    document.getElementById('form-perfil').addEventListener('submit', function (e) {
-      e.preventDefault();
-      alert('Perfil atualizado com sucesso!');
-    });
+    carregarPerfil();
 
-    document.getElementById('form-senha').addEventListener('submit', function (e) {
+    // ── Preview de imagem local ─────────────────────────
+    function previewImage(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      // Preview local
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = document.getElementById('avatar-img');
+        img.src = e.target.result;
+        img.classList.remove('hidden');
+        document.getElementById('avatar-initials').classList.add('hidden');
+      };
+      reader.readAsDataURL(file);
+
+      // Upload para API
+      const formData = new FormData();
+      formData.append('foto', file);
+
+      fetch(API_BASE + '/usuarios/me/foto', {
+        method: 'PUT',
+        headers: { 'Authorization': 'Bearer ' + TOKEN },
+        body: formData
+      })
+      .then(r => { if (r.ok) return r.json(); throw new Error(); })
+      .then(() => { /* sucesso — preview já está mostrando */ })
+      .catch(() => alert('Erro ao enviar foto. Tente novamente.'));
+    }
+
+    // ── Salvar perfil ───────────────────────────────────
+    document.getElementById('form-perfil').addEventListener('submit', async function (e) {
       e.preventDefault();
-      const nova = document.getElementById('input-nova-senha').value;
-      const confirmar = document.getElementById('input-confirmar-senha').value;
-      if (nova !== confirmar) {
-        alert('As senhas não coincidem!');
-        return;
+      const btn = this.querySelector('button[type="submit"]');
+      const original = btn.textContent;
+      btn.textContent = 'Salvando...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(API_BASE + '/usuarios/me', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + TOKEN
+          },
+          body: JSON.stringify({
+            nome:     document.getElementById('input-nome').value.trim(),
+            email:    document.getElementById('input-email').value.trim(),
+            telefone: document.getElementById('input-telefone').value.trim(),
+          })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.detail || 'Erro ao salvar.');
+        }
+        alert('Perfil atualizado com sucesso!');
+      } catch (err) {
+        alert(err.message);
+      } finally {
+        btn.textContent = original;
+        btn.disabled = false;
       }
-      alert('Senha atualizada com sucesso!');
     });
 
-    document.getElementById('btn-excluir-conta').addEventListener('click', function () {
-      if (confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível.')) {
-        alert('Conta excluída. (Implementar no backend)');
+    // ── Alterar senha ───────────────────────────────────
+    document.getElementById('form-senha').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const nova      = document.getElementById('input-nova-senha').value;
+      const confirmar = document.getElementById('input-confirmar-senha').value;
+      if (nova !== confirmar) { alert('As senhas não coincidem!'); return; }
+
+      const btn = this.querySelector('button[type="submit"]');
+      const original = btn.textContent;
+      btn.textContent = 'Atualizando...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(API_BASE + '/usuarios/me/senha', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + TOKEN
+          },
+          body: JSON.stringify({
+            senha_atual:     document.getElementById('input-senha-atual').value,
+            nova_senha:      nova,
+            confirmar_senha: confirmar,
+          })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.detail || 'Erro ao alterar senha.');
+        }
+        alert('Senha atualizada com sucesso!');
+        document.getElementById('input-senha-atual').value = '';
+        document.getElementById('input-nova-senha').value = '';
+        document.getElementById('input-confirmar-senha').value = '';
+      } catch (err) {
+        alert(err.message);
+      } finally {
+        btn.textContent = original;
+        btn.disabled = false;
+      }
+    });
+
+    // ── Excluir conta ───────────────────────────────────
+    document.getElementById('btn-excluir-conta').addEventListener('click', async function () {
+      if (!confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível.')) return;
+
+      try {
+        const res = await fetch(API_BASE + '/usuarios/me', {
+          method: 'DELETE',
+          headers: { 'Authorization': 'Bearer ' + TOKEN }
+        });
+        if (!res.ok && res.status !== 204) throw new Error('Erro ao excluir conta.');
+        alert('Conta excluída com sucesso.');
+        if (typeof setComponentValue === 'function') setComponentValue('login');
+      } catch (err) {
+        alert(err.message);
       }
     });
   </script>

@@ -151,22 +151,21 @@
 </head>
 <body class="bg-surface font-body text-on-surface">
 
-  <!-- ── Navbar (padrão do projeto) ─────────────────────────────────────── -->
+  <!-- ── Navbar (padrão aluno) ─────────────────────────────────────── -->
   <nav class="fixed top-0 w-full z-50 glass-nav shadow-sm">
     <div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
       <div class="flex items-center gap-8">
         <span class="text-xl font-bold tracking-tight text-green-800 font-headline">Lideranças Empáticas</span>
         <div class="hidden md:flex gap-6 items-center">
-          <a class="btn-home text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Home</a>
+          <a class="btn-aluno-home text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Home</a>
           <a class="text-sm font-semibold text-primary border-b-2 border-primary pb-1 transition-colors">Dashboard</a>
-          <a class="btn-equipes text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Equipes</a>
         </div>
       </div>
       <div class="flex items-center gap-4">
         <div class="relative">
           <button id="btn-avatar-menu"
             class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs cursor-pointer hover:ring-2 hover:ring-primary/40 transition-all">
-            AD
+            ..
           </button>
           <div id="avatar-dropdown"
             class="hidden absolute right-0 top-12 w-48 bg-white rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.12)] border border-slate-100 py-2 z-[200]">
@@ -275,9 +274,9 @@
 
   </main>
 
-  <!-- ── Mobile bottom nav (padrão das outras páginas admin) ────────────── -->
-  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-surface-container-high flex justify-around py-2 z-50">
-    <button class="btn-home flex flex-col items-center justify-center text-on-surface-variant cursor-pointer">
+  <!-- ── Mobile bottom nav (padrão aluno) ────────────── -->
+  <nav class="lg:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around items-center px-4 py-3 pb-safe z-50 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] rounded-t-2xl">
+    <button class="btn-aluno-home flex flex-col items-center justify-center text-slate-400 active:bg-slate-50 transition-transform active:scale-90 cursor-pointer">
       <span class="material-symbols-outlined">home</span>
       <span class="text-[10px] font-manrope font-semibold">Home</span>
     </button>
@@ -285,11 +284,7 @@
       <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bar_chart</span>
       <span class="text-[10px] font-manrope font-semibold">Dashboard</span>
     </div>
-    <button class="btn-equipes flex flex-col items-center justify-center text-on-surface-variant cursor-pointer">
-      <span class="material-symbols-outlined">group</span>
-      <span class="text-[10px] font-manrope font-semibold">Equipes</span>
-    </button>
-    <button class="btn-perfil flex flex-col items-center justify-center text-on-surface-variant cursor-pointer">
+    <button class="btn-perfil flex flex-col items-center justify-center text-slate-400 active:bg-slate-50 transition-transform active:scale-90 cursor-pointer">
       <span class="material-symbols-outlined">person</span>
       <span class="text-[10px] font-manrope font-semibold">Perfil</span>
     </button>

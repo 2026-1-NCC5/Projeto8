@@ -111,13 +111,13 @@
         <div class="hidden md:flex gap-6 items-center">
           <a class="text-green-700 border-b-2 border-green-600 pb-1 font-manrope text-sm font-medium transition-colors"
             href="#">Home</a>
+          <a class="btn-dashboard text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Dashboard</a>
         </div>
       </div>
       <div class="flex items-center gap-4">
         <div class="relative">
-          <button id="btn-avatar-menu" class="h-8 w-8 rounded-full overflow-hidden bg-surface-container-high ring-2 ring-primary-container/20 cursor-pointer hover:ring-primary/40 transition-all">
-            <img alt="User avatar" class="w-full h-full object-cover"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6f_WigLQvZiDvHFmGPcubJXsWfVl9RNXIFl8CU1Hd7MHTJ6XUABQG_KlqlPVgN6xkFqzBW20Lw4pZUJxFDuCsXfE9qSltys8s0FOwE2qZmioHC7CNIlEBpH71AuVBO0wNxNVkDJH2vOAr8ftVWj4ahm2fsVYH6wAYLaWMY_czZO9eQMtn0Se2oSsy8-GpRHcgKX_CxajYYZHf48gDe3714_wJglnVHpB-8oGR95NyYCkxVYdGgfO_iCBMmbjy998EwllUVn5_oKWX" />
+          <button id="btn-avatar-menu" class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs cursor-pointer hover:ring-2 hover:ring-primary/40 transition-all">
+            ..
           </button>
           <div id="avatar-dropdown" class="hidden absolute right-0 top-12 w-48 bg-white rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.12)] border border-slate-100 py-2 z-[200]">
             <a class="btn-perfil flex items-center gap-3 px-4 py-3 text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors cursor-pointer">
@@ -138,8 +138,8 @@
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <span class="text-primary font-semibold tracking-wider text-xs uppercase mb-2 block">Portal do Aluno</span>
-          <h1 class="text-5xl font-extrabold text-on-surface tracking-tight mb-2">Bem-vinda, Maria.</h1>
-          <p class="text-3xl font-extrabold text-primary tracking-tight mb-4 font-headline">Equipe Delta</p>
+          <h1 id="titulo-boas-vindas" class="text-5xl font-extrabold text-on-surface tracking-tight mb-2">Bem-vindo(a)!</h1>
+          <p id="nome-equipe" class="text-3xl font-extrabold text-primary tracking-tight mb-4 font-headline"></p>
           <p class="text-on-surface-variant max-w-xl text-lg leading-relaxed">
             Sua jornada de liderança empática continua aqui. Colabore com sua equipe para
             desenvolver autoridade com humanidade.
@@ -147,8 +147,7 @@
         </div>
         <div class="bg-surface-container-low px-6 py-4 rounded-xl flex items-center gap-4">
           <div class="w-12 h-12 bg-primary-container/20 rounded-full flex items-center justify-center text-primary">
-            <span class="material-symbols-outlined" data-icon="verified_user"
-              style="font-variation-settings: 'FILL' 1;">verified_user</span>
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
           </div>
           <div>
             <p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-widest">Status da Conta</p>
@@ -157,72 +156,19 @@
         </div>
       </div>
     </header>
-    <!-- Semesters Grid -->
+    <!-- Semesters Grid — renderizado dinamicamente -->
     <section>
       <div class="flex items-center justify-between mb-8">
         <h2 class="text-2xl font-bold tracking-tight text-on-surface">Seus Semestres</h2>
         <div class="h-px bg-surface-container-high flex-grow mx-8 hidden md:block"></div>
-        <span class="text-sm font-medium text-on-surface-variant">Exibindo 2 períodos acadêmicos</span>
+        <span id="contador-semestres" class="text-sm font-medium text-on-surface-variant"></span>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Active Semester Card -->
-        <div
-          class="bg-surface-container-lowest p-8 rounded-[1.5rem] shadow-[0_20px_40px_rgba(25,28,30,0.04)] relative ring-2 ring-primary">
-          <div
-            class="absolute top-6 right-8 px-3 py-1 bg-primary-container text-on-primary-container text-[10px] font-bold rounded-full uppercase tracking-tighter">
-            Ativo
-          </div>
-          <div class="mb-6">
-            <h3 class="text-2xl font-extrabold text-on-surface">Semestre 2024.1</h3>
-          </div>
-          <div class="space-y-4 mb-8">
-            <div class="flex items-center gap-3 text-on-surface-variant text-sm">
-              <span class="material-symbols-outlined text-sm" data-icon="groups">groups</span>
-              <span>Equipe: Delta</span>
-            </div>
-            <div class="flex items-center gap-3 text-on-surface-variant text-sm">
-              <span class="material-symbols-outlined text-sm" data-icon="calendar_month">calendar_month</span>
-              <span>Término: Junho 2024</span>
-            </div>
-          </div>
-          <a class="btn-acessar-equipe flex items-center justify-center w-full bg-gradient-to-br from-primary to-secondary text-white py-4 px-6 rounded-xl font-bold tracking-tight hover:opacity-90 transition-all group cursor-pointer"
-            href="#">
-            Acessar Minha Equipe
-            <span class="material-symbols-outlined ml-2 transition-transform group-hover:translate-x-1"
-              data-icon="arrow_forward">arrow_forward</span>
-          </a>
-        </div>
-        <!-- Past Semester Card -->
-        <div
-          class="bg-surface-container-low p-8 rounded-[1.5rem] grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all">
-          <div class="mb-6">
-            <h3 class="text-2xl font-extrabold text-on-surface">Semestre 2023.2</h3>
-          </div>
-          <div class="space-y-4 mb-8 text-on-surface-variant">
-            <div class="flex items-center gap-3 text-sm">
-              <span class="material-symbols-outlined text-sm" data-icon="groups">groups</span>
-              <span>Equipe: Delta Pioneers</span>
-            </div>
-            <div class="flex items-center gap-3 text-sm">
-              <span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
-              <span>Concluído</span>
-            </div>
-          </div>
-          <button
-            class="flex items-center justify-center w-full border border-outline/15 text-primary py-4 px-6 rounded-xl font-bold tracking-tight hover:bg-surface-container-high transition-all">
-            Ver Relatórios
-          </button>
-        </div>
-        <!-- Empty State / Upcoming Concept -->
-        <div
-          class="bg-surface-container-low/40 border-2 border-dashed border-outline/10 p-8 rounded-[1.5rem] flex flex-col items-center justify-center text-center">
-          <div class="w-16 h-16 bg-surface-container-high rounded-full flex items-center justify-center mb-4">
-            <span class="material-symbols-outlined text-outline" data-icon="school">school</span>
-          </div>
-          <p class="font-bold text-on-surface-variant">Próximo Semestre</p>
-          <p class="text-xs text-on-surface-variant/60 mt-1">Aguardando período de inscrição</p>
+      <div id="semestres-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="col-span-3 flex justify-center py-16">
+          <div style="border:3px solid #e0e3e6;border-top-color:#006e2f;border-radius:50%;width:36px;height:36px;animation:spin .7s linear infinite;"></div>
         </div>
       </div>
+      <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
     </section>
   </main>
   <!-- BottomNavBar (Mobile Only) -->
@@ -232,17 +178,128 @@
       <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
       <span class="text-[10px] font-manrope font-semibold">Home</span>
     </div>
+    <button class="btn-dashboard flex flex-col items-center justify-center text-slate-400 active:bg-slate-50 transition-transform active:scale-90 cursor-pointer">
+      <span class="material-symbols-outlined">bar_chart</span>
+      <span class="text-[10px] font-manrope font-semibold">Dashboard</span>
+    </button>
     <button class="btn-perfil flex flex-col items-center justify-center text-slate-400 active:bg-slate-50 transition-transform active:scale-90 cursor-pointer">
       <span class="material-symbols-outlined">person</span>
       <span class="text-[10px] font-manrope font-semibold">Perfil</span>
     </button>
   </nav>
   <script>
+    const API_BASE = window._API_BASE || 'http://localhost:8000/api';
+    const TOKEN    = window._TOKEN || '';
+
     const avatarBtn = document.getElementById('btn-avatar-menu');
     const dropdown = document.getElementById('avatar-dropdown');
     avatarBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
     document.addEventListener('click', () => dropdown.classList.add('hidden'));
     dropdown.addEventListener('click', (e) => e.stopPropagation());
+
+    // ── Carregar dados do aluno ─────────────────────────
+    async function carregarDados() {
+      try {
+        // Dados do usuário
+        const resUser = await fetch(API_BASE + '/usuarios/me', {
+          headers: { 'Authorization': 'Bearer ' + TOKEN }
+        });
+        if (resUser.ok) {
+          const user = await resUser.json();
+          const nome = (user.nome || 'Aluno').split(' ')[0];
+          document.getElementById('titulo-boas-vindas').textContent = 'Bem-vinda, ' + nome + '.';
+          const initials = (user.nome || '').split(' ').map(p => p[0]).join('').substring(0, 2).toUpperCase();
+          document.getElementById('btn-avatar-menu').textContent = initials;
+        }
+
+        // Equipe do aluno
+        try {
+          const resEquipe = await fetch(API_BASE + '/equipes/minha', {
+            headers: { 'Authorization': 'Bearer ' + TOKEN }
+          });
+          if (resEquipe.ok) {
+            const equipe = await resEquipe.json();
+            document.getElementById('nome-equipe').textContent = equipe.nome;
+          }
+        } catch (_) {}
+
+        // Semestres
+        const resSem = await fetch(API_BASE + '/semestres', {
+          headers: { 'Authorization': 'Bearer ' + TOKEN }
+        });
+        if (resSem.ok) {
+          const semestres = await resSem.json();
+          renderizarSemestres(semestres);
+        }
+      } catch (_) {
+        document.getElementById('semestres-grid').innerHTML = '<p class="col-span-3 text-center text-error text-sm py-8">Erro ao carregar dados.</p>';
+      }
+    }
+
+    function renderizarSemestres(semestres) {
+      const grid = document.getElementById('semestres-grid');
+      grid.innerHTML = '';
+
+      document.getElementById('contador-semestres').textContent = 'Exibindo ' + semestres.length + ' período' + (semestres.length !== 1 ? 's' : '') + ' acadêmico' + (semestres.length !== 1 ? 's' : '');
+
+      semestres.forEach(function(s) {
+        const card = document.createElement('div');
+
+        if (s.status === 'ativo') {
+          card.className = 'bg-surface-container-lowest p-8 rounded-[1.5rem] shadow-[0_20px_40px_rgba(25,28,30,0.04)] relative ring-2 ring-primary';
+
+          const badge = document.createElement('div');
+          badge.className = 'absolute top-6 right-8 px-3 py-1 bg-primary-container text-on-primary-container text-[10px] font-bold rounded-full uppercase tracking-tighter';
+          badge.textContent = 'Ativo';
+          card.appendChild(badge);
+
+          const body = document.createElement('div');
+          body.className = 'mb-6';
+          const h3 = document.createElement('h3');
+          h3.className = 'text-2xl font-extrabold text-on-surface';
+          h3.textContent = 'Semestre ' + s.nome;
+          body.appendChild(h3);
+          card.appendChild(body);
+
+          const info = document.createElement('div');
+          info.className = 'space-y-4 mb-8';
+          info.innerHTML = '<div class="flex items-center gap-3 text-on-surface-variant text-sm"><span class="material-symbols-outlined text-sm">calendar_month</span><span>Período: ' + s.periodo + '</span></div>';
+          card.appendChild(info);
+
+          const btn = document.createElement('a');
+          btn.className = 'btn-acessar-equipe flex items-center justify-center w-full bg-gradient-to-br from-primary to-secondary text-white py-4 px-6 rounded-xl font-bold tracking-tight hover:opacity-90 transition-all group cursor-pointer';
+          btn.innerHTML = 'Acessar Minha Equipe <span class="material-symbols-outlined ml-2 transition-transform group-hover:translate-x-1">arrow_forward</span>';
+          card.appendChild(btn);
+        } else {
+          card.className = 'bg-surface-container-low p-8 rounded-[1.5rem] grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all';
+
+          const body = document.createElement('div');
+          body.className = 'mb-6';
+          const h3 = document.createElement('h3');
+          h3.className = 'text-2xl font-extrabold text-on-surface';
+          h3.textContent = 'Semestre ' + s.nome;
+          body.appendChild(h3);
+          card.appendChild(body);
+
+          const info = document.createElement('div');
+          info.className = 'space-y-4 mb-8 text-on-surface-variant';
+          info.innerHTML = '<div class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-sm">check_circle</span><span>Concluído</span></div>';
+          card.appendChild(info);
+        }
+
+        grid.appendChild(card);
+      });
+
+      // Bind navigation for dynamically created buttons
+      grid.querySelectorAll('.btn-acessar-equipe').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (typeof setComponentValue === 'function') setComponentValue('aluno_minha_equipe');
+        });
+      });
+    }
+
+    carregarDados();
   </script>
 </body>
 

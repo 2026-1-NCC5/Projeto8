@@ -364,11 +364,204 @@
     </button>
   </footer>
   <script>
+    const API_BASE  = window._API_BASE || 'http://localhost:8000/api';
+    const TOKEN     = window._TOKEN || '';
+    const EQUIPE_ID = window._EQUIPE_ID || '';
+
     const avatarBtn = document.getElementById('btn-avatar-menu');
-    const dropdown = document.getElementById('avatar-dropdown');
+    const dropdown  = document.getElementById('avatar-dropdown');
     avatarBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
     document.addEventListener('click', () => dropdown.classList.add('hidden'));
     dropdown.addEventListener('click', (e) => e.stopPropagation());
+
+    let paginaAtual = 1;
+    const POR_PAGINA = 5;
+    let totalPaginas = 1;
+    let semestreAtivo = '';
+
+    // ── Carregar dados da equipe ─────────────────────────
+    async function carregarEquipe() {
+      if (!EQUIPE_ID) return;
+      try {
+        const res = await fetch(API_BASE + '/equipes/' + EQUIPE_ID, {
+          headers: { 'Authorization': 'Bearer ' + TOKEN }
+        });
+        if (!res.ok) return;
+        const eq = await res.json();
+
+        // Nome da equipe
+        document.querySelector('h1').textContent = eq.nome;
+        document.querySelector('main .text-secondary.font-bold').textContent = eq.nome;
+
+        // Total arrecadado
+        const totalEl = document.querySelector('.text-3xl.font-extrabold.text-on-surface.font-manrope');
+        if (totalEl && eq.total_arrecadado !== undefined) {
+          totalEl.textContent = eq.total_arrecadado.toLocaleString('pt-BR') + ' itens';
+        }
+
+        // Membros
+        renderizarMembros(eq.membros || []);
+
+        // Mentores
+        renderizarMentores(eq.mentores || []);
+
+      } catch (_) {}
+    }
+
+    function renderizarMembros(membros) {
+      const tbody = document.querySelectorAll('tbody')[2];
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      membros.forEach(function(m) {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50/50 transition-colors';
+        const tdNome = document.createElement('td');
+        tdNome.className = 'px-8 py-5 text-sm font-bold text-on-surface';
+        tdNome.textContent = m.nome;
+        const tdCurso = document.createElement('td');
+        tdCurso.className = 'px-8 py-5 text-sm font-medium text-slate-600';
+        tdCurso.textContent = m.curso || '—';
+        const tdRa = document.createElement('td');
+        tdRa.className = 'px-8 py-5 text-sm font-medium text-secondary';
+        tdRa.textContent = m.ra || '—';
+        tr.appendChild(tdNome);
+        tr.appendChild(tdCurso);
+        tr.appendChild(tdRa);
+        tbody.appendChild(tr);
+      });
+      if (membros.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="3" class="px-8 py-5 text-sm text-slate-400 text-center">Nenhum membro cadastrado.</td></tr>';
+      }
+    }
+
+    function renderizarMentores(mentores) {
+      const tbody = document.querySelectorAll('tbody')[1];
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      mentores.forEach(function(m) {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50/50 transition-colors';
+        const td = document.createElement('td');
+        td.className = 'px-8 py-5 text-sm font-bold text-on-surface';
+        td.textContent = m.nome;
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+      });
+      if (mentores.length === 0) {
+        tbody.innerHTML = '<tr><td class="px-8 py-5 text-sm text-slate-400 text-center">Nenhum mentor atribuído.</td></tr>';
+      }
+    }
+
+    // ── Carregar histórico paginado ──────────────────────
+    async function carregarHistorico() {
+      if (!EQUIPE_ID) return;
+      try {
+        const qs = semestreAtivo ? '&semestre_id=' + semestreAtivo : '';
+        const url = API_BASE + '/equipes/' + EQUIPE_ID + '/historico?por_pagina=' + POR_PAGINA + '&pagina=' + paginaAtual + qs;
+        const res = await fetch(url, { headers: { 'Authorization': 'Bearer ' + TOKEN } });
+        if (!res.ok) return;
+        const data = await res.json();
+        totalPaginas = data.total_paginas || 1;
+        renderizarHistorico(data.items || [], data.total || 0);
+      } catch (_) {}
+    }
+
+    function renderizarHistorico(items, total) {
+      const tbody = document.querySelectorAll('tbody')[0];
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      items.forEach(function(r) {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50/50 transition-colors';
+        tr.innerHTML =
+          '<td class="px-8 py-5 text-sm font-medium text-slate-600">' + (r.data || '—') + '</td>' +
+          '<td class="px-8 py-5 text-sm font-bold text-on-surface">' + (r.item || '—') + '</td>' +
+          '<td class="px-8 py-5 text-sm font-bold text-secondary">' + (r.quantidade || 0) + ' un</td>' +
+          '<td class="px-8 py-5"><span class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-[11px] font-bold uppercase tracking-wider">Concluído</span></td>' +
+          '<td class="px-8 py-5 text-right"><button class="material-symbols-outlined text-slate-400 hover:text-secondary transition-colors">more_vert</button></td>';
+        tbody.appendChild(tr);
+      });
+      if (items.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="px-8 py-5 text-sm text-slate-400 text-center">Nenhum registro encontrado.</td></tr>';
+      }
+
+      // Atualizar paginação
+      const inicio = (paginaAtual - 1) * POR_PAGINA + 1;
+      const fim = Math.min(paginaAtual * POR_PAGINA, total);
+      const paginacaoInfo = document.querySelector('.px-8.py-5.bg-slate-50\\/30 span');
+      if (paginacaoInfo) paginacaoInfo.textContent = 'Exibindo ' + inicio + '-' + fim + ' de ' + total + ' registros';
+
+      // Botões de paginação
+      const paginacaoDiv = document.querySelector('.px-8.py-5.bg-slate-50\\/30 .flex.gap-2');
+      if (paginacaoDiv) {
+        paginacaoDiv.innerHTML = '';
+        // Anterior
+        const btnPrev = document.createElement('button');
+        btnPrev.className = 'p-2 rounded-lg border border-slate-200 text-slate-400 hover:bg-white active:scale-90 transition-all';
+        btnPrev.innerHTML = '<span class="material-symbols-outlined text-lg">chevron_left</span>';
+        btnPrev.disabled = paginaAtual <= 1;
+        btnPrev.addEventListener('click', function() { if (paginaAtual > 1) { paginaAtual--; carregarHistorico(); } });
+        paginacaoDiv.appendChild(btnPrev);
+
+        // Números
+        for (var i = 1; i <= totalPaginas; i++) {
+          const btn = document.createElement('button');
+          btn.className = 'p-2 rounded-lg border border-slate-200 hover:bg-white active:scale-90 transition-all font-' + (i === paginaAtual ? 'bold' : 'medium') + ' text-xs px-4 text-slate-' + (i === paginaAtual ? '600' : '400');
+          btn.textContent = i;
+          const pg = i;
+          btn.addEventListener('click', function() { paginaAtual = pg; carregarHistorico(); });
+          paginacaoDiv.appendChild(btn);
+        }
+
+        // Próximo
+        const btnNext = document.createElement('button');
+        btnNext.className = 'p-2 rounded-lg border border-slate-200 text-slate-400 hover:bg-white active:scale-90 transition-all';
+        btnNext.innerHTML = '<span class="material-symbols-outlined text-lg">chevron_right</span>';
+        btnNext.disabled = paginaAtual >= totalPaginas;
+        btnNext.addEventListener('click', function() { if (paginaAtual < totalPaginas) { paginaAtual++; carregarHistorico(); } });
+        paginacaoDiv.appendChild(btnNext);
+      }
+    }
+
+    // ── Semestres (filtros) ──────────────────────────────
+    async function carregarSemestres() {
+      try {
+        const res = await fetch(API_BASE + '/semestres', { headers: { 'Authorization': 'Bearer ' + TOKEN } });
+        if (!res.ok) return;
+        const semestres = await res.json();
+        const container = document.querySelector('.flex.bg-surface-container-low.p-1\\.5.rounded-full');
+        if (!container) return;
+        container.innerHTML = '';
+        semestres.forEach(function(s, idx) {
+          const btn = document.createElement('button');
+          btn.className = 'px-6 py-2 rounded-full text-sm font-' + (idx === 0 ? 'bold bg-white text-secondary shadow-sm' : 'medium text-slate-500 hover:text-slate-700');
+          btn.textContent = s.nome;
+          btn.addEventListener('click', function() {
+            container.querySelectorAll('button').forEach(b => b.className = 'px-6 py-2 rounded-full text-sm font-medium text-slate-500 hover:text-slate-700');
+            btn.className = 'px-6 py-2 rounded-full text-sm font-bold bg-white text-secondary shadow-sm';
+            semestreAtivo = s.id;
+            paginaAtual = 1;
+            carregarHistorico();
+          });
+          container.appendChild(btn);
+        });
+      } catch (_) {}
+    }
+
+    // ── Exportar ─────────────────────────────────────────
+    document.querySelectorAll('button').forEach(function(btn) {
+      if (btn.textContent.trim().includes('Exportar')) {
+        btn.addEventListener('click', function() {
+          if (!EQUIPE_ID) return;
+          window.open(API_BASE + '/equipes/' + EQUIPE_ID + '/exportar?token=' + TOKEN, '_blank');
+        });
+      }
+    });
+
+    // ── Init ─────────────────────────────────────────────
+    carregarEquipe();
+    carregarSemestres();
+    carregarHistorico();
   </script>
 </body>
 

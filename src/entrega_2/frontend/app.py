@@ -2,9 +2,10 @@ import streamlit as st
 import streamlit.components.v1 as components
 import os
 import re
-from dotenv import load_dotenv, dotenv_values
+import json
+from dotenv import load_dotenv
 
-load_dotenv() 
+load_dotenv()
 
 # ─────────────────────────────────────────────
 # 1. Configuração da página
@@ -46,7 +47,7 @@ def _script_navegacao(mapeamento: dict) -> str:
                 setComponentValue('{destino}');
             }});
         }});
-        """
+"""
     return f"""
     <script>
         function sendMessageToStreamlitClient(type, data) {{
@@ -84,29 +85,63 @@ def _renderizar_como_componente(html_content: str, mapeamento: dict, chave: str,
     return comp(key=chave)
 
 
-def _renderizar_simples(nome_arquivo: str, altura: int = 1000):
-    """Renderiza páginas que não precisam devolver valor ao Python."""
-    html_content = carregar_html(nome_arquivo)
-    components.html(html_content, height=altura, scrolling=True)
-
-
 def _handle_resultado(resultado):
     """Trata navegação comum (perfil/sair) e retorna True se processou."""
-    if resultado in ("aluno_perfil", "admin_perfil", "login", "cadastro",
-                     "admin_home", "admin_equipes", "admin_detalhes_equipe",
-                     "aluno_home", "aluno_minha_equipe", "admin_dashboard"):
+    if not resultado:
+        return False
+
+    # Tenta parsear JSON (para payloads com equipe_id, etc.)
+    try:
+        dados = json.loads(resultado)
+        destino = dados.get("destino")
+        if dados.get("equipe_id"):
+            st.session_state["equipe_id"] = dados["equipe_id"]
+        if destino:
+            if destino == "login":
+                st.session_state["token"] = None
+                st.session_state["usuario"] = None
+            st.session_state["pagina_atual"] = destino
+            st.rerun()
+            return True
+    except (json.JSONDecodeError, TypeError, AttributeError):
+        pass
+
+    # Fallback para strings simples
+    paginas_validas = (
+        "aluno_perfil", "admin_perfil", "login", "cadastro",
+        "admin_home", "admin_equipes", "admin_detalhes_equipe",
+        "aluno_home", "aluno_minha_equipe", "admin_dashboard", "aluno_dashboard",
+    )
+    if resultado in paginas_validas:
         if resultado == "login":
-            # Limpar sessão ao sair
             st.session_state["token"] = None
             st.session_state["usuario"] = None
         st.session_state["pagina_atual"] = resultado
         st.rerun()
         return True
+
     return False
 
 
 # ── URL da API Backend ──────────────────────────
-API_URL = os.getenv("API_URL")
+# Prioriza variável de ambiente, fallback para a URL da Azure do usuário
+AZURE_URL = "https://contacerto-api-akbph4bfh8e4cva6.canadacentral-01.azurewebsites.net"
+API_URL = os.getenv("API_URL", AZURE_URL)
+
+
+def _injetar_contexto(html_content: str) -> str:
+    """Injeta token, API_URL e dados do usuário em todas as páginas."""
+    token = st.session_state.get("token") or ""
+    usuario = st.session_state.get("usuario") or {}
+    equipe_id = st.session_state.get("equipe_id") or ""
+    script = f"""<script>
+        window._TOKEN    = '{token}';
+        window._API_BASE = '{API_URL}/api';
+        window._USUARIO  = {json.dumps(usuario)};
+        window._EQUIPE_ID = '{equipe_id}';
+    </script>"""
+    return html_content.replace("</head>", script + "\n</head>")
+
 
 if "pagina_atual" not in st.session_state:
     st.session_state["pagina_atual"] = "login"
@@ -114,6 +149,8 @@ if "token" not in st.session_state:
     st.session_state["token"] = None
 if "usuario" not in st.session_state:
     st.session_state["usuario"] = None
+if "equipe_id" not in st.session_state:
+    st.session_state["equipe_id"] = None
 
 pagina = st.session_state["pagina_atual"]
 
@@ -203,7 +240,6 @@ if pagina == "login":
 
     if resultado:
         try:
-            import json
             dados = json.loads(resultado)
             destino = dados.get("destino", "login")
             if dados.get("token"):
@@ -212,7 +248,6 @@ if pagina == "login":
             st.session_state["pagina_atual"] = destino
             st.rerun()
         except (json.JSONDecodeError, TypeError):
-            # Fallback para navegação simples (ex: cadastro)
             if resultado in ["admin_home", "aluno_home", "cadastro"]:
                 st.session_state["pagina_atual"] = resultado
                 st.rerun()
@@ -220,6 +255,7 @@ if pagina == "login":
 # ── CADASTRO ──────────────────────────────────
 elif pagina == "cadastro":
     html_content = carregar_html("cadastro.html")
+    html_content = _injetar_contexto(html_content)
     resultado = _renderizar_como_componente(
         html_content,
         mapeamento={".btn-voltar-login": "login"},
@@ -231,12 +267,7 @@ elif pagina == "cadastro":
 # ── ADMIN HOME ────────────────────────────────
 elif pagina == "admin_home":
     html_content = carregar_html("admin_home.html")
-    token = st.session_state.get("token") or ""
-    script_token = f"""<script>
-        window._TOKEN = '{token}';
-        window._API_BASE = '{API_URL}/api';
-    </script>"""
-    html_content = html_content.replace("</head>", script_token + "\n</head>")
+    html_content = _injetar_contexto(html_content)
     resultado = _renderizar_como_componente(
         html_content,
         mapeamento={
@@ -253,9 +284,7 @@ elif pagina == "admin_home":
 # ── ADMIN DASHBOARD ───────────────────────────
 elif pagina == "admin_dashboard":
     html_content = carregar_html("admin_dashboard.html")
-    token = st.session_state.get("token") or ""
-    script_token = f"<script>window._TOKEN = '{token}';</script>"
-    html_content = html_content.replace("</head>", script_token + "\n</head>")
+    html_content = _injetar_contexto(html_content)
     resultado = _renderizar_como_componente(
         html_content,
         mapeamento={
@@ -272,13 +301,13 @@ elif pagina == "admin_dashboard":
 # ── ADMIN EQUIPES ─────────────────────────────
 elif pagina == "admin_equipes":
     html_content = carregar_html("admin_equipes.html")
+    html_content = _injetar_contexto(html_content)
     resultado = _renderizar_como_componente(
         html_content,
         mapeamento={
-            ".btn-iniciar-contagem": "admin_detalhes_equipe",
-            ".btn-home": "admin_home",
+            ".btn-home":   "admin_home",
             ".btn-perfil": "admin_perfil",
-            ".btn-sair": "login",
+            ".btn-sair":   "login",
         },
         chave="admin_equipes",
         altura=1000,
@@ -288,13 +317,14 @@ elif pagina == "admin_equipes":
 # ── ADMIN DETALHES EQUIPE ─────────────────────
 elif pagina == "admin_detalhes_equipe":
     html_content = carregar_html("admin_detalhes_equipe.html")
+    html_content = _injetar_contexto(html_content)
     resultado = _renderizar_como_componente(
         html_content,
         mapeamento={
             ".btn-equipes": "admin_equipes",
-            ".btn-home": "admin_home",
-            ".btn-perfil": "admin_perfil",
-            ".btn-sair": "login",
+            ".btn-home":    "admin_home",
+            ".btn-perfil":  "admin_perfil",
+            ".btn-sair":    "login",
         },
         chave="admin_detalhes_equipe",
         altura=1500,
@@ -304,12 +334,13 @@ elif pagina == "admin_detalhes_equipe":
 # ── ADMIN PERFIL ──────────────────────────────
 elif pagina == "admin_perfil":
     html_content = carregar_html("admin_perfil.html")
+    html_content = _injetar_contexto(html_content)
     resultado = _renderizar_como_componente(
         html_content,
         mapeamento={
-            ".btn-admin-home": "admin_home",
+            ".btn-admin-home":     "admin_home",
             ".btn-equipes-mobile": "admin_equipes",
-            ".btn-sair": "login",
+            ".btn-sair":           "login",
         },
         chave="admin_perfil",
         altura=1200,
@@ -319,27 +350,47 @@ elif pagina == "admin_perfil":
 # ── ALUNO HOME ────────────────────────────────
 elif pagina == "aluno_home":
     html_content = carregar_html("aluno_home.html")
+    html_content = _injetar_contexto(html_content)
     resultado = _renderizar_como_componente(
         html_content,
         mapeamento={
             ".btn-acessar-equipe": "aluno_minha_equipe",
-            ".btn-perfil": "aluno_perfil",
-            ".btn-sair": "login",
+            ".btn-dashboard":      "aluno_dashboard",
+            ".btn-perfil":         "aluno_perfil",
+            ".btn-sair":           "login",
         },
         chave="aluno_home",
         altura=1000,
     )
     _handle_resultado(resultado)
 
-# ── ALUNO MINHA EQUIPE ───────────────────────
-elif pagina == "aluno_minha_equipe":
-    html_content = carregar_html("aluno_minha_equipe.html")
+# ── ALUNO DASHBOARD ──────────────────────────
+elif pagina == "aluno_dashboard":
+    html_content = carregar_html("aluno_dashboard.html")
+    html_content = _injetar_contexto(html_content)
     resultado = _renderizar_como_componente(
         html_content,
         mapeamento={
             ".btn-aluno-home": "aluno_home",
-            ".btn-perfil": "aluno_perfil",
-            ".btn-sair": "login",
+            ".btn-perfil":     "aluno_perfil",
+            ".btn-sair":       "login",
+        },
+        chave="aluno_dashboard",
+        altura=2200,
+    )
+    _handle_resultado(resultado)
+
+# ── ALUNO MINHA EQUIPE ───────────────────────
+elif pagina == "aluno_minha_equipe":
+    html_content = carregar_html("aluno_minha_equipe.html")
+    html_content = _injetar_contexto(html_content)
+    resultado = _renderizar_como_componente(
+        html_content,
+        mapeamento={
+            ".btn-aluno-home": "aluno_home",
+            ".btn-dashboard":  "aluno_dashboard",
+            ".btn-perfil":     "aluno_perfil",
+            ".btn-sair":       "login",
         },
         chave="aluno_minha_equipe",
         altura=1500,
@@ -349,11 +400,12 @@ elif pagina == "aluno_minha_equipe":
 # ── ALUNO PERFIL ──────────────────────────────
 elif pagina == "aluno_perfil":
     html_content = carregar_html("aluno_perfil.html")
+    html_content = _injetar_contexto(html_content)
     resultado = _renderizar_como_componente(
         html_content,
         mapeamento={
             ".btn-aluno-home": "aluno_home",
-            ".btn-sair": "login",
+            ".btn-sair":       "login",
         },
         chave="aluno_perfil",
         altura=1200,

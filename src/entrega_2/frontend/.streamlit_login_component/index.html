@@ -262,18 +262,43 @@
             }
         });
         init();
-        
-        document.querySelectorAll('.btn-acessar-equipe').forEach(function(el) {
-            el.addEventListener('click', function(e) {
-                e.preventDefault();
-                setComponentValue('aluno_minha_equipe');
-            });
-        });
-        
-        document.querySelectorAll('.btn-perfil').forEach(function(el) {
-            el.addEventListener('click', function(e) {
-                e.preventDefault();
-                setComponentValue('aluno_perfil');
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var email = document.getElementById('email').value;
+            var senha = document.getElementById('password').value;
+
+            var submitBtn = e.target.querySelector('button[type="submit"]');
+            var originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = 'Entrando...';
+            submitBtn.disabled = true;
+
+            fetch('https://contacerto-api-akbph4bfh8e4cva6.canadacentral-01.azurewebsites.net/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, senha: senha })
+            })
+            .then(function(resp) {
+                if (!resp.ok) {
+                    return resp.json().then(function(err) { throw new Error(err.detail || 'Erro no login'); });
+                }
+                return resp.json();
+            })
+            .then(function(data) {
+                var destino = 'aluno_home';
+                if (data.usuario.tipo === 'admin') {
+                    destino = 'admin_home';
+                }
+                var payload = JSON.stringify({
+                    destino: destino,
+                    token: data.access_token,
+                    usuario: data.usuario
+                });
+                setComponentValue(payload);
+            })
+            .catch(function(err) {
+                alert(err.message || 'Erro ao conectar com o servidor.');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
             });
         });
         
