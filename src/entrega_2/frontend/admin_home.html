@@ -120,9 +120,6 @@
                     <a class="btn-dashboard font-medium text-sm text-slate-600 hover:text-green-700 transition-colors cursor-pointer">
                         Dashboard
                     </a>
-                    <a class="btn-equipes-nav font-medium text-sm text-slate-600 hover:text-green-700 transition-colors cursor-pointer">
-                        Equipes
-                    </a>
                 </div>
             </div>
             <div class="flex items-center gap-4">
@@ -290,207 +287,411 @@
     </div>
 
     <script>
-        // ── Renderizar grid de semestres ───────────────────────────
+        // ─────────────────────────────────────────────────────────
+        // Configuração
+        // window._API_BASE já vem como 'http://localhost:8000/api'
+        // injetado pelo app.py — não concatenar '/api' de novo.
+        // ─────────────────────────────────────────────────────────
+        const API_BASE = window._API_BASE || 'http://localhost:8000/api';
+        const TOKEN    = () => window._TOKEN || '';
+
+        // null = criação | number = id do semestre sendo editado
+        let _editandoId = null;
+
+        // ─────────────────────────────────────────────────────────
+        // Referências fixas do modal
+        // O modal existe no HTML estático — não é re-renderizado.
+        // Somente os cards do grid são recriados.
+        // ─────────────────────────────────────────────────────────
+        const modal        = document.getElementById('modal-novo-semestre');
+        const modalTitle   = modal.querySelector('h2');
+        const formSemestre = document.getElementById('form-novo-semestre');
+        const submitBtn    = document.getElementById('btn-submit-semestre');
+        const inputNome    = document.getElementById('input-nome-semestre');
+        const inputAno     = document.getElementById('input-ano-semestre');
+        const selPeriodo   = document.getElementById('input-periodo-semestre');
+        const inputInicio  = document.getElementById('input-data-inicio');
+        const inputTermino = document.getElementById('input-data-termino');
+        const radioAtivo   = document.getElementById('status-ativo');
+        const radioInativo = document.getElementById('status-inativo');
+
+        // ─────────────────────────────────────────────────────────
+        // Helpers do modal
+        // ─────────────────────────────────────────────────────────
+        function abrirModalCriacao() {
+            _editandoId           = null;
+            modalTitle.textContent = 'Configurar Novo Semestre';
+            inputNome.value        = '';
+            inputAno.value         = new Date().getFullYear();
+            selPeriodo.value       = '1º Semestre';
+            inputInicio.value      = '';
+            inputTermino.value     = '';
+            radioAtivo.checked     = true;
+            radioInativo.checked   = false;
+            modal.classList.remove('hidden');
+        }
+
+        function abrirModalEdicao(s) {
+            _editandoId            = s.id;
+            modalTitle.textContent = 'Editar Semestre';
+            // textContent nos inputs — valores nunca vão para innerHTML
+            inputNome.value        = s.nome         || '';
+            inputAno.value         = s.ano          || '';
+            selPeriodo.value       = s.periodo      || '1º Semestre';
+            inputInicio.value      = s.data_inicio  || '';
+            inputTermino.value     = s.data_termino || '';
+
+            // Marca o radio conforme status real vindo do banco
+            if (s.status === 'inativo') {
+                radioInativo.checked = true;
+                radioAtivo.checked   = false;
+            } else {
+                radioAtivo.checked   = true;
+                radioInativo.checked = false;
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function fecharModal() {
+            modal.classList.add('hidden');
+            _editandoId = null;
+        }
+
+        // ─────────────────────────────────────────────────────────
+        // Construtores de elementos — SEM innerHTML com dados da API
+        // Todos os valores vindos da API são inseridos via
+        // textContent ou setAttribute, nunca via innerHTML.
+        // ─────────────────────────────────────────────────────────
+
+        function _criarBadgeAtivo() {
+            const badge = document.createElement('span');
+            badge.className = 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-container text-on-primary-container';
+            const dot = document.createElement('span');
+            dot.className = 'mr-1.5 h-1.5 w-1.5 rounded-full bg-on-primary-container';
+            badge.appendChild(dot);
+            badge.appendChild(document.createTextNode('ATIVO'));
+            return badge;
+        }
+
+        function _criarBadgeOffline() {
+            const badge = document.createElement('span');
+            badge.className = 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-variant text-on-surface-variant';
+            badge.textContent = 'OFFLINE';
+            return badge;
+        }
+
+        function _criarBtnEditar(id) {
+            const btn = document.createElement('span');
+            btn.className   = 'btn-editar-semestre material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors';
+            btn.textContent = 'more_vert';
+            // dataset aceita apenas string — o id numérico é convertido
+            btn.dataset.id  = String(id);
+            return btn;
+        }
+
+        function _criarCardAtivo(s) {
+            const card = document.createElement('div');
+            card.className = 'bg-surface-container-lowest rounded-xl p-8 cloud-shadow relative flex flex-col items-start transition-transform hover:-translate-y-1';
+
+            // ── Cabeçalho do card ──
+            const cabecalho = document.createElement('div');
+            cabecalho.className = 'flex justify-between w-full items-start mb-6';
+            cabecalho.appendChild(_criarBadgeAtivo());
+            cabecalho.appendChild(_criarBtnEditar(s.id));
+            card.appendChild(cabecalho);
+
+            // ── Corpo do card ──
+            const corpo = document.createElement('div');
+            corpo.className = 'mb-8';
+
+            const titulo = document.createElement('h2');
+            titulo.className   = 'font-headline text-5xl font-extrabold text-primary tracking-tighter';
+            titulo.textContent = s.nome; // textContent — sem risco de XSS
+
+            const subtitulo = document.createElement('p');
+            subtitulo.className   = 'text-xs font-medium text-on-surface-variant mt-2 uppercase tracking-widest';
+            subtitulo.textContent = 'Semestre em Curso';
+
+            corpo.appendChild(titulo);
+            corpo.appendChild(subtitulo);
+            card.appendChild(corpo);
+
+            // ── Botão acessar equipes ──
+            // Usa CLASSE btn-acessar-equipes (não id) para evitar duplicatas no DOM.
+            // O app.py é ajustado para usar '.btn-acessar-equipes' no mapeamento.
+            const btnAcessar = document.createElement('button');
+            btnAcessar.className = 'btn-acessar-equipes w-full bg-primary-container text-on-primary-container font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all';
+
+            const textoBtnAcessar = document.createTextNode('Acessar Equipes');
+            const iconeBtnAcessar = document.createElement('span');
+            iconeBtnAcessar.className   = 'material-symbols-outlined text-sm';
+            iconeBtnAcessar.textContent = 'arrow_forward';
+
+            btnAcessar.appendChild(textoBtnAcessar);
+            btnAcessar.appendChild(iconeBtnAcessar);
+            card.appendChild(btnAcessar);
+
+            return card;
+        }
+
+        function _criarCardOffline(s) {
+            const card = document.createElement('div');
+            card.className = 'bg-surface-container-low rounded-xl p-8 flex flex-col items-start transition-transform hover:-translate-y-1';
+
+            // ── Cabeçalho do card ──
+            const cabecalho = document.createElement('div');
+            cabecalho.className = 'flex justify-between w-full items-start mb-6';
+            cabecalho.appendChild(_criarBadgeOffline());
+            cabecalho.appendChild(_criarBtnEditar(s.id));
+            card.appendChild(cabecalho);
+
+            // ── Corpo do card ──
+            const corpo = document.createElement('div');
+            corpo.className = 'mb-8';
+
+            const titulo = document.createElement('h2');
+            titulo.className   = 'font-headline text-5xl font-extrabold text-on-surface-variant opacity-60 tracking-tighter';
+            titulo.textContent = s.nome; // textContent — sem risco de XSS
+
+            const subtitulo = document.createElement('p');
+            subtitulo.className   = 'text-xs font-medium text-on-surface-variant mt-2 uppercase tracking-widest';
+            subtitulo.textContent = 'Período Encerrado';
+
+            corpo.appendChild(titulo);
+            corpo.appendChild(subtitulo);
+            card.appendChild(corpo);
+
+            // ── Botão verificar edição ──
+            const btnVerificar = document.createElement('button');
+            btnVerificar.className = 'btn-editar-semestre w-full ghost-border text-on-surface font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all';
+            btnVerificar.dataset.id = String(s.id);
+
+            const textoBtnVerificar = document.createTextNode('Verificar Edição');
+            const iconeBtnVerificar = document.createElement('span');
+            iconeBtnVerificar.className   = 'material-symbols-outlined text-sm';
+            iconeBtnVerificar.textContent = 'refresh';
+
+            btnVerificar.appendChild(textoBtnVerificar);
+            btnVerificar.appendChild(iconeBtnVerificar);
+            card.appendChild(btnVerificar);
+
+            return card;
+        }
+
+        function _criarCardNovoSemestre() {
+            const card = document.createElement('div');
+            card.id        = 'btn-novo-semestre';
+            card.className = 'bg-transparent rounded-xl p-8 border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary/40 hover:bg-primary-fixed-dim/5 transition-all group';
+
+            const iconWrap = document.createElement('div');
+            iconWrap.className = 'w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center mb-4 group-hover:scale-110 transition-transform';
+
+            const icone = document.createElement('span');
+            icone.className   = 'material-symbols-outlined text-primary text-3xl';
+            icone.textContent = 'add';
+            iconWrap.appendChild(icone);
+
+            const titulo = document.createElement('h3');
+            titulo.className   = 'font-headline font-bold text-on-surface tracking-tight';
+            titulo.textContent = '+ Novo Semestre';
+
+            const subtitulo = document.createElement('p');
+            subtitulo.className   = 'text-[10px] font-bold text-on-surface-variant mt-1 tracking-widest uppercase';
+            subtitulo.textContent = 'ADICIONAR PERÍODO';
+
+            card.appendChild(iconWrap);
+            card.appendChild(titulo);
+            card.appendChild(subtitulo);
+
+            return card;
+        }
+
+        // ─────────────────────────────────────────────────────────
+        // Renderizar grid — usa construtores acima, sem innerHTML
+        // ─────────────────────────────────────────────────────────
         function renderizarSemestres(semestres) {
             const grid = document.getElementById('semestres-grid');
-            grid.innerHTML = '';
+            grid.innerHTML = ''; // limpa o grid (não há dados de usuário aqui)
 
             semestres.forEach(function(s) {
-                const isAtivo = s.status === 'ativo';
-                const card = document.createElement('div');
-
-                if (isAtivo) {
-                    card.className = 'bg-surface-container-lowest rounded-xl p-8 cloud-shadow relative flex flex-col items-start transition-transform hover:-translate-y-1';
-                    card.innerHTML = `
-                        <div class="flex justify-between w-full items-start mb-6">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-container text-on-primary-container">
-                                <span class="mr-1.5 h-1.5 w-1.5 rounded-full bg-on-primary-container"></span>ATIVO
-                            </span>
-                            <span class="btn-editar-semestre material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors" data-id="${s.id}">more_vert</span>
-                        </div>
-                        <div class="mb-8">
-                            <h2 class="font-headline text-5xl font-extrabold text-primary tracking-tighter">${s.nome}</h2>
-                            <p class="text-xs font-medium text-on-surface-variant mt-2 uppercase tracking-widest">Semestre em Curso</p>
-                        </div>
-                        <button id="btn-acessar-equipes" class="w-full bg-primary-container text-on-primary-container font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all">
-                            Acessar Equipes
-                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                        </button>`;
-                } else {
-                    card.className = 'bg-surface-container-low rounded-xl p-8 flex flex-col items-start transition-transform hover:-translate-y-1';
-                    card.innerHTML = `
-                        <div class="flex justify-between w-full items-start mb-6">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-variant text-on-surface-variant">OFFLINE</span>
-                            <span class="btn-editar-semestre material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors" data-id="${s.id}">more_vert</span>
-                        </div>
-                        <div class="mb-8">
-                            <h2 class="font-headline text-5xl font-extrabold text-on-surface-variant opacity-60 tracking-tighter">${s.nome}</h2>
-                            <p class="text-xs font-medium text-on-surface-variant mt-2 uppercase tracking-widest">Período Encerrado</p>
-                        </div>
-                        <button class="w-full ghost-border text-on-surface font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-all">
-                            Verificar Edição
-                            <span class="material-symbols-outlined text-sm">refresh</span>
-                        </button>`;
-                }
-
+                const card = s.status === 'ativo'
+                    ? _criarCardAtivo(s)
+                    : _criarCardOffline(s);
                 grid.appendChild(card);
             });
 
-            // Card "+ Novo Semestre"
-            const novoCard = document.createElement('div');
-            novoCard.id = 'btn-novo-semestre';
-            novoCard.className = 'bg-transparent rounded-xl p-8 border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary/40 hover:bg-primary-fixed-dim/5 transition-all group';
-            novoCard.innerHTML = `
-                <div class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-primary text-3xl">add</span>
-                </div>
-                <h3 class="font-headline font-bold text-on-surface tracking-tight">+ Novo Semestre</h3>
-                <p class="text-[10px] font-bold text-on-surface-variant mt-1 tracking-widest uppercase">ADICIONAR PERÍODO</p>`;
+            const novoCard = _criarCardNovoSemestre();
             grid.appendChild(novoCard);
 
-            // Re-associar eventos após render dinâmico
-            associarEventos();
+            // Re-associa somente os listeners dos cards recém-criados
+            associarEventosCards();
         }
 
-        // ── Buscar semestres da API ────────────────────────────────
+        // ─────────────────────────────────────────────────────────
+        // Listeners dos cards — re-associados após cada render.
+        // Os listeners do modal e do form ficam no DOMContentLoaded
+        // e são registrados UMA ÚNICA VEZ.
+        // ─────────────────────────────────────────────────────────
+        function associarEventosCards() {
+            // Botão "+ Novo Semestre"
+            const btnNovo = document.getElementById('btn-novo-semestre');
+            if (btnNovo) btnNovo.addEventListener('click', abrirModalCriacao);
+
+            // Botões ⋮ e "Verificar Edição" — classe btn-editar-semestre + data-id
+            document.querySelectorAll('.btn-editar-semestre').forEach(function(btn) {
+                btn.addEventListener('click', async function() {
+                    const id = parseInt(this.dataset.id, 10);
+                    if (!id) return;
+                    try {
+                        const res = await fetch(API_BASE + '/semestres', {
+                            headers: { 'Authorization': 'Bearer ' + TOKEN() }
+                        });
+                        if (!res.ok) throw new Error();
+                        const lista    = await res.json();
+                        const semestre = lista.find(function(s) { return s.id === id; });
+                        if (semestre) abrirModalEdicao(semestre);
+                    } catch (_) {
+                        // Mensagem de erro é estática — sem dados da API no DOM
+                        const p = document.createElement('p');
+                        p.textContent = 'Não foi possível carregar os dados do semestre.';
+                        alert(p.textContent);
+                    }
+                });
+            });
+
+            // Botão "Acessar Equipes" — classe reutilizável, sem id duplicado
+            document.querySelectorAll('.btn-acessar-equipes').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    if (typeof setComponentValue === 'function') setComponentValue('admin_equipes');
+                });
+            });
+        }
+
+        // ─────────────────────────────────────────────────────────
+        // Carregar semestres da API
+        // ─────────────────────────────────────────────────────────
         async function carregarSemestres() {
             try {
-                const res = await fetch((window._API_BASE || '') + '/semestres', {
-                    headers: { 'Authorization': 'Bearer ' + (window._TOKEN || '') }
+                const res = await fetch(API_BASE + '/semestres', {
+                    headers: { 'Authorization': 'Bearer ' + TOKEN() }
                 });
                 if (!res.ok) throw new Error('Erro ao carregar semestres');
                 const semestres = await res.json();
                 renderizarSemestres(semestres);
-            } catch (err) {
-                document.getElementById('semestres-grid').innerHTML =
-                    '<p class="col-span-3 text-center text-error text-sm py-8">Erro ao carregar semestres: ' + err.message + '</p>';
+            } catch (_) {
+                // Mensagem de erro é estática — sem dados externos no DOM
+                const grid = document.getElementById('semestres-grid');
+                grid.innerHTML = '';
+                const msg = document.createElement('p');
+                msg.className   = 'col-span-3 text-center text-error text-sm py-8';
+                msg.textContent = 'Erro ao carregar semestres. Verifique sua conexão.';
+                grid.appendChild(msg);
             }
         }
 
-        // ── Associar eventos (chamado após render) ─────────────────
-        function associarEventos() {
-            const modalNovoSemestre = document.getElementById('modal-novo-semestre');
-            const modalTitle        = document.querySelector('#modal-novo-semestre h2');
-
-            // Botão novo semestre
-            const btnNovoSemestre = document.getElementById('btn-novo-semestre');
-            if (btnNovoSemestre) {
-                btnNovoSemestre.addEventListener('click', () => {
-                    if (modalTitle) modalTitle.innerText = 'Configurar Novo Semestre';
-                    modalNovoSemestre.classList.remove('hidden');
-                });
-            }
-
-            // Botões editar semestre
-            document.querySelectorAll('.btn-editar-semestre').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (modalTitle) modalTitle.innerText = 'Editar Semestre';
-                    modalNovoSemestre.classList.remove('hidden');
-                });
-            });
-
-            // Botão acessar equipes
-            const btnAcessar = document.getElementById('btn-acessar-equipes');
-            if (btnAcessar) {
-                btnAcessar.addEventListener('click', function() {
-                    if (typeof setComponentValue === 'function') setComponentValue('admin_equipes');
-                });
-            }
-        }
-
+        // ─────────────────────────────────────────────────────────
+        // Init — modal e form registrados UMA ÚNICA VEZ aqui.
+        // ─────────────────────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', function () {
-            // ── Carregar semestres da API ──────────────────────────
+
             carregarSemestres();
 
-            // ── Avatar dropdown ────────────────────────────────────
-            const avatarBtn = document.getElementById('btn-avatar-menu');
+            // Avatar dropdown
+            const avatarBtn      = document.getElementById('btn-avatar-menu');
             const avatarDropdown = document.getElementById('avatar-dropdown');
-            avatarBtn.addEventListener('click', (e) => { e.stopPropagation(); avatarDropdown.classList.toggle('hidden'); });
-            document.addEventListener('click', () => avatarDropdown.classList.add('hidden'));
-            avatarDropdown.addEventListener('click', (e) => e.stopPropagation());
-
-            // ── Modal ──────────────────────────────────────────────
-            const modalNovoSemestre = document.getElementById('modal-novo-semestre');
-            const btnCloseModal     = document.getElementById('btn-close-modal');
-            const btnCancelModal    = document.getElementById('btn-cancel-modal');
-
-            // Fechar Modal
-            btnCloseModal.addEventListener('click', () => modalNovoSemestre.classList.add('hidden'));
-            btnCancelModal.addEventListener('click', () => modalNovoSemestre.classList.add('hidden'));
-            modalNovoSemestre.addEventListener('click', (e) => {
-                if (e.target === modalNovoSemestre) modalNovoSemestre.classList.add('hidden');
+            avatarBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                avatarDropdown.classList.toggle('hidden');
+            });
+            document.addEventListener('click', function() {
+                avatarDropdown.classList.add('hidden');
+            });
+            avatarDropdown.addEventListener('click', function(e) {
+                e.stopPropagation();
             });
 
-            // ── Validação: Ano só aceita números ──────────────────
-            const inputAnoSemestre = document.getElementById('input-ano-semestre');
-            if (inputAnoSemestre) {
-                inputAnoSemestre.addEventListener('keydown', function(e) {
-                    const permitidos = ['Backspace','Tab','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'];
-                    if (permitidos.includes(e.key) || (e.key >= '0' && e.key <= '9')) return;
+            // Fechar modal — registrado uma única vez
+            document.getElementById('btn-close-modal').addEventListener('click', fecharModal);
+            document.getElementById('btn-cancel-modal').addEventListener('click', fecharModal);
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) fecharModal();
+            });
+
+            // Validação: ano só aceita números
+            inputAno.addEventListener('keydown', function(e) {
+                const permitidos = ['Backspace','Tab','Delete','ArrowLeft','ArrowRight',
+                                    'ArrowUp','ArrowDown','Home','End'];
+                if (permitidos.includes(e.key) || (e.key >= '0' && e.key <= '9')) return;
+                e.preventDefault();
+            });
+            inputAno.addEventListener('paste', function(e) {
+                if (!/^\d+$/.test((e.clipboardData || window.clipboardData).getData('text')))
                     e.preventDefault();
-                });
-                inputAnoSemestre.addEventListener('paste', function(e) {
-                    var texto = (e.clipboardData || window.clipboardData).getData('text');
-                    if (!/^\d+$/.test(texto)) e.preventDefault();
-                });
-            }
+            });
 
-            // ── Submit: Criar Semestre via API ────────────────────
-            const formSemestre  = document.getElementById('form-novo-semestre');
-            const submitBtn     = document.getElementById('btn-submit-semestre');
-
+            // ── Submit: POST (criação) ou PUT (edição) via _editandoId ──
             formSemestre.addEventListener('submit', async function(e) {
                 e.preventDefault();
 
-                const nome       = document.getElementById('input-nome-semestre').value.trim();
-                const ano        = parseInt(document.getElementById('input-ano-semestre').value);
-                const periodo    = document.getElementById('input-periodo-semestre').value;
-                const dataInicio = document.getElementById('input-data-inicio').value || null;
-                const dataTerm   = document.getElementById('input-data-termino').value || null;
-                const statusEl   = document.querySelector('input[name="status_semestre"]:checked');
-                const status     = statusEl ? statusEl.value : 'ativo';
+                const statusEl = document.querySelector('input[name="status_semestre"]:checked');
+                const payload  = {
+                    nome:         inputNome.value.trim(),
+                    ano:          parseInt(inputAno.value, 10),
+                    periodo:      selPeriodo.value,
+                    data_inicio:  inputInicio.value  || null,
+                    data_termino: inputTermino.value || null,
+                    status:       statusEl ? statusEl.value : 'ativo'
+                };
 
-                if (!nome || !ano) {
+                if (!payload.nome || !payload.ano) {
                     alert('Preencha pelo menos Nome e Ano.');
                     return;
                 }
 
-                const textoOriginal = submitBtn.textContent;
-                submitBtn.textContent = 'Salvando...';
-                submitBtn.disabled = true;
+                const textoOriginal    = submitBtn.textContent;
+                submitBtn.textContent  = 'Salvando...';
+                submitBtn.disabled     = true;
 
                 try {
-                    const res = await fetch((window._API_BASE || '') + '/semestres', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + (window._TOKEN || '')
-                        },
-                        body: JSON.stringify({
-                            nome:         nome,
-                            ano:          ano,
-                            periodo:      periodo,
-                            data_inicio:  dataInicio,
-                            data_termino: dataTerm,
-                            status:       status
-                        })
-                    });
+                    let res;
 
-                    if (!res.ok) {
-                        const err = await res.json();
-                        throw new Error(err.detail || 'Erro ao criar semestre.');
+                    if (_editandoId !== null) {
+                        // PUT — persiste status e demais campos no banco
+                        res = await fetch(API_BASE + '/semestres/' + _editandoId, {
+                            method:  'PUT',
+                            headers: {
+                                'Content-Type':  'application/json',
+                                'Authorization': 'Bearer ' + TOKEN()
+                            },
+                            body: JSON.stringify(payload)
+                        });
+                    } else {
+                        // POST — cria novo semestre
+                        res = await fetch(API_BASE + '/semestres', {
+                            method:  'POST',
+                            headers: {
+                                'Content-Type':  'application/json',
+                                'Authorization': 'Bearer ' + TOKEN()
+                            },
+                            body: JSON.stringify(payload)
+                        });
                     }
 
-                    const semestre = await res.json();
-                    alert('Semestre "' + semestre.nome + '" criado com sucesso!');
-                    modalNovoSemestre.classList.add('hidden');
-                    carregarSemestres();
+                    if (!res.ok) {
+                        const err = await res.json().catch(() => ({}));
+                        // err.detail vem do backend — exibido via alert, não via innerHTML
+                        throw new Error(err.detail || 'Erro ao salvar semestre.');
+                    }
+
+                    fecharModal();
+                    await carregarSemestres();
 
                 } catch (err) {
                     alert(err.message || 'Erro ao conectar com o servidor.');
                 } finally {
                     submitBtn.textContent = textoOriginal;
-                    submitBtn.disabled = false;
+                    submitBtn.disabled    = false;
                 }
             });
 

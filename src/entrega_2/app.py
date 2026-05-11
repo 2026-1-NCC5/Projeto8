@@ -237,9 +237,7 @@ elif pagina == "admin_home":
     resultado = _renderizar_como_componente(
         html_content,
         mapeamento={
-            "#btn-acessar-equipes": "admin_equipes",
             ".btn-equipes-mobile":  "admin_equipes",
-            ".btn-equipes-nav":     "admin_equipes",
             ".btn-dashboard":       "admin_dashboard",
             ".btn-perfil":          "admin_perfil",
             ".btn-sair":            "login",
