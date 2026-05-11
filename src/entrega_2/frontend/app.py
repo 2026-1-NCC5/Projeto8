@@ -2,6 +2,9 @@ import streamlit as st
 import streamlit.components.v1 as components
 import os
 import re
+from dotenv import load_dotenv, dotenv_values
+
+load_dotenv() 
 
 # ─────────────────────────────────────────────
 # 1. Configuração da página
@@ -43,7 +46,7 @@ def _script_navegacao(mapeamento: dict) -> str:
                 setComponentValue('{destino}');
             }});
         }});
-"""
+        """
     return f"""
     <script>
         function sendMessageToStreamlitClient(type, data) {{

@@ -229,7 +229,7 @@
             submitBtn.innerHTML = 'Entrando...';
             submitBtn.disabled = true;
 
-            fetch('http://localhost:8000/api/auth/login', {
+            fetch('contacerto-api-akbph4bfh8e4cva6.canadacentral-01.azurewebsites.net/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, senha: senha })
