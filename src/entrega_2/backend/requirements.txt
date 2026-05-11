@@ -14,6 +14,7 @@ python-multipart
 
 # CORS & Utils
 pydantic[email-validator]
+pydantic[email]
 python-dotenv
 
 # Export

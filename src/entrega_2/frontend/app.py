@@ -8,7 +8,7 @@ import re
 # ─────────────────────────────────────────────
 st.set_page_config(
     page_title="Conta Certo",
-    page_icon=os.path.join("Frontend", "images", "ContaCerto_logo_Icon.png"),
+    page_icon=os.path.join("app", "images", "ContaCerto_logo_Icon.png"),
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -27,7 +27,7 @@ st.markdown("""
 # 2. Helpers
 # ─────────────────────────────────────────────
 def carregar_html(nome_arquivo):
-    caminho = os.path.join("Frontend", nome_arquivo)
+    caminho = os.path.join("app", nome_arquivo)
     with open(caminho, "r", encoding="utf-8") as f:
         return f.read()
 
@@ -103,7 +103,7 @@ def _handle_resultado(resultado):
 
 
 # ── URL da API Backend ──────────────────────────
-API_URL = "http://localhost:8000"
+API_URL = os.getenv("API_URL")
 
 if "pagina_atual" not in st.session_state:
     st.session_state["pagina_atual"] = "login"
