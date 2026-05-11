@@ -240,6 +240,8 @@
         });
 
         // ── Form Submission ────────────────────────────────
+        const API_BASE = window._API_BASE || 'http://localhost:8000/api';
+
         document.getElementById('cadastro-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const senha = document.getElementById('reg-senha').value;
@@ -264,9 +266,33 @@
                 dados.curso = document.getElementById('reg-curso').value;
             }
 
-            console.log('Dados de cadastro:', dados);
-            alert('Conta criada com sucesso! Redirecionando para o login...');
-            // TODO: Enviar dados para API backend aqui
+            var submitBtn = e.target.querySelector('button[type="submit"]');
+            var originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = 'Criando conta...';
+            submitBtn.disabled = true;
+
+            fetch(API_BASE + '/auth/cadastro', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            })
+            .then(function(resp) {
+                if (!resp.ok) {
+                    return resp.json().then(function(err) { throw new Error(err.detail || 'Erro ao criar conta.'); });
+                }
+                return resp.json();
+            })
+            .then(function(data) {
+                alert('Conta criada com sucesso! Faça login para continuar.');
+                if (typeof setComponentValue === 'function') {
+                    setComponentValue('login');
+                }
+            })
+            .catch(function(err) {
+                alert(err.message || 'Erro ao conectar com o servidor.');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
         });
     </script>
 </body>

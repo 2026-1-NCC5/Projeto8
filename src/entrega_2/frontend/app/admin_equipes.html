@@ -404,11 +404,10 @@
             topo.appendChild(membrosInfo);
             card.appendChild(topo);
 
-            // Botão Acessar — navega para detalhes da equipe
+            // Botão Acessar — navega para detalhes da equipe com equipe_id
             const btnAcessar = document.createElement('button');
             btnAcessar.type      = 'button';
-            btnAcessar.className = 'btn-iniciar-contagem w-full py-3 bg-primary-container text-on-primary-container font-bold rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all';
-            btnAcessar.dataset.id = String(equipe.id); // usado pelo mapeamento do app.py
+            btnAcessar.className = 'w-full py-3 bg-primary-container text-on-primary-container font-bold rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all';
 
             const textoBtnAcessar = document.createTextNode('Acessar');
             const iconeBtnAcessar = document.createElement('span');
@@ -417,6 +416,14 @@
 
             btnAcessar.appendChild(textoBtnAcessar);
             btnAcessar.appendChild(iconeBtnAcessar);
+
+            // Envia JSON com destino + equipe_id para o app.py capturar
+            btnAcessar.addEventListener('click', function() {
+                if (typeof setComponentValue === 'function') {
+                    setComponentValue(JSON.stringify({ destino: 'admin_detalhes_equipe', equipe_id: equipe.id }));
+                }
+            });
+
             card.appendChild(btnAcessar);
 
             return card; // ← retorno obrigatório
