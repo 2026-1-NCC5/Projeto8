@@ -15,7 +15,7 @@ router = APIRouter(prefix="/api/semestres", tags=["Semestres"])
 
 
 # ── GET / ───────────────────────────────────────
-@router.get("/", response_model=list[SemestreResponse])
+@router.get("", response_model=list[SemestreResponse])
 def listar_semestres(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user),
@@ -26,7 +26,7 @@ def listar_semestres(
 
 
 # ── POST / ──────────────────────────────────────
-@router.post("/", response_model=SemestreResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=SemestreResponse, status_code=status.HTTP_201_CREATED)
 def criar_semestre(
     dados: SemestreCreate,
     db: Session = Depends(get_db),

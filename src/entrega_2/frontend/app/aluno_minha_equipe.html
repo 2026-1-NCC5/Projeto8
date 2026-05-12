@@ -148,10 +148,10 @@
         <p class="text-on-surface-variant font-manrope text-lg mb-1">Histórico da Unidade:</p>
         <h1 class="text-5xl font-extrabold text-[#166534] font-manrope tracking-tight leading-tight">Equipe Alpha</h1>
       </div>
-      <div class="lg:col-span-1">
+      <div class="lg:col-span-1 flex gap-4">
         <!-- Metric Card: Glassmorphism / Editorial Style -->
         <div
-          class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] flex items-center gap-5 border border-white/20">
+          class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] flex items-center gap-5 border border-white/20 flex-1">
           <div
             class="w-14 h-14 bg-secondary-container text-on-secondary-container flex items-center justify-center rounded-xl">
             <span class="material-symbols-outlined text-3xl" data-icon="inventory_2"
@@ -159,7 +159,20 @@
           </div>
           <div>
             <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Total Arrecadado</p>
-            <p class="text-3xl font-extrabold text-on-surface font-manrope">4.820 itens</p>
+            <p class="text-3xl font-extrabold text-on-surface font-manrope total-itens">4.820 itens</p>
+          </div>
+        </div>
+        <!-- Metric Card Peso -->
+        <div
+          class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.06)] flex items-center gap-5 border border-white/20 flex-1">
+          <div
+            class="w-14 h-14 bg-primary-container text-on-primary-container flex items-center justify-center rounded-xl">
+            <span class="material-symbols-outlined text-3xl" data-icon="scale"
+              style="font-variation-settings: 'FILL' 1;">scale</span>
+          </div>
+          <div>
+            <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Total em Quilos</p>
+            <p class="text-3xl font-extrabold text-on-surface font-manrope total-peso">1.250 kg</p>
           </div>
         </div>
       </div>
@@ -175,13 +188,6 @@
         <button class="px-6 py-2 rounded-full text-sm font-medium text-slate-500 hover:text-slate-700">2025.2</button>
         <button class="px-6 py-2 rounded-full text-sm font-medium text-slate-500 hover:text-slate-700">2025.1</button>
       </div>
-      <div class="flex items-center gap-3 w-full md:w-auto">
-        <button
-          class="flex items-center gap-2 bg-surface-container-lowest px-4 py-2.5 rounded-lg border border-slate-200/50 text-slate-600 text-sm font-bold hover:bg-slate-50 active:scale-95 transition-all">
-          <span class="material-symbols-outlined text-lg" data-icon="download">download</span>
-          Exportar
-        </button>
-      </div>
     </div>
     <!-- History Table: Editorial Typography -->
     <div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-slate-100/50">
@@ -195,6 +201,8 @@
                 Item</th>
               <th class="px-8 py-5 text-[11px] font-extrabold uppercase tracking-widest text-slate-400 font-manrope">
                 Quantity</th>
+              <th class="px-8 py-5 text-[11px] font-extrabold uppercase tracking-widest text-slate-400 font-manrope">
+                Peso (Kg)</th>
               <th
                 class="px-8 py-5 text-[11px] font-extrabold uppercase tracking-widest text-slate-400 font-manrope text-right">
                 Actions</th>
@@ -378,9 +386,14 @@
         document.querySelector('h1').textContent = eq.nome;
         document.querySelector('main .text-secondary.font-bold').textContent = eq.nome || 'Minha Equipe';
 
-        const totalEl = document.querySelector('.text-3xl.font-extrabold.text-on-surface.font-manrope');
+        const totalEl = document.querySelector('.total-itens');
         if (totalEl && eq.total_arrecadado !== undefined) {
           totalEl.textContent = eq.total_arrecadado.toLocaleString('pt-BR') + ' itens';
+        }
+
+        const totalPesoEl = document.querySelector('.total-peso');
+        if (totalPesoEl && eq.total_peso !== undefined) {
+          totalPesoEl.textContent = eq.total_peso.toLocaleString('pt-BR') + ' kg';
         }
 
         renderizarMembros(eq.membros || []);
@@ -446,7 +459,8 @@
         tr.innerHTML =
           '<td class="px-8 py-5 text-sm font-medium text-slate-600">' + (r.data || '—') + '</td>' +
           '<td class="px-8 py-5 text-sm font-bold text-on-surface">' + (r.item || '—') + '</td>' +
-          '<td class="px-8 py-5 text-sm font-bold text-secondary">' + (r.quantidade || 0) + ' un</td>' +
+          '<td class="px-8 py-5 text-sm font-bold text-secondary">' + (r.quantidade || 0) + ' ' + (r.unidade || 'un') + '</td>' +
+          '<td class="px-8 py-5 text-sm font-bold text-secondary">' + (r.peso !== undefined && r.peso !== null ? r.peso + ' kg' : '—') + '</td>' +
           '<td class="px-8 py-5 text-right"><button class="material-symbols-outlined text-slate-400 hover:text-secondary transition-colors">more_vert</button></td>';
         tbody.appendChild(tr);
       });
@@ -508,16 +522,6 @@
         });
       } catch (_) {}
     }
-
-    // Exportar
-    document.querySelectorAll('button').forEach(function(btn) {
-      if (btn.textContent.trim().includes('Exportar')) {
-        btn.addEventListener('click', function() {
-          if (!equipeId) return;
-          window.open(API_BASE + '/equipes/' + equipeId + '/exportar?token=' + TOKEN, '_blank');
-        });
-      }
-    });
 
     carregarEquipe();
   </script>

@@ -103,14 +103,14 @@ def seed():
 
         # ── Histórico de Alimentos ──────────────
         historicos = [
-            HistoricoAlimento(equipe_id=equipe_alpha.id, data=date(2024, 5, 24), item="Cestas Básicas Premium", quantidade=450, unidade="un", status="concluido"),
-            HistoricoAlimento(equipe_id=equipe_alpha.id, data=date(2024, 5, 21), item="Kits Higiene (Master)", quantidade=1200, unidade="un", status="concluido"),
-            HistoricoAlimento(equipe_id=equipe_alpha.id, data=date(2024, 5, 18), item="Agasalhos Térmicos", quantidade=85, unidade="un", status="concluido"),
-            HistoricoAlimento(equipe_id=equipe_alpha.id, data=date(2024, 5, 15), item="Leite em Pó Integral", quantidade=2085, unidade="un", status="concluido"),
-            HistoricoAlimento(equipe_id=equipe_alpha.id, data=date(2024, 5, 12), item="Mantas de Lã", quantidade=1000, unidade="un", status="concluido"),
-            HistoricoAlimento(equipe_id=equipe_beta.id, data=date(2024, 5, 20), item="Arroz 5kg", quantidade=300, unidade="un", status="concluido"),
-            HistoricoAlimento(equipe_id=equipe_beta.id, data=date(2024, 5, 15), item="Feijão 1kg", quantidade=500, unidade="un", status="concluido"),
-            HistoricoAlimento(equipe_id=equipe_gamma.id, data=date(2024, 5, 22), item="Óleo de Soja", quantidade=200, unidade="un", status="concluido"),
+            HistoricoAlimento(equipe_id=equipe_alpha.id, data=date(2024, 5, 24), item="Cestas Básicas Premium", quantidade=450, unidade="un", peso=450.0, status="concluido"),
+            HistoricoAlimento(equipe_id=equipe_alpha.id, data=date(2024, 5, 21), item="Kits Higiene (Master)", quantidade=1200, unidade="un", peso=1200.0, status="concluido"),
+            HistoricoAlimento(equipe_id=equipe_alpha.id, data=date(2024, 5, 18), item="Agasalhos Térmicos", quantidade=85, unidade="un", peso=85.0, status="concluido"),
+            HistoricoAlimento(equipe_id=equipe_alpha.id, data=date(2024, 5, 15), item="Leite em Pó Integral", quantidade=2085, unidade="un", peso=2085.0, status="concluido"),
+            HistoricoAlimento(equipe_id=equipe_alpha.id, data=date(2024, 5, 12), item="Mantas de Lã", quantidade=1000, unidade="un", peso=1000.0, status="concluido"),
+            HistoricoAlimento(equipe_id=equipe_beta.id, data=date(2024, 5, 20), item="Arroz 5kg", quantidade=300, unidade="un", peso=1500.0, status="concluido"),
+            HistoricoAlimento(equipe_id=equipe_beta.id, data=date(2024, 5, 15), item="Feijão 1kg", quantidade=500, unidade="un", peso=500.0, status="concluido"),
+            HistoricoAlimento(equipe_id=equipe_gamma.id, data=date(2024, 5, 22), item="Óleo de Soja", quantidade=200, unidade="un", peso=180.0, status="concluido"),
         ]
         db.add_all(historicos)
         print(f"   [OK] {len(historicos)} registros de historico criados")

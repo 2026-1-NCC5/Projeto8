@@ -208,23 +208,28 @@
     </div>
 
     <!-- Metric Cards -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-      <div class="metric-card col-span-2 md:col-span-1">
+    <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+      <div class="metric-card col-span-2 lg:col-span-1">
         <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Total arrecadado</p>
         <p id="metricTotal" class="text-3xl font-extrabold text-primary font-headline">—</p>
         <p class="text-xs text-on-surface-variant mt-1">unidades</p>
       </div>
-      <div class="metric-card col-span-2 md:col-span-1">
+      <div class="metric-card col-span-2 lg:col-span-1">
+        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Total em quilos</p>
+        <p id="metricPeso" class="text-3xl font-extrabold text-primary font-headline">—</p>
+        <p class="text-xs text-on-surface-variant mt-1">kg</p>
+      </div>
+      <div class="metric-card col-span-2 lg:col-span-1">
         <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Tipos de item</p>
         <p id="metricTipos" class="text-3xl font-extrabold text-primary font-headline">—</p>
         <p class="text-xs text-on-surface-variant mt-1">categorias</p>
       </div>
-      <div class="metric-card col-span-2 md:col-span-1">
-        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Item mais arrecadado</p>
+      <div class="metric-card col-span-2 lg:col-span-1">
+        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Mais arrecadado</p>
         <p id="metricTop" class="text-lg font-extrabold leading-tight text-primary font-headline">—</p>
         <p id="metricTopPct" class="text-xs text-on-surface-variant mt-1">—</p>
       </div>
-      <div class="metric-card col-span-2 md:col-span-1">
+      <div class="metric-card col-span-2 lg:col-span-1">
         <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Registros</p>
         <p id="metricRegistros" class="text-3xl font-extrabold text-primary font-headline">—</p>
         <p class="text-xs text-on-surface-variant mt-1">entradas no histórico</p>
@@ -447,9 +452,11 @@
         .map(([item, qtd], i) => ({ item, qtd, cor: CORES[i % CORES.length] }));
 
       const total = itens.reduce((s, d) => s + d.qtd, 0);
+      const totalPeso = registros.reduce((s, r) => s + (r.peso || 0), 0);
 
       // Métricas
       document.getElementById('metricTotal').textContent     = fmt(total);
+      document.getElementById('metricPeso').textContent      = fmt(totalPeso);
       document.getElementById('metricTipos').textContent     = itens.length;
       document.getElementById('metricRegistros').textContent = registros.length;
 

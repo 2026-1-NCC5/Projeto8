@@ -13,6 +13,7 @@ class HistoricoAlimentoCreate(BaseModel):
     item: str
     quantidade: int
     unidade: str = "un"
+    peso: Optional[float] = None
     status: str = "concluido"
 
 
@@ -21,6 +22,7 @@ class HistoricoAlimentoUpdate(BaseModel):
     item: Optional[str] = None
     quantidade: Optional[int] = None
     unidade: Optional[str] = None
+    peso: Optional[float] = None
     status: Optional[str] = None
 
 
@@ -31,6 +33,7 @@ class HistoricoAlimentoResponse(BaseModel):
     item: str
     quantidade: int
     unidade: str
+    peso: Optional[float] = None
     status: str
     criado_em: Optional[datetime] = None
 

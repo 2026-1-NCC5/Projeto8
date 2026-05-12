@@ -58,6 +58,7 @@ class EquipeDetalheResponse(BaseModel):
     nome: str
     semestre_id: int
     total_arrecadado: int = 0
+    total_peso: float = 0.0
     membros: list[MembroDetalhe] = []
     mentores: list[MentorDetalhe] = []
     criado_em: Optional[datetime] = None
@@ -73,6 +74,7 @@ class EquipeMinhaResponse(BaseModel):
     semestre_nome: str
     semestre_id: int
     total_arrecadado: int = 0
+    total_peso: float = 0.0
     membros: list[MembroDetalhe] = []
     mentores: list[MentorDetalhe] = []
 

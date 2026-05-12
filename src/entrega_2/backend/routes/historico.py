@@ -108,7 +108,7 @@ def editar_registro(
     if not reg:
         raise HTTPException(status_code=404, detail="Registro não encontrado.")
 
-    for field in ["data", "item", "quantidade", "unidade", "status"]:
+    for field in ["data", "item", "quantidade", "unidade", "status", "peso"]:
         val = getattr(dados, field, None)
         if val is not None:
             setattr(reg, field, val)
@@ -168,6 +168,7 @@ def exportar_relatorio(
     )
 
     total_itens = sum(h.quantidade for h in historico)
+    total_peso = sum(h.peso for h in historico if h.peso is not None)
     total_registros = len(historico)
 
     # Criar Excel
@@ -214,6 +215,11 @@ def exportar_relatorio(
     ws[f"A{row}"] = "Total Arrecadado:"
     ws[f"A{row}"].font = bold
     ws[f"B{row}"] = f"{total_itens:,} itens".replace(",", ".")
+    ws[f"B{row}"].font = Font(name="Arial", bold=True, size=14, color="006E2F")
+    row += 1
+    ws[f"A{row}"] = "Total em Quilos:"
+    ws[f"A{row}"].font = bold
+    ws[f"B{row}"] = f"{total_peso:,.2f} kg".replace(".", ",")
     ws[f"B{row}"].font = Font(name="Arial", bold=True, size=14, color="006E2F")
     row += 1
     ws[f"A{row}"] = "Total Registros:"
@@ -264,14 +270,14 @@ def exportar_relatorio(
 
     # Histórico
     row += 1
-    ws.merge_cells(f"A{row}:E{row}")
+    ws.merge_cells(f"A{row}:F{row}")
     ws[f"A{row}"] = "HISTÓRICO DE ALIMENTOS"
     ws[f"A{row}"].font = header_font
     ws[f"A{row}"].fill = green_fill
-    for c in ["B", "C", "D", "E"]:
+    for c in ["B", "C", "D", "E", "F"]:
         ws[f"{c}{row}"].fill = green_fill
     row += 1
-    for col, label in [("A", "Data"), ("B", "Item"), ("C", "Quantidade"), ("D", "Unidade"), ("E", "Status")]:
+    for col, label in [("A", "Data"), ("B", "Item"), ("C", "Quantidade"), ("D", "Unidade"), ("E", "Peso (kg)"), ("F", "Status")]:
         ws[f"{col}{row}"] = label
         ws[f"{col}{row}"].font = bold
         ws[f"{col}{row}"].fill = light_fill
@@ -281,15 +287,16 @@ def exportar_relatorio(
         ws[f"B{row}"] = h.item
         ws[f"C{row}"] = h.quantidade
         ws[f"D{row}"] = h.unidade
-        ws[f"E{row}"] = h.status.capitalize()
+        ws[f"E{row}"] = h.peso if h.peso is not None else "—"
+        ws[f"F{row}"] = h.status.capitalize()
         row += 1
 
-    # Ajustar larguras
     ws.column_dimensions["A"].width = 25
     ws.column_dimensions["B"].width = 35
     ws.column_dimensions["C"].width = 15
-    ws.column_dimensions["D"].width = 30
+    ws.column_dimensions["D"].width = 15
     ws.column_dimensions["E"].width = 15
+    ws.column_dimensions["F"].width = 15
 
     # Salvar em memória
     output = io.BytesIO()

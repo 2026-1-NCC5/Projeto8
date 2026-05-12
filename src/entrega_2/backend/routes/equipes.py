@@ -25,10 +25,14 @@ def _total(db, eid):
     return int(db.query(func.coalesce(func.sum(HistoricoAlimento.quantidade), 0)).filter(HistoricoAlimento.equipe_id == eid).scalar())
 
 
+def _total_peso(db, eid):
+    return float(db.query(func.coalesce(func.sum(HistoricoAlimento.peso), 0.0)).filter(HistoricoAlimento.equipe_id == eid).scalar())
+
+
 def _det(db, eq):
     m = [MembroDetalhe(id=e.usuario.id, nome=e.usuario.nome, curso=e.usuario.curso, ra=e.usuario.ra) for e in eq.membros]
     mt = [MentorDetalhe(id=e.usuario.id, nome=e.usuario.nome) for e in eq.mentores]
-    return {"id": eq.id, "nome": eq.nome, "semestre_id": eq.semestre_id, "total_arrecadado": _total(db, eq.id), "membros": m, "mentores": mt, "criado_em": eq.criado_em}
+    return {"id": eq.id, "nome": eq.nome, "semestre_id": eq.semestre_id, "total_arrecadado": _total(db, eq.id), "total_peso": _total_peso(db, eq.id), "membros": m, "mentores": mt, "criado_em": eq.criado_em}
 
 
 def _load(db, eid):

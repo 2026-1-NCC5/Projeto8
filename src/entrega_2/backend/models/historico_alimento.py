@@ -6,7 +6,7 @@ Futuramente preenchido via API YOLO de detecção de alimentos.
 
 from datetime import datetime, timezone
 
-from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey, CheckConstraint
+from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey, CheckConstraint, Float
 from sqlalchemy.orm import relationship
 
 from database import Base
@@ -21,6 +21,7 @@ class HistoricoAlimento(Base):
     item = Column(String(255), nullable=False)  # Ex: "Cestas Básicas Premium"
     quantidade = Column(Integer, nullable=False)
     unidade = Column(String(20), nullable=False, default="un")  # un, kg, etc.
+    peso = Column(Float, nullable=True) # peso em kg
     status = Column(String(20), nullable=False, default="concluido")  # concluido | pendente
     criado_em = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     atualizado_em = Column(

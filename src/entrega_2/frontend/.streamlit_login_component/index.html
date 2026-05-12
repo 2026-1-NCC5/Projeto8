@@ -149,29 +149,30 @@
     }
   </style>
 <script>
-        window._TOKEN    = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3IiwidGlwbyI6ImFsdW5vIiwiZXhwIjoxNzc4NjMzNTQ2fQ.TOgfK7GK32eLXRK2xNS5g-QPtvcylPVcUouea3yJTv8';
+        window._TOKEN    = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidGlwbyI6ImFkbWluIiwiZXhwIjoxNzc4NjM3MTEzfQ.Dp1dymNihSVT9gsGRVer5F1LMDXqkZV4UNQtKzKJ_CA';
         window._API_BASE = 'http://localhost:8000/api';
-        window._USUARIO  = {"id": 7, "nome": "Maria Oliveira", "email": "aluno@le.com", "tipo": "aluno"};
+        window._USUARIO  = {"id": 1, "nome": "Admin Respons\u00e1vel", "email": "admin@le.com", "tipo": "admin"};
         window._EQUIPE_ID = '';
     </script>
 </head>
 <body class="bg-surface font-body text-on-surface">
 
-  <!-- ── Navbar (padrão aluno) ─────────────────────────────────────── -->
+  <!-- ── Navbar (padrão do projeto) ─────────────────────────────────────── -->
   <nav class="fixed top-0 w-full z-50 glass-nav shadow-sm">
     <div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
       <div class="flex items-center gap-8">
         <span class="text-xl font-bold tracking-tight text-green-800 font-headline">Lideranças Empáticas</span>
         <div class="hidden md:flex gap-6 items-center">
-          <a class="btn-aluno-home text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Home</a>
+          <a class="btn-home text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Home</a>
           <a class="text-sm font-semibold text-primary border-b-2 border-primary pb-1 transition-colors">Dashboard</a>
+          <a class="btn-equipes text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Equipes</a>
         </div>
       </div>
       <div class="flex items-center gap-4">
         <div class="relative">
           <button id="btn-avatar-menu"
             class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs cursor-pointer hover:ring-2 hover:ring-primary/40 transition-all">
-            ..
+            AD
           </button>
           <div id="avatar-dropdown"
             class="hidden absolute right-0 top-12 w-48 bg-white rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.12)] border border-slate-100 py-2 z-[200]">
@@ -214,23 +215,28 @@
     </div>
 
     <!-- Metric Cards -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-      <div class="metric-card col-span-2 md:col-span-1">
+    <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+      <div class="metric-card col-span-2 lg:col-span-1">
         <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Total arrecadado</p>
         <p id="metricTotal" class="text-3xl font-extrabold text-primary font-headline">—</p>
         <p class="text-xs text-on-surface-variant mt-1">unidades</p>
       </div>
-      <div class="metric-card col-span-2 md:col-span-1">
+      <div class="metric-card col-span-2 lg:col-span-1">
+        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Total em quilos</p>
+        <p id="metricPeso" class="text-3xl font-extrabold text-primary font-headline">—</p>
+        <p class="text-xs text-on-surface-variant mt-1">kg</p>
+      </div>
+      <div class="metric-card col-span-2 lg:col-span-1">
         <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Tipos de item</p>
         <p id="metricTipos" class="text-3xl font-extrabold text-primary font-headline">—</p>
         <p class="text-xs text-on-surface-variant mt-1">categorias</p>
       </div>
-      <div class="metric-card col-span-2 md:col-span-1">
-        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Item mais arrecadado</p>
+      <div class="metric-card col-span-2 lg:col-span-1">
+        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Mais arrecadado</p>
         <p id="metricTop" class="text-lg font-extrabold leading-tight text-primary font-headline">—</p>
         <p id="metricTopPct" class="text-xs text-on-surface-variant mt-1">—</p>
       </div>
-      <div class="metric-card col-span-2 md:col-span-1">
+      <div class="metric-card col-span-2 lg:col-span-1">
         <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Registros</p>
         <p id="metricRegistros" class="text-3xl font-extrabold text-primary font-headline">—</p>
         <p class="text-xs text-on-surface-variant mt-1">entradas no histórico</p>
@@ -280,9 +286,9 @@
 
   </main>
 
-  <!-- ── Mobile bottom nav (padrão aluno) ────────────── -->
-  <nav class="lg:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around items-center px-4 py-3 pb-safe z-50 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] rounded-t-2xl">
-    <button class="btn-aluno-home flex flex-col items-center justify-center text-slate-400 active:bg-slate-50 transition-transform active:scale-90 cursor-pointer">
+  <!-- ── Mobile bottom nav (padrão das outras páginas admin) ────────────── -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-surface-container-high flex justify-around py-2 z-50">
+    <button class="btn-home flex flex-col items-center justify-center text-on-surface-variant cursor-pointer">
       <span class="material-symbols-outlined">home</span>
       <span class="text-[10px] font-manrope font-semibold">Home</span>
     </button>
@@ -290,7 +296,11 @@
       <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bar_chart</span>
       <span class="text-[10px] font-manrope font-semibold">Dashboard</span>
     </div>
-    <button class="btn-perfil flex flex-col items-center justify-center text-slate-400 active:bg-slate-50 transition-transform active:scale-90 cursor-pointer">
+    <button class="btn-equipes flex flex-col items-center justify-center text-on-surface-variant cursor-pointer">
+      <span class="material-symbols-outlined">group</span>
+      <span class="text-[10px] font-manrope font-semibold">Equipes</span>
+    </button>
+    <button class="btn-perfil flex flex-col items-center justify-center text-on-surface-variant cursor-pointer">
       <span class="material-symbols-outlined">person</span>
       <span class="text-[10px] font-manrope font-semibold">Perfil</span>
     </button>
@@ -453,9 +463,11 @@
         .map(([item, qtd], i) => ({ item, qtd, cor: CORES[i % CORES.length] }));
 
       const total = itens.reduce((s, d) => s + d.qtd, 0);
+      const totalPeso = registros.reduce((s, r) => s + (r.peso || 0), 0);
 
       // Métricas
       document.getElementById('metricTotal').textContent     = fmt(total);
+      document.getElementById('metricPeso').textContent      = fmt(totalPeso);
       document.getElementById('metricTipos').textContent     = itens.length;
       document.getElementById('metricRegistros').textContent = registros.length;
 
@@ -574,17 +586,24 @@
         });
         init();
         
-        document.querySelectorAll('.btn-aluno-home').forEach(function(el) {
+        document.querySelectorAll('.btn-home').forEach(function(el) {
             el.addEventListener('click', function(e) {
                 e.preventDefault();
-                setComponentValue('aluno_home');
+                setComponentValue('admin_home');
+            });
+        });
+
+        document.querySelectorAll('.btn-equipes').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                setComponentValue('admin_equipes');
             });
         });
 
         document.querySelectorAll('.btn-perfil').forEach(function(el) {
             el.addEventListener('click', function(e) {
                 e.preventDefault();
-                setComponentValue('aluno_perfil');
+                setComponentValue('admin_perfil');
             });
         });
 

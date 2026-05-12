@@ -137,6 +137,7 @@ def seed_mockup():
                 item=r["item"],
                 quantidade=r["quantidade"],
                 unidade=r["unidade"],
+                peso=float(r["quantidade"]) * 1.25,
                 status=r["status"],
             )
             db.add(registro)
