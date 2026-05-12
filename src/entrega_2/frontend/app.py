@@ -125,8 +125,8 @@ def _handle_resultado(resultado):
 
 # ── URL da API Backend ──────────────────────────
 # Prioriza variável de ambiente, fallback para a URL da Azure do usuário
-AZURE_URL = "https://contacerto-api-akbph4bfh8e4cva6.canadacentral-01.azurewebsites.net"
-API_URL = os.getenv("API_URL", AZURE_URL)
+#AZURE_URL = "https://contacerto-api-akbph4bfh8e4cva6.canadacentral-01.azurewebsites.net"
+API_URL = os.getenv("API_URL", "http://localhost:8000")
 
 
 def _injetar_contexto(html_content: str) -> str:

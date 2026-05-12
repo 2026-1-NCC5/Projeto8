@@ -194,8 +194,6 @@
                 Item</th>
               <th class="px-8 py-5 text-[11px] font-extrabold uppercase tracking-widest text-slate-400 font-manrope">
                 Quantity</th>
-              <th class="px-8 py-5 text-[11px] font-extrabold uppercase tracking-widest text-slate-400 font-manrope">
-                Status</th>
               <th
                 class="px-8 py-5 text-[11px] font-extrabold uppercase tracking-widest text-slate-400 font-manrope text-right">
                 Actions</th>
@@ -206,10 +204,6 @@
               <td class="px-8 py-5 text-sm font-medium text-slate-600">24/05/2024</td>
               <td class="px-8 py-5 text-sm font-bold text-on-surface">Cestas Básicas Premium</td>
               <td class="px-8 py-5 text-sm font-bold text-secondary">450 un</td>
-              <td class="px-8 py-5">
-                <span
-                  class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-[11px] font-bold uppercase tracking-wider">Concluído</span>
-              </td>
               <td class="px-8 py-5 text-right">
                 <button class="material-symbols-outlined text-slate-400 hover:text-secondary transition-colors"
                   data-icon="more_vert">more_vert</button>
@@ -219,10 +213,6 @@
               <td class="px-8 py-5 text-sm font-medium text-slate-600">21/05/2024</td>
               <td class="px-8 py-5 text-sm font-bold text-on-surface">Kits Higiene (Master)</td>
               <td class="px-8 py-5 text-sm font-bold text-secondary">1.200 un</td>
-              <td class="px-8 py-5">
-                <span
-                  class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-[11px] font-bold uppercase tracking-wider">Concluído</span>
-              </td>
               <td class="px-8 py-5 text-right">
                 <button class="material-symbols-outlined text-slate-400 hover:text-secondary transition-colors"
                   data-icon="more_vert">more_vert</button>
@@ -232,10 +222,6 @@
               <td class="px-8 py-5 text-sm font-medium text-slate-600">18/05/2024</td>
               <td class="px-8 py-5 text-sm font-bold text-on-surface">Agasalhos Térmicos</td>
               <td class="px-8 py-5 text-sm font-bold text-secondary">85 un</td>
-              <td class="px-8 py-5">
-                <span
-                  class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-[11px] font-bold uppercase tracking-wider">Concluído</span>
-              </td>
               <td class="px-8 py-5 text-right">
                 <button class="material-symbols-outlined text-slate-400 hover:text-secondary transition-colors"
                   data-icon="more_vert">more_vert</button>
@@ -245,10 +231,6 @@
               <td class="px-8 py-5 text-sm font-medium text-slate-600">15/05/2024</td>
               <td class="px-8 py-5 text-sm font-bold text-on-surface">Leite em Pó Integral</td>
               <td class="px-8 py-5 text-sm font-bold text-secondary">2.085 un</td>
-              <td class="px-8 py-5">
-                <span
-                  class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-[11px] font-bold uppercase tracking-wider">Concluído</span>
-              </td>
               <td class="px-8 py-5 text-right">
                 <button class="material-symbols-outlined text-slate-400 hover:text-secondary transition-colors"
                   data-icon="more_vert">more_vert</button>
@@ -258,10 +240,6 @@
               <td class="px-8 py-5 text-sm font-medium text-slate-600">12/05/2024</td>
               <td class="px-8 py-5 text-sm font-bold text-on-surface">Mantas de Lã</td>
               <td class="px-8 py-5 text-sm font-bold text-secondary">1.000 un</td>
-              <td class="px-8 py-5">
-                <span
-                  class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-[11px] font-bold uppercase tracking-wider">Concluído</span>
-              </td>
               <td class="px-8 py-5 text-right">
                 <button class="material-symbols-outlined text-slate-400 hover:text-secondary transition-colors"
                   data-icon="more_vert">more_vert</button>
@@ -477,12 +455,11 @@
           '<td class="px-8 py-5 text-sm font-medium text-slate-600">' + (r.data || '—') + '</td>' +
           '<td class="px-8 py-5 text-sm font-bold text-on-surface">' + (r.item || '—') + '</td>' +
           '<td class="px-8 py-5 text-sm font-bold text-secondary">' + (r.quantidade || 0) + ' un</td>' +
-          '<td class="px-8 py-5"><span class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 text-[11px] font-bold uppercase tracking-wider">Concluído</span></td>' +
           '<td class="px-8 py-5 text-right"><button class="material-symbols-outlined text-slate-400 hover:text-secondary transition-colors">more_vert</button></td>';
         tbody.appendChild(tr);
       });
       if (items.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="px-8 py-5 text-sm text-slate-400 text-center">Nenhum registro encontrado.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" class="px-8 py-5 text-sm text-slate-400 text-center">Nenhum registro encontrado.</td></tr>';
       }
 
       // Atualizar paginação

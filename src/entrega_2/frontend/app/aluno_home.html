@@ -246,32 +246,40 @@
         const card = document.createElement('div');
 
         if (s.status === 'ativo') {
-          card.className = 'bg-surface-container-lowest p-8 rounded-[1.5rem] shadow-[0_20px_40px_rgba(25,28,30,0.04)] relative ring-2 ring-primary';
+          card.className = 'flex flex-col h-full bg-surface-container-lowest p-8 rounded-[1.5rem] shadow-[0_20px_40px_rgba(25,28,30,0.04)] relative ring-2 ring-primary';
+
+          const contentDiv = document.createElement('div');
+          contentDiv.className = 'flex-grow';
 
           const badge = document.createElement('div');
           badge.className = 'absolute top-6 right-8 px-3 py-1 bg-primary-container text-on-primary-container text-[10px] font-bold rounded-full uppercase tracking-tighter';
           badge.textContent = 'Ativo';
-          card.appendChild(badge);
+          contentDiv.appendChild(badge);
 
           const body = document.createElement('div');
-          body.className = 'mb-6';
+          body.className = 'mb-6 mt-4 md:mt-0';
           const h3 = document.createElement('h3');
           h3.className = 'text-2xl font-extrabold text-on-surface';
           h3.textContent = 'Semestre ' + s.nome;
           body.appendChild(h3);
-          card.appendChild(body);
+          contentDiv.appendChild(body);
 
           const info = document.createElement('div');
           info.className = 'space-y-4 mb-8';
           info.innerHTML = '<div class="flex items-center gap-3 text-on-surface-variant text-sm"><span class="material-symbols-outlined text-sm">calendar_month</span><span>Período: ' + s.periodo + '</span></div>';
-          card.appendChild(info);
+          contentDiv.appendChild(info);
+
+          card.appendChild(contentDiv);
 
           const btn = document.createElement('a');
           btn.className = 'btn-acessar-equipe flex items-center justify-center w-full bg-gradient-to-br from-primary to-secondary text-white py-4 px-6 rounded-xl font-bold tracking-tight hover:opacity-90 transition-all group cursor-pointer';
           btn.innerHTML = 'Acessar Minha Equipe <span class="material-symbols-outlined ml-2 transition-transform group-hover:translate-x-1">arrow_forward</span>';
           card.appendChild(btn);
         } else {
-          card.className = 'bg-surface-container-low p-8 rounded-[1.5rem] grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all';
+          card.className = 'flex flex-col h-full bg-surface-container-low p-8 rounded-[1.5rem] grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all';
+
+          const contentDiv = document.createElement('div');
+          contentDiv.className = 'flex-grow';
 
           const body = document.createElement('div');
           body.className = 'mb-6';
@@ -279,12 +287,14 @@
           h3.className = 'text-2xl font-extrabold text-on-surface';
           h3.textContent = 'Semestre ' + s.nome;
           body.appendChild(h3);
-          card.appendChild(body);
+          contentDiv.appendChild(body);
 
           const info = document.createElement('div');
           info.className = 'space-y-4 mb-8 text-on-surface-variant';
           info.innerHTML = '<div class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-sm">check_circle</span><span>Concluído</span></div>';
-          card.appendChild(info);
+          contentDiv.appendChild(info);
+
+          card.appendChild(contentDiv);
         }
 
         grid.appendChild(card);
@@ -297,6 +307,13 @@
           if (typeof setComponentValue === 'function') setComponentValue('aluno_minha_equipe');
         });
       });
+
+      // Adjust height in Streamlit
+      setTimeout(() => {
+        if (typeof sendMessageToStreamlitClient === 'function') {
+          sendMessageToStreamlitClient("streamlit:setFrameHeight", {height: document.documentElement.scrollHeight + 50});
+        }
+      }, 50);
     }
 
     carregarDados();

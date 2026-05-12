@@ -383,7 +383,8 @@
 
     async function carregarEquipes() {
       try {
-        const res = await fetch(`${API_BASE}/equipes`, {
+        const qs = semestreAtivo ? `?semestre_id=${semestreAtivo}` : '';
+        const res = await fetch(`${API_BASE}/equipes${qs}`, {
           headers: { Authorization: `Bearer ${TOKEN}` }
         });
         if (!res.ok) return;
@@ -392,6 +393,8 @@
         todasEquipesIds = lista.map(e => e.id);
 
         const container = document.getElementById('equipe-pills');
+        container.innerHTML = '<button class="pill active" data-equipe="todas">Todas</button>';
+
         lista.forEach(eq => {
           const btn = document.createElement('button');
           btn.className = 'pill';
@@ -536,7 +539,8 @@
     // ── Eventos de filtro ─────────────────────────────────────────────────────
     document.getElementById('selectSemestre').addEventListener('change', e => {
       semestreAtivo = e.target.value;
-      buscarHistorico();
+      equipeAtiva = 'todas';
+      carregarEquipes().then(() => buscarHistorico());
     });
 
     // ── Init ──────────────────────────────────────────────

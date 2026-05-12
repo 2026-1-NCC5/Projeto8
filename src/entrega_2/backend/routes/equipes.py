@@ -36,8 +36,11 @@ def _load(db, eid):
 
 
 @router.get("/", response_model=list[EquipeResponse])
-def listar_equipes(semestre_id: int = Query(...), db: Session = Depends(get_db), u: Usuario = Depends(get_current_user)):
-    eqs = db.query(Equipe).filter(Equipe.semestre_id == semestre_id).options(joinedload(Equipe.membros)).all()
+def listar_equipes(semestre_id: int = Query(None), db: Session = Depends(get_db), u: Usuario = Depends(get_current_user)):
+    query = db.query(Equipe).options(joinedload(Equipe.membros))
+    if semestre_id is not None:
+        query = query.filter(Equipe.semestre_id == semestre_id)
+    eqs = query.all()
     return [EquipeResponse(id=e.id, nome=e.nome, semestre_id=e.semestre_id, total_membros=len(e.membros), criado_em=e.criado_em) for e in eqs]
 
 

@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
-
 <head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard · Lideranças Empáticas</title>
+
+  <!-- Mesmas fontes do projeto -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind com plugins (igual às outras páginas) -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap"
-    rel="stylesheet" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-    rel="stylesheet" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-    rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+
+  <!-- Tokens de cor do projeto (Material Design 3) -->
   <script id="tailwind-config">
     tailwind.config = {
       darkMode: "class",
       theme: {
         extend: {
-          "colors": {
+          fontFamily: {
+            body: ["Inter", "sans-serif"],
+            headline: ["Manrope", "sans-serif"],
+            manrope: ["Manrope", "sans-serif"],
+          },
+          colors: {
             "surface-bright": "#f7f9fc",
             "on-primary": "#ffffff",
             "surface-container-low": "#f2f4f7",
@@ -29,7 +33,6 @@
             "on-primary-container": "#004b1e",
             "on-error-container": "#93000a",
             "surface-container": "#eceef1",
-            "on-tertiary-fixed": "#410001",
             "surface-variant": "#e0e3e6",
             "on-secondary-container": "#24703e",
             "on-surface": "#191c1e",
@@ -38,88 +41,140 @@
             "surface-tint": "#006e2f",
             "surface-container-high": "#e6e8eb",
             "secondary": "#1f6c3a",
-            "secondary-container": "#a4f1b2",
-            "on-secondary-fixed": "#00210b",
-            "inverse-primary": "#4ae176",
-            "tertiary-container": "#ff8b7c",
-            "inverse-surface": "#2d3133",
-            "secondary-fixed-dim": "#8bd79b",
-            "on-surface-variant": "#3d4a3d",
-            "on-tertiary-container": "#76231b",
-            "surface-dim": "#d8dadd",
-            "tertiary": "#9e4036",
-            "error": "#ba1a1a",
-            "tertiary-fixed-dim": "#ffb4a9",
-            "on-background": "#191c1e",
-            "primary-container": "#22c55e",
-            "on-tertiary-fixed-variant": "#7f2a21",
+            "secondary-container": "#b7f1cb",
             "on-secondary": "#ffffff",
-            "on-error": "#ffffff",
-            "primary-fixed-dim": "#4ae176",
-            "secondary-fixed": "#a6f4b5",
-            "on-secondary-fixed-variant": "#005226",
-            "primary-fixed": "#6bff8f",
+            "primary-container": "#b7f1cb",
             "primary": "#006e2f",
-            "outline-variant": "#bccbb9",
-            "inverse-on-surface": "#eff1f4",
-            "on-primary-fixed-variant": "#005321",
-            "outline": "#6d7b6c",
-            "tertiary-fixed": "#ffdad5",
+            "on-surface-variant": "#41484d",
             "surface-container-lowest": "#ffffff",
-            "on-primary-fixed": "#002109",
-            "background": "#f7f9fc"
+            "error": "#ba1a1a",
+            "tertiary": "#b91c1c",
+            "tertiary-container": "#ffdad6",
+            "on-tertiary-container": "#410001",
           },
-          "borderRadius": {
-            "DEFAULT": "0.25rem",
-            "lg": "0.5rem",
-            "xl": "0.75rem",
-            "full": "9999px"
-          },
-          "fontFamily": {
-            "headline": ["Manrope"],
-            "body": ["Inter"],
-            "label": ["Inter"]
-          }
         },
       },
-    }
+    };
   </script>
+
   <style>
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    html, body {
+      background-color: #f7f9fc;
+      /* SEM overflow:hidden — dentro do iframe do Streamlit o scroll é do próprio iframe */
     }
-
-    body {
-      font-family: 'Inter', sans-serif;
+    /* Vidro da navbar — igual ao admin_home */
+    .glass-nav {
+      background: rgba(247, 249, 252, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(65, 72, 77, 0.1);
     }
-
-    h1,
-    h2,
-    h3,
-    .font-headline {
+    /* Cards */
+    .metric-card {
+      background: #ffffff;
+      border: 1px solid #e0e3e6;
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .metric-card:hover {
+      box-shadow: 0 8px 24px rgba(0, 110, 47, .08);
+      transform: translateY(-2px);
+    }
+    .chart-card {
+      background: #ffffff;
+      border: 1px solid #e0e3e6;
+      border-radius: 16px;
+      padding: 1.5rem;
+    }
+    /* Barra horizontal */
+    .bar-track {
+      height: 6px;
+      background: #eceef1;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width .8s ease;
+    }
+    /* Spinner */
+    .spinner {
+      border: 3px solid #e0e3e6;
+      border-top-color: #006e2f;
+      border-radius: 50%;
+      width: 36px; height: 36px;
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* Pill de filtro */
+    .pill {
+      cursor: pointer;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
       font-family: 'Manrope', sans-serif;
+      border: 1.5px solid #e0e3e6;
+      background: #ffffff;
+      color: #41484d;
+      transition: all .15s;
+    }
+    .pill.active, .pill:hover {
+      border-color: #006e2f;
+      background: #b7f1cb;
+      color: #004b1e;
+    }
+    /* Select */
+    select {
+      border: 1.5px solid #e0e3e6;
+      border-radius: 10px;
+      padding: 6px 12px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #191c1e;
+      background: #ffffff;
+      outline: none;
+      cursor: pointer;
+    }
+    select:focus { border-color: #006e2f; }
+    /* Legend dot */
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 3px;
+      display: inline-block;
+      flex-shrink: 0;
     }
   </style>
+<script>
+        window._TOKEN    = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3IiwidGlwbyI6ImFsdW5vIiwiZXhwIjoxNzc4NjMzNTQ2fQ.TOgfK7GK32eLXRK2xNS5g-QPtvcylPVcUouea3yJTv8';
+        window._API_BASE = 'http://localhost:8000/api';
+        window._USUARIO  = {"id": 7, "nome": "Maria Oliveira", "email": "aluno@le.com", "tipo": "aluno"};
+        window._EQUIPE_ID = '';
+    </script>
 </head>
+<body class="bg-surface font-body text-on-surface">
 
-<body class="bg-surface text-on-surface min-h-screen">
-  <!-- TopNavBar -->
-  <nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md shadow-sm">
+  <!-- ── Navbar (padrão aluno) ─────────────────────────────────────── -->
+  <nav class="fixed top-0 w-full z-50 glass-nav shadow-sm">
     <div class="flex justify-between items-center px-6 h-16 w-full max-w-screen-2xl mx-auto">
       <div class="flex items-center gap-8">
-        <span class="text-xl font-bold tracking-tight text-green-800">Lideranças Empáticas</span>
+        <span class="text-xl font-bold tracking-tight text-green-800 font-headline">Lideranças Empáticas</span>
         <div class="hidden md:flex gap-6 items-center">
-          <a class="text-green-700 border-b-2 border-green-600 pb-1 font-manrope text-sm font-medium transition-colors"
-            href="#">Home</a>
+          <a class="btn-aluno-home text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Home</a>
+          <a class="text-sm font-semibold text-primary border-b-2 border-primary pb-1 transition-colors">Dashboard</a>
         </div>
       </div>
       <div class="flex items-center gap-4">
         <div class="relative">
-          <button id="btn-avatar-menu" class="h-8 w-8 rounded-full overflow-hidden bg-surface-container-high ring-2 ring-primary-container/20 cursor-pointer hover:ring-primary/40 transition-all">
-            <img alt="User avatar" class="w-full h-full object-cover"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6f_WigLQvZiDvHFmGPcubJXsWfVl9RNXIFl8CU1Hd7MHTJ6XUABQG_KlqlPVgN6xkFqzBW20Lw4pZUJxFDuCsXfE9qSltys8s0FOwE2qZmioHC7CNIlEBpH71AuVBO0wNxNVkDJH2vOAr8ftVWj4ahm2fsVYH6wAYLaWMY_czZO9eQMtn0Se2oSsy8-GpRHcgKX_CxajYYZHf48gDe3714_wJglnVHpB-8oGR95NyYCkxVYdGgfO_iCBMmbjy998EwllUVn5_oKWX" />
+          <button id="btn-avatar-menu"
+            class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs cursor-pointer hover:ring-2 hover:ring-primary/40 transition-all">
+            ..
           </button>
-          <div id="avatar-dropdown" class="hidden absolute right-0 top-12 w-48 bg-white rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.12)] border border-slate-100 py-2 z-[200]">
+          <div id="avatar-dropdown"
+            class="hidden absolute right-0 top-12 w-48 bg-white rounded-xl shadow-[0_20px_40px_rgba(25,28,30,0.12)] border border-slate-100 py-2 z-[200]">
             <a class="btn-perfil flex items-center gap-3 px-4 py-3 text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors cursor-pointer">
               <span class="material-symbols-outlined text-lg text-on-surface-variant">person</span> Perfil
             </a>
@@ -132,117 +187,373 @@
       </div>
     </div>
   </nav>
-  <main class="pt-24 pb-20 px-6 max-w-screen-2xl mx-auto">
-    <!-- Welcome Hero Section -->
-    <header class="mb-16">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div>
-          <span class="text-primary font-semibold tracking-wider text-xs uppercase mb-2 block">Portal do Aluno</span>
-          <h1 class="text-5xl font-extrabold text-on-surface tracking-tight mb-2">Bem-vinda, Maria.</h1>
-          <p class="text-3xl font-extrabold text-primary tracking-tight mb-4 font-headline">Equipe Delta</p>
-          <p class="text-on-surface-variant max-w-xl text-lg leading-relaxed">
-            Sua jornada de liderança empática continua aqui. Colabore com sua equipe para
-            desenvolver autoridade com humanidade.
-          </p>
+
+  <!-- ── Main ───────────────────────────────────────────────────────────── -->
+  <main class="pt-24 pb-20 px-6 max-w-screen-xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-8">
+      <p class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">Visão geral</p>
+      <h1 class="text-4xl font-extrabold tracking-tight text-primary font-headline">Dashboard de Arrecadação</h1>
+      <p class="text-on-surface-variant mt-2 text-base">Distribuição dos alimentos coletados por equipe e tipo de item.</p>
+    </div>
+
+    <!-- Filtros -->
+    <div class="flex flex-wrap items-center gap-3 mb-8">
+      <span class="text-sm font-semibold text-on-surface-variant">Equipe:</span>
+      <div id="equipe-pills" class="flex flex-wrap gap-2">
+        <button class="pill active" data-equipe="todas">Todas</button>
+      </div>
+
+      <div class="ml-auto flex items-center gap-2">
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size:18px;">calendar_month</span>
+        <select id="selectSemestre">
+          <option value="">Todos os semestres</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Metric Cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div class="metric-card col-span-2 md:col-span-1">
+        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Total arrecadado</p>
+        <p id="metricTotal" class="text-3xl font-extrabold text-primary font-headline">—</p>
+        <p class="text-xs text-on-surface-variant mt-1">unidades</p>
+      </div>
+      <div class="metric-card col-span-2 md:col-span-1">
+        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Tipos de item</p>
+        <p id="metricTipos" class="text-3xl font-extrabold text-primary font-headline">—</p>
+        <p class="text-xs text-on-surface-variant mt-1">categorias</p>
+      </div>
+      <div class="metric-card col-span-2 md:col-span-1">
+        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Item mais arrecadado</p>
+        <p id="metricTop" class="text-lg font-extrabold leading-tight text-primary font-headline">—</p>
+        <p id="metricTopPct" class="text-xs text-on-surface-variant mt-1">—</p>
+      </div>
+      <div class="metric-card col-span-2 md:col-span-1">
+        <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Registros</p>
+        <p id="metricRegistros" class="text-3xl font-extrabold text-primary font-headline">—</p>
+        <p class="text-xs text-on-surface-variant mt-1">entradas no histórico</p>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- Pizza -->
+      <div class="chart-card">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-base font-bold text-on-surface font-headline">Distribuição por item</h2>
+          <span class="material-symbols-outlined text-on-surface-variant">donut_large</span>
         </div>
-        <div class="bg-surface-container-low px-6 py-4 rounded-xl flex items-center gap-4">
-          <div class="w-12 h-12 bg-primary-container/20 rounded-full flex items-center justify-center text-primary">
-            <span class="material-symbols-outlined" data-icon="verified_user"
-              style="font-variation-settings: 'FILL' 1;">verified_user</span>
+        <div id="loadingPizza" class="flex items-center justify-center" style="height:300px;">
+          <div class="spinner"></div>
+        </div>
+        <div id="chartPizzaWrap" class="hidden">
+          <div style="position:relative; width:100%; height:280px;">
+            <canvas id="pizzaChart" role="img" aria-label="Gráfico de rosca — distribuição dos alimentos arrecadados"></canvas>
           </div>
-          <div>
-            <p class="text-[10px] text-on-surface-variant uppercase font-bold tracking-widest">Status da Conta</p>
-            <p class="font-semibold text-primary">Estudante Verificado</p>
-          </div>
+          <div id="legendPizza" class="flex flex-wrap gap-x-4 gap-y-2 mt-4"></div>
         </div>
       </div>
-    </header>
-    <!-- Semesters Grid -->
-    <section>
-      <div class="flex items-center justify-between mb-8">
-        <h2 class="text-2xl font-bold tracking-tight text-on-surface">Seus Semestres</h2>
-        <div class="h-px bg-surface-container-high flex-grow mx-8 hidden md:block"></div>
-        <span class="text-sm font-medium text-on-surface-variant">Exibindo 2 períodos acadêmicos</span>
+
+      <!-- Barras horizontais -->
+      <div class="chart-card">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-base font-bold text-on-surface font-headline">Quantidade por item</h2>
+          <span class="material-symbols-outlined text-on-surface-variant">bar_chart</span>
+        </div>
+        <div id="loadingBarra" class="flex items-center justify-center" style="height:300px;">
+          <div class="spinner"></div>
+        </div>
+        <div id="barrasWrap" class="hidden flex flex-col gap-4 mt-2"></div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Active Semester Card -->
-        <div
-          class="bg-surface-container-lowest p-8 rounded-[1.5rem] shadow-[0_20px_40px_rgba(25,28,30,0.04)] relative ring-2 ring-primary">
-          <div
-            class="absolute top-6 right-8 px-3 py-1 bg-primary-container text-on-primary-container text-[10px] font-bold rounded-full uppercase tracking-tighter">
-            Ativo
-          </div>
-          <div class="mb-6">
-            <h3 class="text-2xl font-extrabold text-on-surface">Semestre 2024.1</h3>
-          </div>
-          <div class="space-y-4 mb-8">
-            <div class="flex items-center gap-3 text-on-surface-variant text-sm">
-              <span class="material-symbols-outlined text-sm" data-icon="groups">groups</span>
-              <span>Equipe: Delta</span>
-            </div>
-            <div class="flex items-center gap-3 text-on-surface-variant text-sm">
-              <span class="material-symbols-outlined text-sm" data-icon="calendar_month">calendar_month</span>
-              <span>Término: Junho 2024</span>
-            </div>
-          </div>
-          <a class="btn-acessar-equipe flex items-center justify-center w-full bg-gradient-to-br from-primary to-secondary text-white py-4 px-6 rounded-xl font-bold tracking-tight hover:opacity-90 transition-all group cursor-pointer"
-            href="#">
-            Acessar Minha Equipe
-            <span class="material-symbols-outlined ml-2 transition-transform group-hover:translate-x-1"
-              data-icon="arrow_forward">arrow_forward</span>
-          </a>
-        </div>
-        <!-- Past Semester Card -->
-        <div
-          class="bg-surface-container-low p-8 rounded-[1.5rem] grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all">
-          <div class="mb-6">
-            <h3 class="text-2xl font-extrabold text-on-surface">Semestre 2023.2</h3>
-          </div>
-          <div class="space-y-4 mb-8 text-on-surface-variant">
-            <div class="flex items-center gap-3 text-sm">
-              <span class="material-symbols-outlined text-sm" data-icon="groups">groups</span>
-              <span>Equipe: Delta Pioneers</span>
-            </div>
-            <div class="flex items-center gap-3 text-sm">
-              <span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
-              <span>Concluído</span>
-            </div>
-          </div>
-          <button
-            class="flex items-center justify-center w-full border border-outline/15 text-primary py-4 px-6 rounded-xl font-bold tracking-tight hover:bg-surface-container-high transition-all">
-            Ver Relatórios
-          </button>
-        </div>
-        <!-- Empty State / Upcoming Concept -->
-        <div
-          class="bg-surface-container-low/40 border-2 border-dashed border-outline/10 p-8 rounded-[1.5rem] flex flex-col items-center justify-center text-center">
-          <div class="w-16 h-16 bg-surface-container-high rounded-full flex items-center justify-center mb-4">
-            <span class="material-symbols-outlined text-outline" data-icon="school">school</span>
-          </div>
-          <p class="font-bold text-on-surface-variant">Próximo Semestre</p>
-          <p class="text-xs text-on-surface-variant/60 mt-1">Aguardando período de inscrição</p>
-        </div>
-      </div>
-    </section>
+
+    </div>
+
+    <!-- Erro -->
+    <div id="errorBox"
+      class="hidden mt-8 p-4 rounded-xl border border-red-200 bg-red-50 text-error text-sm font-semibold flex items-center gap-2">
+      <span class="material-symbols-outlined" style="font-size:20px;">error</span>
+      <span id="errorMsg">Erro ao carregar dados.</span>
+    </div>
+
   </main>
-  <!-- BottomNavBar (Mobile Only) -->
-  <nav
-    class="lg:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around items-center px-4 py-3 pb-safe z-50 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] rounded-t-2xl">
-    <div class="flex flex-col items-center justify-center bg-green-100 text-green-800 rounded-xl px-4 py-1">
-      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+
+  <!-- ── Mobile bottom nav (padrão aluno) ────────────── -->
+  <nav class="lg:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around items-center px-4 py-3 pb-safe z-50 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] rounded-t-2xl">
+    <button class="btn-aluno-home flex flex-col items-center justify-center text-slate-400 active:bg-slate-50 transition-transform active:scale-90 cursor-pointer">
+      <span class="material-symbols-outlined">home</span>
       <span class="text-[10px] font-manrope font-semibold">Home</span>
+    </button>
+    <div class="flex flex-col items-center justify-center bg-green-100 text-green-800 rounded-xl px-4 py-1">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bar_chart</span>
+      <span class="text-[10px] font-manrope font-semibold">Dashboard</span>
     </div>
     <button class="btn-perfil flex flex-col items-center justify-center text-slate-400 active:bg-slate-50 transition-transform active:scale-90 cursor-pointer">
       <span class="material-symbols-outlined">person</span>
       <span class="text-[10px] font-manrope font-semibold">Perfil</span>
     </button>
   </nav>
+
   <script>
-    const avatarBtn = document.getElementById('btn-avatar-menu');
-    const dropdown = document.getElementById('avatar-dropdown');
-    avatarBtn.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('hidden'); });
-    document.addEventListener('click', () => dropdown.classList.add('hidden'));
-    dropdown.addEventListener('click', (e) => e.stopPropagation());
+    // ── Configuração ──────────────────────────────────────────────────────────
+    const API_BASE = window._API_BASE || 'http://localhost:8000/api';
+    const TOKEN = window._TOKEN || '';
+
+    const CORES = [
+      '#006e2f', '#1D9E75', '#378ADD', '#7F77DD',
+      '#EF9F27', '#D4537E', '#D85A30', '#639922',
+      '#5DCAA5', '#85B7EB', '#AFA9EC', '#FAC775',
+    ];
+
+    // ── Estado ────────────────────────────────────────────────────────────────
+    let equipeAtiva   = 'todas';
+    let semestreAtivo = '';
+    let pizzaChart    = null;
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
+    const fmt = n => n.toLocaleString('pt-BR');
+
+    function showError(msg) {
+      document.getElementById('errorBox').classList.remove('hidden');
+      document.getElementById('errorMsg').textContent = msg;
+    }
+    function hideError() {
+      document.getElementById('errorBox').classList.add('hidden');
+    }
+    function setLoading(show) {
+      ['loadingPizza', 'loadingBarra'].forEach(id =>
+        document.getElementById(id).classList.toggle('hidden', !show));
+      ['chartPizzaWrap', 'barrasWrap'].forEach(id =>
+        document.getElementById(id).classList.toggle('hidden', show));
+    }
+
+    // ── Avatar dropdown ───────────────────────────────────────────────────────
+    document.getElementById('btn-avatar-menu').addEventListener('click', () => {
+      document.getElementById('avatar-dropdown').classList.toggle('hidden');
+    });
+    document.addEventListener('click', e => {
+      const menu   = document.getElementById('avatar-dropdown');
+      const btn    = document.getElementById('btn-avatar-menu');
+      if (!menu.contains(e.target) && !btn.contains(e.target))
+        menu.classList.add('hidden');
+    });
+
+    // ── Carregar semestres via API ────────────────────────────────────────────
+    async function carregarSemestres() {
+      try {
+        const res = await fetch(`${API_BASE}/semestres`, {
+          headers: { Authorization: `Bearer ${TOKEN}` }
+        });
+        if (!res.ok) return;
+        const data = await res.json();
+        const sel  = document.getElementById('selectSemestre');
+        // A rota /api/semestres retorna array direto (list[SemestreResponse])
+        const lista = Array.isArray(data) ? data : (data.items || []);
+        lista.forEach(s => {
+          const opt = document.createElement('option');
+          opt.value       = s.id;
+          opt.textContent = s.nome;
+          sel.appendChild(opt);
+        });
+      } catch (_) { /* silencioso — filtro de semestre fica vazio */ }
+    }
+
+    // ── Buscar histórico via API ──────────────────────────────────────────────
+    // Endpoint: GET /api/equipes/{id}/historico?por_pagina=50[&semestre_id=X]
+    // Retorna HistoricoPaginado { items, total, pagina, por_pagina, total_paginas }
+    // O backend limita por_pagina a 50, então paginamos até buscar tudo.
+    async function buscarTodasPaginas(equipeId) {
+      const qs = semestreAtivo ? `&semestre_id=${semestreAtivo}` : '';
+      let todos = [];
+      let pagina = 1;
+      let totalPaginas = 1;
+
+      do {
+        const url = `${API_BASE}/equipes/${equipeId}/historico?por_pagina=50&pagina=${pagina}${qs}`;
+        const res = await fetch(url, {
+          headers: { Authorization: `Bearer ${TOKEN}` }
+        });
+        if (!res.ok) break;
+        const json = await res.json();
+        todos = todos.concat(json.items || []);
+        totalPaginas = json.total_paginas || 1;
+        pagina++;
+      } while (pagina <= totalPaginas);
+
+      return todos;
+    }
+
+    let todasEquipesIds = [];
+
+    async function carregarEquipes() {
+      try {
+        const qs = semestreAtivo ? `?semestre_id=${semestreAtivo}` : '';
+        const res = await fetch(`${API_BASE}/equipes${qs}`, {
+          headers: { Authorization: `Bearer ${TOKEN}` }
+        });
+        if (!res.ok) return;
+        const equipes = await res.json();
+        const lista = Array.isArray(equipes) ? equipes : (equipes.items || []);
+        todasEquipesIds = lista.map(e => e.id);
+
+        const container = document.getElementById('equipe-pills');
+        container.innerHTML = '<button class="pill active" data-equipe="todas">Todas</button>';
+
+        lista.forEach(eq => {
+          const btn = document.createElement('button');
+          btn.className = 'pill';
+          btn.dataset.equipe = String(eq.id);
+          btn.textContent = eq.nome;
+          container.appendChild(btn);
+        });
+
+        // Bind pill events
+        container.querySelectorAll('.pill').forEach(btn => {
+          btn.addEventListener('click', () => {
+            container.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            equipeAtiva = btn.dataset.equipe;
+            buscarHistorico();
+          });
+        });
+      } catch (_) {}
+    }
+
+    async function buscarHistorico() {
+      setLoading(true);
+      hideError();
+
+      try {
+        const ids = equipeAtiva === 'todas' ? todasEquipesIds : [parseInt(equipeAtiva)];
+        if (ids.length === 0) { renderizar([]); return; }
+
+        const resultados = await Promise.all(ids.map(id => buscarTodasPaginas(id)));
+        const todos = resultados.flat();
+
+        renderizar(todos);
+
+      } catch (err) {
+        showError('Não foi possível conectar ao servidor. Verifique se o backend está rodando.');
+        setLoading(false);
+      }
+    }
+
+    // ── Renderizar gráficos e métricas ────────────────────────────────────────
+    function renderizar(registros) {
+      // Agrupa por item somando quantidade
+      const agrupado = {};
+      registros.forEach(r => {
+        agrupado[r.item] = (agrupado[r.item] || 0) + r.quantidade;
+      });
+
+      const itens = Object.entries(agrupado)
+        .sort((a, b) => b[1] - a[1])
+        .map(([item, qtd], i) => ({ item, qtd, cor: CORES[i % CORES.length] }));
+
+      const total = itens.reduce((s, d) => s + d.qtd, 0);
+
+      // Métricas
+      document.getElementById('metricTotal').textContent     = fmt(total);
+      document.getElementById('metricTipos').textContent     = itens.length;
+      document.getElementById('metricRegistros').textContent = registros.length;
+
+      if (itens.length > 0) {
+        document.getElementById('metricTop').textContent    = itens[0].item;
+        document.getElementById('metricTopPct').textContent =
+          Math.round(itens[0].qtd / total * 100) + '% do total';
+      } else {
+        document.getElementById('metricTop').textContent    = '—';
+        document.getElementById('metricTopPct').textContent = '—';
+      }
+
+      // Pizza
+      if (pizzaChart) { pizzaChart.destroy(); pizzaChart = null; }
+
+      if (itens.length > 0) {
+        const ctx = document.getElementById('pizzaChart').getContext('2d');
+        pizzaChart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: itens.map(d => d.item),
+            datasets: [{
+              data: itens.map(d => d.qtd),
+              backgroundColor: itens.map(d => d.cor),
+              borderColor: '#fff',
+              borderWidth: 2,
+              hoverOffset: 10,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '58%',
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: ctx => {
+                    const pct = Math.round(ctx.parsed / total * 100);
+                    return ' ' + fmt(ctx.parsed) + ' un (' + pct + '%)';
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // Legenda customizada da pizza
+      const leg = document.getElementById('legendPizza');
+      leg.innerHTML = '';
+      itens.forEach(d => {
+        const pct = Math.round(d.qtd / total * 100);
+        leg.innerHTML += `
+          <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:#41484d;">
+            <span class="legend-dot" style="background:${d.cor};"></span>
+            ${d.item} <strong style="color:#191c1e;">${pct}%</strong>
+          </span>`;
+      });
+
+      // Barras horizontais
+      const wrap   = document.getElementById('barrasWrap');
+      wrap.innerHTML = '';
+      const maxQtd = itens.length > 0 ? itens[0].qtd : 1;
+      itens.forEach(d => {
+        const pct    = Math.round(d.qtd / total * 100);
+        const largura = Math.round(d.qtd / maxQtd * 100);
+        wrap.innerHTML += `
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:#41484d;margin-bottom:5px;">
+              <span style="font-weight:700;font-family:'Manrope',sans-serif;">${d.item}</span>
+              <span style="color:#191c1e;font-weight:700;">${fmt(d.qtd)} un · ${pct}%</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:${largura}%;background:${d.cor};"></div>
+            </div>
+          </div>`;
+      });
+
+      if (itens.length === 0) {
+        wrap.innerHTML = `<p class="text-on-surface-variant text-sm text-center py-8">Nenhum dado encontrado para os filtros selecionados.</p>`;
+      }
+
+      setLoading(false);
+    }
+
+    // ── Eventos de filtro ─────────────────────────────────────────────────────
+    document.getElementById('selectSemestre').addEventListener('change', e => {
+      semestreAtivo = e.target.value;
+      equipeAtiva = 'todas';
+      carregarEquipes().then(() => buscarHistorico());
+    });
+
+    // ── Init ──────────────────────────────────────────────
+    carregarEquipes().then(() => {
+      carregarSemestres();
+      buscarHistorico();
+    });
   </script>
 
     <script>
@@ -262,55 +573,29 @@
             }
         });
         init();
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            var email = document.getElementById('email').value;
-            var senha = document.getElementById('password').value;
-
-            var submitBtn = e.target.querySelector('button[type="submit"]');
-            var originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = 'Entrando...';
-            submitBtn.disabled = true;
-
-            fetch('https://contacerto-api-akbph4bfh8e4cva6.canadacentral-01.azurewebsites.net/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email, senha: senha })
-            })
-            .then(function(resp) {
-                if (!resp.ok) {
-                    return resp.json().then(function(err) { throw new Error(err.detail || 'Erro no login'); });
-                }
-                return resp.json();
-            })
-            .then(function(data) {
-                var destino = 'aluno_home';
-                if (data.usuario.tipo === 'admin') {
-                    destino = 'admin_home';
-                }
-                var payload = JSON.stringify({
-                    destino: destino,
-                    token: data.access_token,
-                    usuario: data.usuario
-                });
-                setComponentValue(payload);
-            })
-            .catch(function(err) {
-                alert(err.message || 'Erro ao conectar com o servidor.');
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
+        
+        document.querySelectorAll('.btn-aluno-home').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                setComponentValue('aluno_home');
             });
         });
-        
+
+        document.querySelectorAll('.btn-perfil').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                setComponentValue('aluno_perfil');
+            });
+        });
+
         document.querySelectorAll('.btn-sair').forEach(function(el) {
             el.addEventListener('click', function(e) {
                 e.preventDefault();
                 setComponentValue('login');
             });
         });
-        
+
     </script>
     
 </body>
-
 </html>
